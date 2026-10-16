@@ -5,7 +5,8 @@
 <meta name="google" content="notranslate">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NeuroUstaz</title>
+<title>neuroUstaz</title>
+<link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="logo.png"><meta property="og:image" content="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -19,8 +20,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .app{height:100%;display:flex;flex-direction:column}
 header{display:flex;align-items:center;gap:16px;padding:22px clamp(20px,4vw,64px);flex:none;width:100%;max-width:1600px;margin:0 auto}
 .logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:28px;letter-spacing:-.5px}
-.logo .mk{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--brand),#8f6bff);display:grid;place-items:center;color:#fff;font-size:24px;box-shadow:0 6px 16px #5b4bdb44}
-.logo b{color:var(--brand)}.logo i{font-style:normal;color:var(--brand2)}
+.logo .mk{width:50px;height:50px;border-radius:14px;background:#0b1d2c url(logo.png) center/cover;box-shadow:0 6px 16px #0b1d2c44}
+.logo b{color:#13283d;font-weight:800}.logo i{font-style:normal;color:#2498bd}
 .crumbs{margin-left:auto;display:flex;gap:8px;align-items:center;color:var(--mut);font-weight:700;font-size:18px}
 .back{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--line);padding:10px 20px;border-radius:999px;font-weight:800;font-size:20px;box-shadow:0 2px 0 var(--line)}
 .back:active{transform:translateY(2px);box-shadow:none}
@@ -95,7 +96,7 @@ h1{font-size:44px;font-weight:900;letter-spacing:-1px;margin:6px 0 4px}
 <div class="app">
  <header>
   <button class="back" id="back" style="display:none">⬅ Артқа</button>
-  <div class="logo"><div class="mk">🧠</div><span><b>Neuro</b><i>Ustaz</i></span></div>
+  <div class="logo"><div class="mk" role="img" aria-label="neuroUstaz"></div><span><b>neuro</b><i>Ustaz</i></span></div>
   <div class="crumbs" id="crumbs"></div>
  </header>
  <main>
