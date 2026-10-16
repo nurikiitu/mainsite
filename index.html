@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroUstaz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1f2a44;--mut:#6b7590;--bg:#f4f6fb;--card:#fff;--line:#e3e8f2;--brand:#5b4bdb;--brand2:#ff7a59}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--bg);overflow:hidden;user-select:none}
+body::before{content:"";position:fixed;inset:0;z-index:-1;
+ background:radial-gradient(900px 500px at 8% -10%,#e6e2ff 0,transparent 60%),radial-gradient(800px 500px at 105% 110%,#ffe6dc 0,transparent 60%),var(--bg)}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.app{height:100%;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:16px;padding:22px clamp(20px,4vw,64px);flex:none;width:100%;max-width:1600px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:28px;letter-spacing:-.5px}
+.logo .mk{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--brand),#8f6bff);display:grid;place-items:center;color:#fff;font-size:24px;box-shadow:0 6px 16px #5b4bdb44}
+.logo b{color:var(--brand)}.logo i{font-style:normal;color:var(--brand2)}
+.crumbs{margin-left:auto;display:flex;gap:8px;align-items:center;color:var(--mut);font-weight:700;font-size:18px}
+.back{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--line);padding:10px 20px;border-radius:999px;font-weight:800;font-size:20px;box-shadow:0 2px 0 var(--line)}
+.back:active{transform:translateY(2px);box-shadow:none}
+main{flex:1;min-height:0;position:relative}
+.page{position:absolute;top:0;bottom:0;left:0;right:0;margin:0 auto;width:100%;max-width:1600px;display:none;flex-direction:column;padding:10px clamp(20px,4vw,64px) 32px;animation:in .28s ease}
+.page.on{display:flex}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+h1{font-size:44px;font-weight:900;letter-spacing:-1px;margin:6px 0 4px}
+.sub{color:var(--mut);font-size:22px;font-weight:700;margin-bottom:26px}
+
+/* grades */
+.grades{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;min-height:0;max-height:560px}
+.grade{position:relative;border-radius:34px;color:#fff;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;text-align:left;
+ box-shadow:0 10px 0 var(--sh),0 18px 30px #0002;transition:transform .15s}
+.grade:active{transform:translateY(6px);box-shadow:0 4px 0 var(--sh),0 8px 16px #0002}
+.grade .n{position:absolute;top:-10px;right:14px;font-size:230px;font-weight:900;line-height:1;opacity:.25}
+.grade .em{position:absolute;top:28px;left:28px;font-size:60px}
+.grade .t{font-size:42px;font-weight:900}
+.grade .d{font-size:20px;font-weight:700;opacity:.9}
+.g1{background:linear-gradient(160deg,#ff9a62,#ff6b6b);--sh:#d9484c}
+.g2{background:linear-gradient(160deg,#4fd1a5,#1fa67a);--sh:#14805d}
+.g3{background:linear-gradient(160deg,#5aa9ff,#3b6cf0);--sh:#2a4fc0}
+.g4{background:linear-gradient(160deg,#b28bff,#7a4ff0);--sh:#5a35c4}
+
+/* subjects */
+.subjects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;align-content:start}
+.subj{position:relative;min-width:0;background:#fff;border-radius:26px;padding:28px 28px;display:flex;align-items:center;gap:20px;text-align:left;border:3px solid var(--line);box-shadow:0 6px 0 var(--line);transition:transform .12s}
+.subj:active{transform:translateY(4px);box-shadow:0 2px 0 var(--line)}
+.subj .ic{width:78px;height:78px;border-radius:22px;display:grid;place-items:center;font-size:42px;flex:none;background:var(--c)}
+.subj>div:not(.ic){min-width:0}.subj .t{font-size:28px;font-weight:900;line-height:1.15}
+.subj .d{font-size:18px;color:var(--mut);font-weight:700}
+.subj.off{opacity:.55;filter:grayscale(1);cursor:default}
+.subj.off:active{transform:none;box-shadow:0 6px 0 var(--line)}
+.subj .lock{position:absolute;top:16px;right:24px;font-size:14px;font-weight:800;background:#eef1f7;color:var(--mut);padding:4px 10px;border-radius:999px;white-space:nowrap}
+
+/* quarters + lessons */
+.qtabs{display:flex;gap:18px;margin-bottom:20px;flex:none}
+.qt{flex:1;padding:18px 10px;border-radius:20px;background:#fff;border:3px solid var(--line);font-size:24px;font-weight:900;color:var(--mut);box-shadow:0 5px 0 var(--line)}
+.qt.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 5px 0 #3e30b0}
+.qt small{display:block;font-size:15px;font-weight:700;opacity:.85;margin-top:2px}
+.qtitle{font-size:20px;font-weight:800;color:var(--mut);margin:0 6px 12px;flex:none}
+.lessons{flex:1;min-height:0;overflow-y:auto;padding:4px 10px 20px 4px;scroll-behavior:smooth}
+.lessons::-webkit-scrollbar{width:14px}.lessons::-webkit-scrollbar-thumb{background:#c9d0e0;border-radius:10px;border:3px solid var(--bg)}
+.ls{width:100%;display:flex;align-items:center;gap:22px;background:#fff;border-radius:22px;padding:16px 24px;margin-bottom:12px;border:3px solid var(--line);text-align:left;box-shadow:0 4px 0 var(--line);transition:transform .1s,border-color .15s}
+.ls:hover{border-color:#cfc8ff}
+.ls:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.ls .num{width:64px;height:64px;border-radius:18px;flex:none;display:grid;place-items:center;font-size:28px;font-weight:900;color:var(--brand);background:#efecff}
+.ls .lab{font-size:16px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+.ls .tt{font-size:28px;font-weight:800;line-height:1.2}
+.ls .go{margin-left:auto;font-size:34px;color:#c3c9d8;font-weight:900}
+.ls .soon{margin-left:auto;font-size:15px;font-weight:800;color:var(--mut);background:#f1f3f8;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.ls .soon+.go,.ls .ready+.go{margin-left:12px}
+.ls .ready{margin-left:auto;font-size:16px;font-weight:900;color:#fff;background:#22b07d;padding:7px 14px;border-radius:999px;white-space:nowrap}
+.ls.rd{border-color:#bfead6}.ls.rd .num{background:#e3f7ee;color:#1b9e6a}
+.empty{flex:1;display:grid;place-items:center;text-align:center;color:var(--mut);font-size:26px;font-weight:800}
+.empty div{font-size:80px;margin-bottom:10px}
+
+@media (max-width:1250px){.subjects{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){
+ header{padding:14px 16px}.page{padding:6px 16px 18px}
+ .crumbs{display:none}.logo{font-size:22px}
+ h1{font-size:30px}.sub{font-size:17px;margin-bottom:16px}
+ .grades{grid-template-columns:1fr 1fr;gap:14px;max-height:none}
+ .grade{padding:18px;border-radius:24px;min-height:150px}.grade .n{font-size:130px}.grade .em{font-size:38px;top:16px;left:16px}.grade .t{font-size:26px}.grade .d{font-size:14px}
+ .subjects{grid-template-columns:1fr;gap:12px}.subj{padding:16px}.subj .ic{width:56px;height:56px;font-size:30px}.subj .t{font-size:21px}
+ .qtabs{gap:8px}.qt{font-size:17px;padding:12px 4px}.qt small{display:none}
+ .ls{gap:12px;padding:12px}.ls .num{width:46px;height:46px;font-size:20px}.ls .tt{font-size:19px}.ls .lab{font-size:12px}.ls .soon{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+ <header>
+  <button class="back" id="back" style="display:none">⬅ Артқа</button>
+  <div class="logo"><div class="mk">🧠</div><span><b>Neuro</b><i>Ustaz</i></span></div>
+  <div class="crumbs" id="crumbs"></div>
+ </header>
+ <main>
+  <section class="page" id="p-home">
+   <h1>Сыныпты таңда</h1>
+   <div class="sub">Тақтада сабақ өткізуге арналған тапсырмалар мен ойындар</div>
+   <div class="grades" id="grades"></div>
+  </section>
+  <section class="page" id="p-grade">
+   <h1 id="gTitle"></h1>
+   <div class="sub">Пәнді таңда</div>
+   <div class="subjects" id="subjects"></div>
+  </section>
+  <section class="page" id="p-subj">
+   <h1 id="sTitle"></h1>
+   <div class="qtabs" id="qtabs"></div>
+   <div class="qtitle" id="qtitle"></div>
+   <div class="lessons" id="lessons"></div>
+  </section>
+ </main>
+</div>
+<script src="data.js?v=16"></script>
+<script>
+const $=s=>document.querySelector(s);
+const ST={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+let route={g:null,s:null};
+function go(hash){location.hash=hash}
+function render(){
+ const p=location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);
+ const g=+p[0]||null, s=p[1]||null;
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
+ const back=$('#back'),cr=$('#crumbs');
+ if(!g||g<1||g>4){$('#p-home').classList.add('on');back.style.display='none';cr.textContent='';return}
+ const sub=SUBJ(g).find(x=>x.id===s&&x.on);
+ back.style.display='';
+ if(!sub){
+  $('#p-grade').classList.add('on');$('#gTitle').textContent=g+'-сынып';
+  cr.textContent=g+'-сынып';back.onclick=()=>go('');
+  const box=$('#subjects');box.innerHTML='';
+  SUBJ(g).forEach(x=>{const b=document.createElement('button');b.className='subj'+(x.on?'':' off');b.style.setProperty('--c',x.c);
+   b.innerHTML=`<div class="ic">${x.em}</div><div><div class="t">${x.t}</div><div class="d">${x.d}</div></div>${x.on?'':'<span class="lock">🔒 Жақында</span>'}`;
+   if(x.on)b.onclick=()=>go('/'+g+'/'+x.id);box.append(b)});
+  return}
+ $('#p-subj').classList.add('on');$('#sTitle').textContent=g+'-сынып · '+sub.t;
+ cr.textContent=g+'-сынып › '+sub.t;back.onclick=()=>go('/'+g);
+ const key=g+'/'+sub.id,qk='nu_q_'+key;let q=+(ST.get(qk)||1);
+ const tabs=$('#qtabs');tabs.innerHTML='';
+ for(let i=1;i<=4;i++){const d=DATA[key]?.q[i-1],c=d&&d.ls.length?d.ls.length+' сабақ':'жақында';
+  const b=document.createElement('button');b.className='qt'+(i===q?' on':'');b.innerHTML=`${i}-тоқсан<small>${c}</small>`;
+  b.onclick=()=>{ST.set(qk,i);tabs.querySelectorAll('.qt').forEach((x,j)=>x.classList.toggle('on',j===i-1));list(i)};tabs.append(b)}
+ function list(i){const d=DATA[key]?.q[i-1],box=$('#lessons');box.innerHTML='';box.scrollTop=0;
+  $('#qtitle').textContent=d&&d.name?'📘 '+d.name:'';
+  if(!d||!d.ls.length){box.innerHTML='<div class="empty"><div><div>🛠️</div>Бұл тоқсанның тақырыптары жақында қосылады</div></div>';return}
+  d.ls.forEach(l=>{const id=key+'/'+l.n,ok=READY.has(id);const b=document.createElement('button');b.className='ls'+(ok?' rd':'');
+   b.innerHTML=`<div class="num">${l.n}</div><div><div class="lab">${l.lab}</div><div class="tt">${l.t}</div></div>${ok?'<span class="ready">✓ Дайын</span>':'<span class="soon">Дайындалуда</span>'}<span class="go">›</span>`;
+   b.onclick=()=>{location.href='sabak.html?g='+g+'&s='+sub.id+'&n='+l.n+'&v=16'};box.append(b)})}
+ list(q)}
+window.addEventListener('hashchange',render);
+
+const gb=$('#grades');
+GRADES.forEach(x=>{const b=document.createElement('button');b.className='grade '+x.c;
+ b.innerHTML=`<span class="n">${x.n}</span><span class="em">${x.em}</span><span class="t">${x.n}-сынып</span><span class="d">${x.d}</span>`;
+ b.onclick=()=>go('/'+x.n);gb.append(b)});
+render();
+</script>
+</body>
+</html>
