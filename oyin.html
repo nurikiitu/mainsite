@@ -187,7 +187,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=20"></script>
+<script src="data.js?v=21"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
@@ -381,8 +381,9 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 /* ====== жүктеу ====== */
 const GAMES={};
 fit();
-const kit=document.createElement('script');kit.src='lessons/kit.js?v=20';kit.onload=()=>document.body.append(sc);document.body.append(kit);
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=20`;sc.onload=()=>start();sc.onerror=()=>start();
+const kit=document.createElement('script');kit.src='lessons/kit.js?v=21';kit.onload=()=>document.body.append(cm);document.body.append(kit);
+const cm=document.createElement('script');cm.src='games/common.js?v=21';cm.onload=()=>document.body.append(sc);
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=21`;sc.onload=()=>start();sc.onerror=()=>start();
 </script>
 </body>
 </html>
