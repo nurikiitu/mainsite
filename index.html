@@ -5,164 +5,146 @@
 <meta name="google" content="notranslate">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>neuroUstaz</title>
+<title>neuroUstaz · Ойнап үйренеміз!</title>
+<meta name="description" content="neuroUstaz — 1–4 сыныптарға арналған интерактивті ойындар: математика, сауат ашу. Интерактивті тақтаға ыңғайлы.">
 <link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="logo-full.png"><meta property="og:image" content="logo-full.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1f2a44;--mut:#6b7590;--bg:#f4f6fb;--card:#fff;--line:#e3e8f2;--brand:#5b4bdb;--brand2:#ff7a59}
+:root{--blue:#1e88e5;--red:#e53935;--green:#43a047;--yellow:#fdd835;--ink:#1a2a5a}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--bg);overflow:hidden;user-select:none}
-body::before{content:"";position:fixed;inset:0;z-index:-1;
- background:radial-gradient(900px 500px at 8% -10%,#e6e2ff 0,transparent 60%),radial-gradient(800px 500px at 105% 110%,#ffe6dc 0,transparent 60%),var(--bg)}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
-.app{height:100%;display:flex;flex-direction:column}
-header{display:flex;align-items:center;gap:16px;padding:22px clamp(20px,4vw,64px);flex:none;width:100%;max-width:1600px;margin:0 auto}
-.logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:28px;letter-spacing:-.5px}
-.logo .mk{width:96px;height:96px;border-radius:50%;background:url(logo-full.png) center/cover;box-shadow:0 0 0 4px #fff,0 8px 20px #0b1d2c40}
-@media(max-width:700px){.logo .mk{width:64px;height:64px}}
-.logo b{color:#13283d;font-weight:800}.logo i{font-style:normal;color:#2498bd}
-.crumbs{margin-left:auto;display:flex;gap:8px;align-items:center;color:var(--mut);font-weight:700;font-size:18px}
-.back{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--line);padding:10px 20px;border-radius:999px;font-weight:800;font-size:20px;box-shadow:0 2px 0 var(--line)}
-.back:active{transform:translateY(2px);box-shadow:none}
-main{flex:1;min-height:0;position:relative}
-.page{position:absolute;top:0;bottom:0;left:0;right:0;margin:0 auto;width:100%;max-width:1600px;display:none;flex-direction:column;padding:10px clamp(20px,4vw,64px) 32px;animation:in .28s ease}
-.page.on{display:flex}
-@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-h1{font-size:44px;font-weight:900;letter-spacing:-1px;margin:6px 0 4px}
-.sub{color:var(--mut);font-size:22px;font-weight:700;margin-bottom:26px}
-
-/* grades */
-.grades{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;min-height:0;max-height:560px}
-.grade{position:relative;border-radius:34px;color:#fff;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;text-align:left;
- box-shadow:0 10px 0 var(--sh),0 18px 30px #0002;transition:transform .15s}
-.grade:active{transform:translateY(6px);box-shadow:0 4px 0 var(--sh),0 8px 16px #0002}
-.grade .n{position:absolute;top:-10px;right:14px;font-size:230px;font-weight:900;line-height:1;opacity:.25}
-.grade .em{position:absolute;top:28px;left:28px;font-size:60px}
-.grade .t{font-size:42px;font-weight:900}
-.grade .d{font-size:20px;font-weight:700;opacity:.9}
-.g1{background:linear-gradient(160deg,#ff9a62,#ff6b6b);--sh:#d9484c}
-.g2{background:linear-gradient(160deg,#4fd1a5,#1fa67a);--sh:#14805d}
-.g3{background:linear-gradient(160deg,#5aa9ff,#3b6cf0);--sh:#2a4fc0}
-.g4{background:linear-gradient(160deg,#b28bff,#7a4ff0);--sh:#5a35c4}
-
-/* subjects */
-.subjects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;align-content:start}
-.subj{position:relative;min-width:0;background:#fff;border-radius:26px;padding:28px 28px;display:flex;align-items:center;gap:20px;text-align:left;border:3px solid var(--line);box-shadow:0 6px 0 var(--line);transition:transform .12s}
-.subj:active{transform:translateY(4px);box-shadow:0 2px 0 var(--line)}
-.subj .ic{width:78px;height:78px;border-radius:22px;display:grid;place-items:center;font-size:42px;flex:none;background:var(--c)}
-.subj>div:not(.ic){min-width:0}.subj .t{font-size:28px;font-weight:900;line-height:1.15}
-.subj .d{font-size:18px;color:var(--mut);font-weight:700}
-.subj.off{opacity:.55;filter:grayscale(1);cursor:default}
-.subj.off:active{transform:none;box-shadow:0 6px 0 var(--line)}
-.subj .lock{position:absolute;top:16px;right:24px;font-size:14px;font-weight:800;background:#eef1f7;color:var(--mut);padding:4px 10px;border-radius:999px;white-space:nowrap}
-
-/* quarters + lessons */
-.qtabs{display:flex;gap:18px;margin-bottom:20px;flex:none}
-.qt{flex:1;padding:18px 10px;border-radius:20px;background:#fff;border:3px solid var(--line);font-size:24px;font-weight:900;color:var(--mut);box-shadow:0 5px 0 var(--line)}
-.qt.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 5px 0 #3e30b0}
-.qt small{display:block;font-size:15px;font-weight:700;opacity:.85;margin-top:2px}
-.qtitle{font-size:20px;font-weight:800;color:var(--mut);margin:0 6px 12px;flex:none}
-.lessons{flex:1;min-height:0;overflow-y:auto;padding:4px 10px 20px 4px;scroll-behavior:smooth}
-.lessons::-webkit-scrollbar{width:14px}.lessons::-webkit-scrollbar-thumb{background:#c9d0e0;border-radius:10px;border:3px solid var(--bg)}
-.ls{width:100%;display:flex;align-items:center;gap:22px;background:#fff;border-radius:22px;padding:16px 24px;margin-bottom:12px;border:3px solid var(--line);text-align:left;box-shadow:0 4px 0 var(--line);transition:transform .1s,border-color .15s}
-.ls:hover{border-color:#cfc8ff}
-.ls:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
-.ls .num{width:64px;height:64px;border-radius:18px;flex:none;display:grid;place-items:center;font-size:28px;font-weight:900;color:var(--brand);background:#efecff}
-.ls .lab{font-size:16px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
-.ls .tt{font-size:28px;font-weight:800;line-height:1.2}
-.ls .go{margin-left:auto;font-size:34px;color:#c3c9d8;font-weight:900}
-.ls .soon{margin-left:auto;font-size:15px;font-weight:800;color:var(--mut);background:#f1f3f8;padding:6px 12px;border-radius:999px;white-space:nowrap}
-.ls .soon+.go,.ls .ready+.go{margin-left:12px}
-.ls .ready{margin-left:auto;font-size:16px;font-weight:900;color:#fff;background:#22b07d;padding:7px 14px;border-radius:999px;white-space:nowrap}
-.ls.rd{border-color:#bfead6}.ls.rd .num{background:#e3f7ee;color:#1b9e6a}
-.empty{flex:1;display:grid;place-items:center;text-align:center;color:var(--mut);font-size:26px;font-weight:800}
-.empty div{font-size:80px;margin-bottom:10px}
-
-@media (max-width:1250px){.subjects{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:900px){
- header{padding:14px 16px}.page{padding:6px 16px 18px}
- .crumbs{display:none}.logo{font-size:22px}
- h1{font-size:30px}.sub{font-size:17px;margin-bottom:16px}
- .grades{grid-template-columns:1fr 1fr;gap:14px;max-height:none}
- .grade{padding:18px;border-radius:24px;min-height:150px}.grade .n{font-size:130px}.grade .em{font-size:38px;top:16px;left:16px}.grade .t{font-size:26px}.grade .d{font-size:14px}
- .subjects{grid-template-columns:1fr;gap:12px}.subj{padding:16px}.subj .ic{width:56px;height:56px;font-size:30px}.subj .t{font-size:21px}
- .qtabs{gap:8px}.qt{font-size:17px;padding:12px 4px}.qt small{display:none}
- .ls{gap:12px;padding:12px}.ls .num{width:46px;height:46px;font-size:20px}.ls .tt{font-size:19px}.ls .lab{font-size:12px}.ls .soon{display:none}
-}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,#29a3f5,#1565c0) fixed;min-height:100vh;user-select:none;-webkit-user-select:none}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 8% 20%,#ffffff22 0 60px,transparent 61px),radial-gradient(circle at 92% 12%,#ffffff1a 0 90px,transparent 91px),radial-gradient(circle at 85% 80%,#ffffff14 0 120px,transparent 121px),radial-gradient(circle at 15% 85%,#ffffff12 0 80px,transparent 81px)}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.tbtn{background:#fff;color:var(--ink);font-size:20px;font-weight:900;padding:12px 20px;border-radius:18px;box-shadow:0 6px 0 rgba(0,0,0,.2);white-space:nowrap}
+.tbtn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+header{position:relative;text-align:center;color:#fff;padding:22px 20px 6px}
+header .tl{position:absolute;left:22px;top:22px}header .tr{position:absolute;right:22px;top:22px;display:flex;gap:10px}
+.brand{display:inline-flex;align-items:center;gap:14px;cursor:pointer}
+.lg{width:74px;height:74px;border-radius:50%;background:url(logo-full.png) center/cover;box-shadow:0 0 0 5px #fff,0 8px 0 5px rgba(0,0,0,.15);flex:none}
+h1{font-size:clamp(34px,4.4vw,60px);font-weight:900;text-shadow:0 5px 0 rgba(0,0,0,.2)}
+.sub{font-size:24px;font-weight:900;opacity:.95;margin-top:2px;text-shadow:0 3px 0 rgba(0,0,0,.15);min-height:32px}
+.qs{display:flex;gap:12px;justify-content:center;margin:16px 0 4px;flex-wrap:wrap}
+.qs button{font-size:22px;font-weight:900;padding:12px 24px;border-radius:999px;background:#ffffff33;color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.15)}
+.qs button.on{background:var(--yellow);color:var(--ink)}
+.qs button.lock{opacity:.6;cursor:default}
+.wrap{max-width:1560px;margin:0 auto;padding:10px 26px 90px;position:relative}
+/* сыныптар */
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;max-width:1300px;margin:28px auto 0}
+.gc{border-radius:36px;padding:34px 10px 28px;color:#fff;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 10px 0 rgba(0,0,0,.22);border:6px solid rgba(255,255,255,.85);transition:transform .15s}
+.gc:hover{transform:translateY(-6px) rotate(-1deg)}.gc:active{transform:translateY(8px);box-shadow:0 2px 0 rgba(0,0,0,.22)}
+.gc .em{font-size:54px}.gc .gn{font-size:clamp(90px,10vw,150px);font-weight:900;line-height:1;text-shadow:0 6px 0 rgba(0,0,0,.2)}
+.gc .gt{font-size:clamp(28px,3vw,42px);font-weight:900;letter-spacing:2px}
+.gc .gd{font-size:20px;font-weight:800;background:rgba(0,0,0,.18);padding:4px 16px;border-radius:14px;margin-top:6px}
+/* пәндер */
+.subs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1300px;margin:26px auto 0}
+.sc{background:#fff;border-radius:30px;padding:24px;display:flex;align-items:center;gap:20px;text-align:left;box-shadow:0 9px 0 rgba(0,0,0,.18);position:relative;transition:transform .15s}
+.sc:hover{transform:translateY(-5px)}.sc:active{transform:translateY(6px);box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.sc .ic{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:50px;flex:none}
+.sc b{display:block;font-size:28px;font-weight:900;line-height:1.1}.sc span{font-size:17px;font-weight:700;opacity:.6}
+.sc.off{opacity:.75;cursor:default}.sc.off:hover{transform:none}.sc.off .ic{filter:grayscale(.6)}
+.soon{position:absolute;top:12px;right:-8px;background:#ffffffee;color:#5a6a8a;font-size:14px;font-weight:900;padding:5px 12px;border-radius:12px;transform:rotate(6deg);box-shadow:0 4px 0 rgba(0,0,0,.12)}
+.cnt{position:absolute;top:12px;right:-8px;background:var(--yellow);color:var(--ink);font-size:14px;font-weight:900;padding:5px 12px;border-radius:12px;transform:rotate(6deg);box-shadow:0 4px 0 rgba(0,0,0,.15)}
+/* ойындар */
+.sec{margin-top:34px}
+.sh{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px;color:#fff}
+.si{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:#fff;box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.sh h2{font-size:clamp(30px,3vw,44px);font-weight:900;text-shadow:0 4px 0 rgba(0,0,0,.2)}
+.sh span{font-size:18px;font-weight:900;background:#ffffff2e;border-radius:999px;padding:6px 14px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}
+.card{background:#fff;border-radius:30px;padding:22px 14px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 9px 0 rgba(0,0,0,.18);transition:transform .15s;position:relative;text-align:center}
+.card:hover{transform:translateY(-6px) rotate(-1deg)}
+.card:active{transform:translateY(6px);box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.card .ic{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;font-size:60px}
+.card:hover .ic{animation:bob .6s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-6px) scale(1.05)}}
+.n{position:absolute;top:14px;left:14px;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;font-weight:900;font-size:17px;display:grid;place-items:center}
+.card b{font-size:23px;font-weight:900;line-height:1.15}
+.card p{font-size:16px;font-weight:700;opacity:.6;line-height:1.25;flex:1}
+.md{font-size:15px;font-weight:900;padding:6px 12px;border-radius:999px;color:#fff}
+.md.s{background:#1e88e5}.md.d{background:#e53935}.md.c{background:#8e24aa}
+.st{font-size:18px;letter-spacing:2px;color:#ffb300;min-height:24px}
+.st i{font-style:normal;color:#dfe3ec}
+.empty{color:#fff;text-align:center;font-size:30px;font-weight:900;margin-top:60px;text-shadow:0 4px 0 rgba(0,0,0,.2)}
+.empty div{font-size:110px}
+/* терезе */
+.ov{position:fixed;inset:0;background:#0d2a6bcc;display:none;align-items:center;justify-content:center;z-index:9;padding:20px}
+.ov.on{display:flex}
+.mb{background:#fff;border-radius:36px;max-width:620px;width:100%;padding:30px;text-align:center;box-shadow:0 12px 0 rgba(0,0,0,.2);animation:pop .25s}
+@keyframes pop{from{transform:scale(.8);opacity:0}}
+.mb .ic{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;font-size:100px;margin:0 auto 12px}
+.mb h3{font-size:38px;font-weight:900}
+.mb p{font-size:20px;font-weight:700;opacity:.65;margin:6px 0 20px}
+.lvs{display:flex;gap:12px;margin-bottom:20px}
+.lvs button{flex:1;padding:16px 6px;border-radius:22px;font-weight:900;font-size:21px;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.2);border:5px solid transparent;opacity:.75}
+.lvs button.on{border-color:var(--ink);opacity:1;transform:translateY(-3px)}
+.lvs .e{background:#43a047}.lvs .m{background:#fb8c00}.lvs .h{background:#e53935}
+.go{width:100%;padding:20px;border-radius:24px;background:var(--yellow);color:var(--ink);font-size:30px;font-weight:900;box-shadow:0 8px 0 #c7a500}
+.go:active{transform:translateY(6px);box-shadow:0 2px 0 #c7a500}
+.x{margin-top:14px;font-weight:900;font-size:18px;opacity:.55}
+footer{color:#fff;text-align:center;font-weight:800;opacity:.85;padding:30px 0 10px;font-size:16px}
+@media(max-width:1250px){.grid{grid-template-columns:repeat(3,1fr)}.subs{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.grades{grid-template-columns:repeat(2,1fr);gap:16px}}
+@media(max-width:700px){header{padding-top:78px}header .tl{left:12px;top:14px}header .tr{right:12px;top:14px}.tbtn{font-size:15px;padding:8px 12px}h1{font-size:30px}
+ .lg{width:54px;height:54px}.sub{font-size:17px}.qs button{font-size:15px;padding:8px 14px}.grid{grid-template-columns:repeat(2,1fr);gap:14px}.card .ic{width:76px;height:76px;font-size:42px}
+ .card b{font-size:17px}.card p{display:none}.wrap{padding:6px 12px 40px}.sh span{display:none}.lvs button{font-size:15px}.subs{grid-template-columns:1fr}.sc .ic{width:70px;height:70px;font-size:36px}.sc b{font-size:22px}
+ .gc .em{font-size:36px}.gc .gd{font-size:14px}}
 </style>
 </head>
 <body>
-<div class="app">
- <header>
-  <button class="back" id="back" style="display:none">⬅ Артқа</button>
-  <div class="logo"><div class="mk" role="img" aria-label="neuroUstaz"></div></div>
-  <div class="crumbs" id="crumbs"></div>
- </header>
- <main>
-  <section class="page" id="p-home">
-   <h1>Сыныпты таңда</h1>
-   <div class="sub">Тақтада сабақ өткізуге арналған тапсырмалар мен ойындар</div>
-   <div class="grades" id="grades"></div>
-  </section>
-  <section class="page" id="p-grade">
-   <h1 id="gTitle"></h1>
-   <div class="sub">Пәнді таңда</div>
-   <div class="subjects" id="subjects"></div>
-  </section>
-  <section class="page" id="p-subj">
-   <h1 id="sTitle"></h1>
-   <div class="qtabs" id="qtabs"></div>
-   <div class="qtitle" id="qtitle"></div>
-   <div class="lessons" id="lessons"></div>
-  </section>
- </main>
-</div>
-<script src="data.js?v=16"></script>
+<header>
+  <div class="tl"><button class="tbtn" id="back" style="visibility:hidden">⬅ Артқа</button></div>
+  <div class="tr"><button class="tbtn" id="fs" title="Толық экран">⛶</button></div>
+  <div class="brand" id="home"><div class="lg" role="img" aria-label="neuroUstaz"></div><h1>Ойнап үйренеміз!</h1></div>
+  <div class="sub" id="sub"></div>
+  <div class="qs" id="qs"></div>
+</header>
+<div class="wrap" id="wrap"></div>
+<footer>neuroUstaz · балалар нейропедагогика орталығы · Астана</footer>
+
+<div class="ov" id="ov"><div class="mb">
+  <div class="ic" id="mic"></div><h3 id="mt"></h3><p id="mp"></p>
+  <div class="lvs" id="lvs"><button class="e" data-l="1">⭐ Жеңіл</button><button class="m" data-l="2">⭐⭐ Орташа</button><button class="h" data-l="3">⭐⭐⭐ Қиын</button></div>
+  <button class="go" id="go">▶ ОЙНАУ!</button><br><button class="x" id="mx">Жабу</button>
+</div></div>
+
+<script src="data.js?v=20"></script>
 <script>
 const $=s=>document.querySelector(s);
-const ST={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const go=h=>{location.hash=h};
+$('#home').onclick=()=>go('');
+$('#fs').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()};
 
-let route={g:null,s:null};
-function go(hash){location.hash=hash}
-function render(){
- const p=location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);
- const g=+p[0]||null, s=p[1]||null;
- document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
- const back=$('#back'),cr=$('#crumbs');
- if(!g||g<1||g>4){$('#p-home').classList.add('on');back.style.display='none';cr.textContent='';return}
- const sub=SUBJ(g).find(x=>x.id===s&&x.on);
- back.style.display='';
- if(!sub){
-  $('#p-grade').classList.add('on');$('#gTitle').textContent=g+'-сынып';
-  cr.textContent=g+'-сынып';back.onclick=()=>go('');
-  const box=$('#subjects');box.innerHTML='';
-  SUBJ(g).forEach(x=>{const b=document.createElement('button');b.className='subj'+(x.on?'':' off');b.style.setProperty('--c',x.c);
-   b.innerHTML=`<div class="ic">${x.em}</div><div><div class="t">${x.t}</div><div class="d">${x.d}</div></div>${x.on?'':'<span class="lock">🔒 Жақында</span>'}`;
-   if(x.on)b.onclick=()=>go('/'+g+'/'+x.id);box.append(b)});
-  return}
- $('#p-subj').classList.add('on');$('#sTitle').textContent=g+'-сынып · '+sub.t;
- cr.textContent=g+'-сынып › '+sub.t;back.onclick=()=>go('/'+g);
- const key=g+'/'+sub.id,qk='nu_q_'+key;let q=+(ST.get(qk)||1);
- const tabs=$('#qtabs');tabs.innerHTML='';
- for(let i=1;i<=4;i++){const d=DATA[key]?.q[i-1],c=d&&d.ls.length?d.ls.length+' сабақ':'жақында';
-  const b=document.createElement('button');b.className='qt'+(i===q?' on':'');b.innerHTML=`${i}-тоқсан<small>${c}</small>`;
-  b.onclick=()=>{ST.set(qk,i);tabs.querySelectorAll('.qt').forEach((x,j)=>x.classList.toggle('on',j===i-1));list(i)};tabs.append(b)}
- function list(i){const d=DATA[key]?.q[i-1],box=$('#lessons');box.innerHTML='';box.scrollTop=0;
-  $('#qtitle').textContent=d&&d.name?'📘 '+d.name:'';
-  if(!d||!d.ls.length){box.innerHTML='<div class="empty"><div><div>🛠️</div>Бұл тоқсанның тақырыптары жақында қосылады</div></div>';return}
-  d.ls.forEach(l=>{const id=key+'/'+l.n,ok=READY.has(id);const b=document.createElement('button');b.className='ls'+(ok?' rd':'');
-   b.innerHTML=`<div class="num">${l.n}</div><div><div class="lab">${l.lab}</div><div class="tt">${l.t}</div></div>${ok?'<span class="ready">✓ Дайын</span>':'<span class="soon">Дайындалуда</span>'}<span class="go">›</span>`;
-   b.onclick=()=>{location.href='sabak.html?g='+g+'&s='+sub.id+'&n='+l.n+'&v=16'};box.append(b)})}
- list(q)}
-window.addEventListener('hashchange',render);
+function route(){const p=location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);const W=$('#wrap');W.innerHTML='';$('#qs').innerHTML='';
+ const back=$('#back');back.style.visibility=p.length?'visible':'hidden';scrollTo(0,0);
+ if(!p.length){$('#sub').textContent='Сыныпты таңда';back.onclick=null;
+  const g=el('div','grades');GRADES.forEach(G=>{const b=el('button','gc',`<div class="em">${G.em}</div><div class="gn">${G.n}</div><div class="gt">СЫНЫП</div><div class="gd">${G.d}</div>`);b.style.background=G.c;b.onclick=()=>go('/'+G.n);g.append(b)});W.append(g);return}
+ const g=+p[0];
+ if(p.length===1){$('#sub').textContent=g+'-сынып · Пәнді таңда';back.onclick=()=>go('');
+  const s=el('div','subs');SUBJ(g).forEach(S=>{const has=Object.keys(CAT).some(k=>k.startsWith(g+'/'+S.id+'/'));
+   const b=el('button','sc'+(has?'':' off'),`<div class="ic" style="background:${S.c}">${S.em}</div><div><b>${S.t}</b><span>${S.d}</span></div>${has?`<span class="cnt">🎮 ${count(g,S.id)} ойын</span>`:'<span class="soon">🔒 Жақында</span>'}`);
+   if(has)b.onclick=()=>go('/'+g+'/'+S.id);s.append(b)});W.append(s);return}
+ const sid=p[1],S=SUBJ(g).find(x=>x.id===sid)||{t:sid};let q=+p[2]||LS.get('nu_q_'+g+sid,1);if(!CAT[g+'/'+sid+'/'+q])q=1;
+ $('#sub').textContent=g+'-сынып · '+S.t;back.onclick=()=>go('/'+g);
+ [1,2,3,4].forEach(n=>{const has=!!CAT[g+'/'+sid+'/'+n];const b=el('button',(n===q?'on':'')+(has?'':' lock'),(has?(n===q?'⭐ ':''):'🔒 ')+n+'-тоқсан');if(has)b.onclick=()=>{LS.set('nu_q_'+g+sid,n);go('/'+g+'/'+sid+'/'+n)};$('#qs').append(b)});
+ const secs=CAT[g+'/'+sid+'/'+q];if(!secs){W.append(el('div','empty','<div>🛠️</div>Ойындар дайындалуда'));return}
+ let n=0;const STARS=LS.get('nu_stars',{});
+ secs.forEach(sec=>{const s=el('section','sec',`<div class="sh"><div class="si" style="background:#fff">${sec.em}</div><h2>${sec.t}</h2><span>${sec.g.length} ойын</span></div>`);const gr=el('div','grid');s.append(gr);
+  sec.g.forEach(([id,e,t,d,m])=>{n++;const key=g+'/'+sid+'/'+q+'/'+id,st=STARS[key]||0;
+   const c=el('button','card',`<span class="n">${n}</span><div class="ic" style="background:${sec.bg}">${e}</div><b>${t}</b><p>${d}</p><span class="md ${m}">${MODES[m]}</span><span class="st">${'★'.repeat(st)}<i>${'★'.repeat(3-st)}</i></span>`);
+   c.onclick=()=>openGame({g,sid,q,id,e,t,d,m,bg:sec.bg});gr.append(c)});W.append(s)})}
+function count(g,sid){let c=0;Object.keys(CAT).filter(k=>k.startsWith(g+'/'+sid+'/')).forEach(k=>CAT[k].forEach(s=>c+=s.g.length));return c}
 
-const gb=$('#grades');
-GRADES.forEach(x=>{const b=document.createElement('button');b.className='grade '+x.c;
- b.innerHTML=`<span class="n">${x.n}</span><span class="em">${x.em}</span><span class="t">${x.n}-сынып</span><span class="d">${x.d}</span>`;
- b.onclick=()=>go('/'+x.n);gb.append(b)});
-render();
+let CUR=null,LV=1;
+function openGame(o){CUR=o;$('#mic').textContent=o.e;$('#mic').style.background=o.bg;$('#mt').textContent=o.t;$('#mp').textContent=o.d+' · '+MODES[o.m];
+ LV=LS.get('nu_lv_'+o.id,1);document.querySelectorAll('#lvs button').forEach(b=>b.classList.toggle('on',+b.dataset.l===LV));$('#ov').classList.add('on')}
+document.querySelectorAll('#lvs button').forEach(b=>b.onclick=()=>{LV=+b.dataset.l;document.querySelectorAll('#lvs button').forEach(x=>x.classList.toggle('on',x===b))});
+$('#go').onclick=()=>{LS.set('nu_lv_'+CUR.id,LV);location.href=`oyin.html?g=${CUR.g}&s=${CUR.sid}&q=${CUR.q}&id=${CUR.id}&lv=${LV}&v=20`};
+$('#mx').onclick=()=>$('#ov').classList.remove('on');$('#ov').onclick=e=>{if(e.target===$('#ov'))$('#ov').classList.remove('on')};
+addEventListener('keydown',e=>{if(e.key==='Escape')$('#ov').classList.remove('on')});
+addEventListener('hashchange',route);route();
 </script>
 </body>
 </html>
