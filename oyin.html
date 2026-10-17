@@ -98,6 +98,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .slot{width:76px;height:76px;border-radius:16px;border:4px dashed #b9c1d3;background:#fafbfe;font-size:42px;font-weight:900;display:grid;place-items:center}
 .slot.f{border-style:solid;border-color:#8f84f0;background:#f3f1ff}
 .slot.sel{box-shadow:0 0 0 5px #ffc531}
+.tiles{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+.tile{min-width:110px;height:110px;padding:0 20px;background:#fff;border-radius:22px;font-size:60px;font-weight:900;color:var(--ink);box-shadow:0 7px 0 #b9c6dc;border:3px solid #dfe6f2;display:grid;place-items:center;line-height:1}
+.tile:active{transform:translateY(5px);box-shadow:0 2px 0 #b9c6dc}.tile.used{visibility:hidden}.tile.wide{font-size:42px}
+.sline{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:flex-end;max-width:1400px}
+.wslot{min-width:150px;height:96px;padding:0 18px;border-radius:18px;border:5px dashed #90a4ae;display:grid;place-items:center;font-size:42px;font-weight:900;color:var(--ink)}
+.wslot.filled{border:5px solid #43a047;background:#e8f5e9}.wslot.next{box-shadow:0 0 0 7px #fdd83599}
+.sline .dot{font-size:70px;line-height:1}
 .endov{position:absolute;inset:0;background:#1f2a44cc;display:grid;place-items:center;z-index:28;animation:tin .3s}
 .endbox{background:#fff;border-radius:34px;padding:40px 60px;text-align:center;min-width:560px}
 .endbox .em{font-size:90px}
@@ -187,7 +194,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=21"></script>
+<script src="data.js?v=23"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
@@ -382,8 +389,8 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 const GAMES={};
 fit();
 const kit=document.createElement('script');kit.src='lessons/kit.js?v=21';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=21';cm.onload=()=>document.body.append(sc);
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=21`;sc.onload=()=>start();sc.onerror=()=>start();
+const cm=document.createElement('script');cm.src='games/common.js?v=23';cm.onload=()=>{if(SB==='kaz'){const sj=document.createElement('script');sj.src='games/subj-kaz.js?v=23';sj.onload=sj.onerror=()=>document.body.append(sc);document.body.append(sj)}else document.body.append(sc)};
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=23`;sc.onload=()=>start();sc.onerror=()=>start();
 </script>
 </body>
 </html>
