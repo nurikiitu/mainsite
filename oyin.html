@@ -194,7 +194,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=27"></script>
+<script src="data.js?v=28"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
@@ -388,9 +388,9 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 /* ====== жүктеу ====== */
 const GAMES={};
 fit();
-const kit=document.createElement('script');kit.src='lessons/kit.js?v=27';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=27';cm.onload=()=>{if(SB==='kaz'||SB==='jar'){const sj=document.createElement('script');sj.src='games/subj-'+SB+'.js?v=27';sj.onload=sj.onerror=()=>document.body.append(sc);document.body.append(sj)}else document.body.append(sc)};
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=27`;sc.onload=()=>start();sc.onerror=()=>start();
+const kit=document.createElement('script');kit.src='lessons/kit.js?v=28';kit.onload=()=>document.body.append(cm);document.body.append(kit);
+const cm=document.createElement('script');cm.src='games/common.js?v=28';cm.onload=()=>{if(SB==='kaz'||SB==='jar'){const sj=document.createElement('script');sj.src='games/subj-'+SB+'.js?v=28';sj.onload=sj.onerror=()=>document.body.append(sc);document.body.append(sj)}else document.body.append(sc)};
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=28`;sc.onload=()=>start();sc.onerror=()=>start();
 </script>
 </body>
 </html>
