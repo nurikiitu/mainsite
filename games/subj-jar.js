@@ -50,3 +50,9 @@ function bodySVG(hl){const f=p=>p===hl?'#ff7043':'#90caf9';const sk=p=>p===hl?'#
 function pathSVG(kind,e){const P={'түзу':'M30 90 L330 90','қисық':'M30 120 C100 10 180 170 250 60 S320 40 330 70','шеңбер':'M180 40 A60 60 0 1 1 179.9 40'};
   const end={'түзу':[330,90],'қисық':[330,70],'шеңбер':[180,40]}[kind];
   return `<svg viewBox="0 0 360 180" style="width:420px;height:210px"><path d="${P[kind]}" stroke="#7a6cf0" stroke-width="7" stroke-dasharray="14 10" fill="none" stroke-linecap="round"/><text x="${end[0]}" y="${end[1]+16}" font-size="46" text-anchor="middle">${e}</text></svg>`}
+
+/* жауап нұсқаларынан смайликтерді алып тастау */
+const JX=v=>typeof v==='string'?v.replace(/[\p{Extended_Pictographic}\p{Regional_Indicator}\u200d\ufe0f\u20e3]/gu,'').replace(/\s+/g,' ').trim():v;
+const JC=t=>t&&t.o?{...t,o:t.o.map(JX),a:JX(t.a)}:t;
+const JZQ=(t,g,o)=>QZ(t,(lv,k)=>JC(g(lv,k)),o),JZD=(t,g)=>DU(t,lv=>JC(g(lv))),JZR=(t,g)=>RC(t,lv=>JC(g(lv))),JZT=(t,g,r)=>TQ(t,(lv,k)=>JC(g(lv,k)),r);
+const JMIL=(box,T,G)=>MILLION(box,T,G.map(f=>k=>JC(f(k))));

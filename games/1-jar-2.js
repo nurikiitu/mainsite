@@ -33,17 +33,17 @@ const J2MQ=[{e:'🛷',q:'Шананы қозғалту үшін не істей�
 /* 15. Қозғалыс траекториясы */
 const J2TR=[['⚽','түзу'],['🎳','түзу'],['🚂','түзу'],['🏹','түзу'],['🦋','қисық'],['🐝','қисық'],['🐍','қисық'],['🎠','шеңбер'],['🎡','шеңбер'],['🌍','шеңбер']];
 
-GAMES.j2body=QZ('🧍 Дене мүшелері',lv=>{const p=JPK(lv===1?['бас','қол','аяқ']:J2B);const o=lv===1?[p,...pick(['бас','қол','аяқ'].filter(x=>x!==p),1)]:[p,...pick(J2B.filter(x=>x!==p),JN(lv)-1)];
+GAMES.j2body=JZQ('🧍 Дене мүшелері',lv=>{const p=JPK(lv===1?['бас','қол','аяқ']:J2B);const o=lv===1?[p,...pick(['бас','қол','аяқ'].filter(x=>x!==p),1)]:[p,...pick(J2B.filter(x=>x!==p),JN(lv)-1)];
   return{q:bodySVG(p)+JT('Боялған мүше қалай аталады?',28),o:shuffle(o.map(J2CAP)),a:J2CAP(p),oh:JO}});
 GAMES.j2fun=JMEM('👁️ Мүше мен қызметін жұпта!',J2F);
-GAMES.j2org=DU('👂 Немен сеземіз?',JQ(J2FQ));
+GAMES.j2org=JZD('👂 Немен сеземіз?',JQ(J2FQ));
 GAMES.j2age=JORD('👶➡️👴 Ретімен қой: адам қалай өседі?',J2AGE);
 GAMES.j2grow=JORD('🌱 Ретімен қой: қалай өседі?',J2GROW);
 GAMES.j2food=JCATCH('🍎 Тек <b style="color:#2e7d32">пайдалы тағамды</b> бас!',J2GOOD,J2BAD);
-GAMES.j2eat=TQ('🥗 Дұрыс тамақтану',JQ(J2FD));
-GAMES.j2rest=DU('😴 Дұрыс па, бұрыс па?',lv=>{const x=JPK(J2REST);return{q:JT(x.q,26),o:['✅ Дұрыс','❌ Бұрыс'],a:x.a}});
-GAMES.j2move=RC('🏃 Қалай қозғалады?',JS('Қалай қозғалады?',['Ұшады','Жүзеді','Жорғалайды','Секіреді','Домалайды','Шабады'],J2MV));
-GAMES.j2traj=QZ('〰️ Қозғалыс ізі',lv=>{const [e,k]=JPK(lv===1?J2TR.filter(x=>x[1]!=='шеңбер'):J2TR);const o=lv===1?['Түзу із','Қисық із']:['Түзу із','Қисық із','Шеңбер (айналма) із'];
+GAMES.j2eat=JZT('🥗 Дұрыс тамақтану',JQ(J2FD));
+GAMES.j2rest=JZD('😴 Дұрыс па, бұрыс па?',lv=>{const x=JPK(J2REST);return{q:JT(x.q,26),o:['✅ Дұрыс','❌ Бұрыс'],a:x.a}});
+GAMES.j2move=JZR('🏃 Қалай қозғалады?',JS('Қалай қозғалады?',['Ұшады','Жүзеді','Жорғалайды','Секіреді','Домалайды','Шабады'],J2MV));
+GAMES.j2traj=JZQ('〰️ Қозғалыс ізі',lv=>{const [e,k]=JPK(lv===1?J2TR.filter(x=>x[1]!=='шеңбер'):J2TR);const o=lv===1?['Түзу із','Қисық із']:['Түзу із','Қисық із','Шеңбер (айналма) із'];
   return{q:pathSVG(k,e)+JT('Бұл қозғалыстың ізі (траекториясы) қандай?',30),o,a:{'түзу':'Түзу із','қисық':'Қисық із','шеңбер':'Шеңбер (айналма) із'}[k],oh:JO}});
-GAMES.j2mil=(box,T,lv)=>MILLION(box,T,[k=>JQ(J2FQ)(Math.min(3,1+(k>>2))),k=>JQ(J2FD)(Math.min(3,1+(k>>2))),k=>JQ(J2AQ)(Math.min(3,1+(k>>2))),k=>JQ(J2MQ)(Math.min(3,1+(k>>2))),
+GAMES.j2mil=(box,T,lv)=>JMIL(box,T,[k=>JQ(J2FQ)(Math.min(3,1+(k>>2))),k=>JQ(J2FD)(Math.min(3,1+(k>>2))),k=>JQ(J2AQ)(Math.min(3,1+(k>>2))),k=>JQ(J2MQ)(Math.min(3,1+(k>>2))),
   k=>{const x=JPK(J2REST);return{q:JT(x.q,30),o:['✅ Дұрыс','❌ Бұрыс'],a:x.a}}]);

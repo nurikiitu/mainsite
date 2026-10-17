@@ -34,15 +34,15 @@ const J3MG=[['📎','Қыстырғыш','Тартады'],['🔩','Бұранд
 const J3MQ=[{e:'🧲',q:'Магниттің неше жағы (полюсі) бар?',a:'2',o:['1','3','5'],d:2},{e:'🧲🧲',q:'Екі магнит бір-бірін не істейді?',a:'Тартады немесе тебеді',o:['Ериді','Жанып кетеді','Түсін өзгертеді'],d:3},
  {e:'🧲',q:'Магнит қандай заттарды тартады?',a:'Темірден жасалған',o:['Ағаштан жасалған','Қағаздан жасалған','Шыныдан жасалған']}];
 
-GAMES.j3sp=QZ('🚀 Ғарыш әлемі',JQ(J3SP));
+GAMES.j3sp=JZQ('🚀 Ғарыш әлемі',JQ(J3SP));
 GAMES.j3mem=JMEM('🪐 Ғарыш: суреті мен атын жұпта!',J3MEM);
-GAMES.j3glob=QZ('🌐 Глобус',JQ(J3GL));
-GAMES.j3time=QZ('⏳ Уақыт құралдары',JQ(J3TQ));
+GAMES.j3glob=JZQ('🌐 Глобус',JQ(J3GL));
+GAMES.j3time=JZQ('⏳ Уақыт құралдары',JQ(J3TQ));
 GAMES.j3day=JORD('🌅 Ретімен қой',J3DAY);
-GAMES.j3mag=QZ('🧲 Магнит тартады ма?',JS('Магнит тарта ма?',['Тартады','Тартпайды'],J3MG));
+GAMES.j3mag=JZQ('🧲 Магнит тартады ма?',JS('Магнит тарта ма?',['Тартады','Тартпайды'],J3MG));
 GAMES.j3el=JCATCH('⚡ Тек <b style="color:#e53935">электрмен жұмыс істейтінді</b> бас!',J3EL,J3NE);
-GAMES.j3heat=DU('🔥 Қайсысы жылытады?',lv=>{const g=JPK(J3HT);const o=[g,...pick(J3NH,JN(lv)-1)];return{q:JT('Қайсысы үйді жылытады?',28),o:o.map(x=>x[0]+' '+x[1]),a:g[0]+' '+g[1],oh:JO}});
-GAMES.j3spd=RC('🌍 Ғарыш жарысы',JQ([...J3SP,...J3GL]));
-GAMES.j3elq=TQ('⚡ Электр және магнит',JQ([...J3EQ,...J3MQ]));
-GAMES.j3mil=(box,T,lv)=>MILLION(box,T,[k=>JQ(J3SP)(Math.min(3,1+(k>>2))),k=>JQ(J3GL)(Math.min(3,1+(k>>2))),k=>JQ(J3TQ)(Math.min(3,1+(k>>2))),k=>JQ(J3EQ)(Math.min(3,1+(k>>2))),
+GAMES.j3heat=JZD('🔥 Қайсысы жылытады?',lv=>{const g=JPK(J3HT);const o=[g,...pick(J3NH,JN(lv)-1)];return{q:JT('Қайсысы үйді жылытады?',28),o:o.map(x=>x[0]+' '+x[1]),a:g[0]+' '+g[1],oh:JO}});
+GAMES.j3spd=JZR('🌍 Ғарыш жарысы',JQ([...J3SP,...J3GL]));
+GAMES.j3elq=JZT('⚡ Электр және магнит',JQ([...J3EQ,...J3MQ]));
+GAMES.j3mil=(box,T,lv)=>JMIL(box,T,[k=>JQ(J3SP)(Math.min(3,1+(k>>2))),k=>JQ(J3GL)(Math.min(3,1+(k>>2))),k=>JQ(J3TQ)(Math.min(3,1+(k>>2))),k=>JQ(J3EQ)(Math.min(3,1+(k>>2))),
   k=>JS('Магнит тарта ма?',['Тартады','Тартпайды'],J3MG)(2)]);

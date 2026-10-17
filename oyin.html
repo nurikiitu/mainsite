@@ -118,9 +118,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .duel{position:absolute;inset:0;display:flex;flex-direction:column}
 .rope{height:120px;position:relative;flex:none;background:linear-gradient(90deg,#ffe3e3 0 50%,#e0ecff 50%);border-radius:24px;margin:10px 20px 0;overflow:hidden}
 .rope .mid{position:absolute;left:50%;top:10px;bottom:10px;width:4px;background:#1f2a4433;transform:translateX(-50%)}
-.rope .zone{position:absolute;top:0;bottom:0;width:13%;}
+.rope .zone{position:absolute;top:0;bottom:0;width:28%;}
 .rope .zl{left:0;background:#ef535033}.rope .zr{right:0;background:#3b7dd833}
-.rope .r{position:absolute;left:50%;top:50%;width:110%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.rope .r{position:absolute;left:50%;top:50%;width:80%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
 .rope .r .line{height:10px;width:62%;background:repeating-linear-gradient(90deg,#b07a3c 0 14px,#8c5a24 14px 28px);border-radius:6px}
 .rope .r .tm{font-size:50px}
 .rope .r .knot{position:absolute;left:50%;transform:translateX(-50%);font-size:40px}
@@ -194,7 +194,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=24"></script>
+<script src="data.js?v=25"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
@@ -303,7 +303,7 @@ function duel(box,def){const alive=T.alive();const GOAL=5;let pos=0,over=false,s
  const rope=el('div','rope',`<div class="zone zl"></div><div class="zone zr"></div><div class="mid"></div><div class="r"><span class="tm">🧒🧒</span><div class="line"></div><span class="tm">🧒🧒</span><span class="knot">🎀</span></div>`);d.append(rope);
  const sides=el('div','dsides');d.append(sides);
  const S=[0,1].map(i=>{const s=el('div','ds s'+i,`<div class="h">${i?'🔵 2-оқушы':'🔴 1-оқушы'} · <b class="sc">0</b></div><div class="q"></div><div class="os"></div>`);sides.append(s);return s});
- const draw=()=>{rope.querySelector('.r').style.transform=`translate(calc(-50% + ${pos*-7.2}%),-50%)`;S.forEach((s,i)=>s.querySelector('.sc').textContent=sc[i])};
+ const draw=()=>{rope.querySelector('.r').style.transform=`translate(calc(-50% + ${pos*5.5}%),-50%)`;S.forEach((s,i)=>s.querySelector('.sc').textContent=sc[i])};
  const ask=i=>{if(!alive()||over)return;const s=S[i];let t,g=0;do{t=def.gen()}while(s._l===t.q&&g++<6);s._l=t.q;s.querySelector('.q').innerHTML=t.q;const os=s.querySelector('.os');os.innerHTML='';
   shuffle(t.o).forEach(v=>{const b=typeof v==='number'&&!t.oh?ncard(v,'sm'):el('button','opt',t.oh?t.oh(v):v);if(t.oh){b.style.height='auto';b.style.padding='8px'}
    b.onclick=()=>{if(over||s.classList.contains('lock'))return;
@@ -389,8 +389,8 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 const GAMES={};
 fit();
 const kit=document.createElement('script');kit.src='lessons/kit.js?v=21';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=24';cm.onload=()=>{if(SB==='kaz'||SB==='jar'){const sj=document.createElement('script');sj.src='games/subj-'+SB+'.js?v=24';sj.onload=sj.onerror=()=>document.body.append(sc);document.body.append(sj)}else document.body.append(sc)};
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=24`;sc.onload=()=>start();sc.onerror=()=>start();
+const cm=document.createElement('script');cm.src='games/common.js?v=25';cm.onload=()=>{if(SB==='kaz'||SB==='jar'){const sj=document.createElement('script');sj.src='games/subj-'+SB+'.js?v=25';sj.onload=sj.onerror=()=>document.body.append(sc);document.body.append(sj)}else document.body.append(sc)};
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=25`;sc.onload=()=>start();sc.onerror=()=>start();
 </script>
 </body>
 </html>
