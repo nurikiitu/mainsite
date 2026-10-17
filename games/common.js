@@ -13,13 +13,13 @@ function spots(n,cols=5,rows=3){return pick([...Array(cols*rows).keys()],n).map(
 function scatter(e,n,w=640,h=330,fs=64){const P=spots(n,n>10?6:5,3);return `<div style="position:relative;width:${w}px;height:${h}px;background:#f3f8ff;border:4px solid #d6e4f7;border-radius:26px">${P.map(p=>`<span style="position:absolute;left:${p.x}%;top:${p.y}%;transform:translate(-50%,-50%);font-size:${fs}px;line-height:1">${e}</span>`).join('')}</div>`}
 
 /* ===== Бүкіл сынып: екі топ кезекпен жауап береді ===== */
-function TEAMQ(box,{rounds=10,gen,title}){const start=()=>{const W=gwrap(box);W.style.justifyContent='flex-start';W.style.gap='14px';
+function TEAMQ(box,{rounds=10,gen,title}){const start=()=>{const SEEN=new Set();const W=gwrap(box);W.style.justifyContent='flex-start';W.style.gap='14px';
  const tm=el('div','teams',`<div class="team t0">🔴 1-топ<b>0</b></div><div class="team t1">🔵 2-топ<b>0</b></div>`);const hd=el('div','qline',title);hd.style.fontSize='30px';
  const st=prog(W,rounds);const qb=el('div','');qb.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;min-height:0';
  const ob=el('div','');ob.style.cssText='display:flex;gap:16px;flex-wrap:wrap;justify-content:center';W.append(tm,hd,qb,ob);W.insertBefore(st,hd);
  const sc=[0,0];let k=0,turn=0,cur;const TS=tm.querySelectorAll('.team');
  const paint=()=>TS.forEach((t,i)=>{t.classList.toggle('on',i===turn);t.querySelector('b').textContent=sc[i]});
- const show=()=>{st.set(k);paint();cur=gen(k);qb.innerHTML='';if(typeof cur.q==='function')cur.q(qb);else qb.innerHTML=cur.q;ob.innerHTML='';
+ const show=()=>{st.set(k);paint();{let g=0;do{cur=gen(k)}while(SEEN.has(String(cur.q)+'|'+cur.a)&&g++<30);SEEN.add(String(cur.q)+'|'+cur.a)}qb.innerHTML='';if(typeof cur.q==='function')cur.q(qb);else qb.innerHTML=cur.q;ob.innerHTML='';
   shuffle(cur.o).forEach(v=>{const b=typeof v==='number'&&!cur.oh?ncard(v):el('button','opt',cur.oh?cur.oh(v):v);b.dataset.v=v;if(cur.oh){b.style.height='auto';b.style.minHeight='84px';b.style.padding='8px 18px'}
    b.onclick=()=>{if(ob.dataset.l)return;ob.dataset.l=1;if(String(v)===String(cur.a)){T.ok(b);sc[turn]++}else{T.bad(b);[...ob.children].forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')})}
     paint();T.later(()=>{delete ob.dataset.l;k++;turn^=1;if(k<rounds)show();else{const w=sc[0]===sc[1]?'Тең түсті! 🤝':(sc[0]>sc[1]?'🔴 1-топ жеңді!':'🔵 2-топ жеңді!');T.end(box,{em:'🏆',title:w,text:`🔴 ${sc[0]} : ${sc[1]} 🔵`,again:start})}},1300)};ob.append(b)})};

@@ -84,10 +84,10 @@ order(b,T,{items,title}){col(b,18,'center');if(title)b.append(el('div','qline',t
 function gwrap(box,bg){box.innerHTML='';const W=el('div','');W.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:18px;'+(bg?'background:'+bg:'');box.append(W);return W}
 const GM={
 /* жалпы викторина: 10 айналым, уақыт пен қате */
-quiz({icon,title,gen,rounds=10,bg,em:emj='🏆',win='Керемет!'}){return{icon,build(box,T){const start=()=>{const W=gwrap(box,bg);const st=prog(W,rounds);const hd=el('div','qline',title);hd.style.fontSize='32px';const tm=el('div','mut','');tm.style.fontSize='24px';
+quiz({icon,title,gen,rounds=10,bg,em:emj='🏆',win='Керемет!'}){return{icon,build(box,T){const start=()=>{const SEEN=new Set();const W=gwrap(box,bg);const st=prog(W,rounds);const hd=el('div','qline',title);hd.style.fontSize='32px';const tm=el('div','mut','');tm.style.fontSize='24px';
  const qb=el('div','');qb.style.cssText='flex:1;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;width:100%';const ob=el('div','');ob.style.cssText='display:flex;gap:16px;flex-wrap:wrap;justify-content:center';W.append(st,hd,tm,qb,ob);
  let k=0,err=0,t0=Date.now(),cur;const alive=T.alive();const tick=()=>{if(!alive()||!W.isConnected)return;tm.textContent='⏱ '+Math.floor((Date.now()-t0)/1000)+' сек · ❌ '+err;setTimeout(tick,500)};tick();
- const show=()=>{st.set(k);cur=gen(k);qb.innerHTML=cur.q;ob.innerHTML='';shuffle(cur.o).forEach(v=>{const b=typeof v==='number'&&!cur.oh?ncard(v):el('button','opt',cur.oh?cur.oh(v):v);b.dataset.v=v;if(cur.oh){b.style.height='auto';b.style.minHeight='84px';b.style.padding='8px 18px'}
+ const show=()=>{st.set(k);{let g=0;do{cur=gen(k)}while(SEEN.has(String(cur.q)+'|'+cur.a)&&g++<30);SEEN.add(String(cur.q)+'|'+cur.a)}qb.innerHTML=cur.q;ob.innerHTML='';shuffle(cur.o).forEach(v=>{const b=typeof v==='number'&&!cur.oh?ncard(v):el('button','opt',cur.oh?cur.oh(v):v);b.dataset.v=v;if(cur.oh){b.style.height='auto';b.style.minHeight='84px';b.style.padding='8px 18px'}
   b.onclick=()=>{if(b.dataset.l)return;if(String(v)===String(cur.a)){T.ok(b);[...ob.children].forEach(x=>x.dataset.l=1);T.later(()=>{k++;if(k<rounds)show();else{const s=Math.floor((Date.now()-t0)/1000);T.end(box,{em:emj,title:win,text:`Уақыт: ${s} сек · ${T.errTxt(err)}`,again:start})}},650)}else{err++;T.bad(b)}};ob.append(b)})};
  T.reveal=()=>[...ob.children].forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')});show()};start()}}},
 /* шарларды ретімен жару */
