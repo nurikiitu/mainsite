@@ -108,7 +108,7 @@ footer{color:#fff;text-align:center;font-weight:800;opacity:.85;padding:30px 0 1
   <button class="go" id="go">▶ ОЙНАУ!</button><br><button class="x" id="mx">Жабу</button>
 </div></div>
 
-<script src="data.js?v=23"></script>
+<script src="data.js?v=24"></script>
 <script>
 const $=s=>document.querySelector(s);
 const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
@@ -141,7 +141,7 @@ let CUR=null,LV=1;
 function openGame(o){CUR=o;$('#mic').textContent=o.e;$('#mic').style.background=o.bg;$('#mt').textContent=o.t;$('#mp').textContent=o.d+' · '+MODES[o.m];
  LV=LS.get('nu_lv_'+o.id,1);document.querySelectorAll('#lvs button').forEach(b=>b.classList.toggle('on',+b.dataset.l===LV));$('#ov').classList.add('on')}
 document.querySelectorAll('#lvs button').forEach(b=>b.onclick=()=>{LV=+b.dataset.l;document.querySelectorAll('#lvs button').forEach(x=>x.classList.toggle('on',x===b))});
-$('#go').onclick=()=>{LS.set('nu_lv_'+CUR.id,LV);location.href=`oyin.html?g=${CUR.g}&s=${CUR.sid}&q=${CUR.q}&id=${CUR.id}&lv=${LV}&v=23`};
+$('#go').onclick=()=>{LS.set('nu_lv_'+CUR.id,LV);location.href=`oyin.html?g=${CUR.g}&s=${CUR.sid}&q=${CUR.q}&id=${CUR.id}&lv=${LV}&v=24`};
 $('#mx').onclick=()=>$('#ov').classList.remove('on');$('#ov').onclick=e=>{if(e.target===$('#ov'))$('#ov').classList.remove('on')};
 addEventListener('keydown',e=>{if(e.key==='Escape')$('#ov').classList.remove('on')});
 addEventListener('hashchange',route);route();
