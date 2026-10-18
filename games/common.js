@@ -94,7 +94,8 @@ function nearS(a,lo,hi,step=1,n=4){const s=new Set([a]);let g=0;while(s.size<n&&
 /* қысқа құрастырушылар */
 /* Қайталанбайтын генератор: деңгейдегі тапсырмалар біткенде көрші деңгейден алады */
 function NRG(gen,lv){const S=new Set();const ord=[lv,lv+1,lv-1,lv+2,lv-2].filter(x=>x>=1&&x<=3);return(...a)=>{let c;for(const L of ord){for(let g=0;g<30;g++){c=gen(L,...a);if(!S.has(QK(c))){S.add(QK(c));return c}}}S.clear();S.add(QK(c));return c}}
-const QZ=(title,gen,{rounds=8,icon='⭐'}={})=>(box,T,lv)=>{const G=NRG(gen,lv);return GM.quiz({icon,title:typeof title==='function'?title(lv):title,rounds,gen:k=>G(k)}).build(box,T)};
+const QZ=(title,gen,{rounds=8,icon='⭐'}={})=>{const f=(box,T,lv)=>{const G=NRG(gen,lv);const tt=typeof title==='function'?title(lv):title;const sk=typeof SKINS!=='undefined'?(SKP!=null?SKP:f._skin):null;
+ if(sk!=null&&SKINS[sk])return SKINQ(box,T,{title:tt,gen:k=>G(k),rounds,skin:SKINS[sk]});return GM.quiz({icon,title:tt,rounds,gen:k=>G(k)}).build(box,T)};f._qz=1;return f};
 const DU=(title,gen)=>(box,T,lv)=>{const G=NRG(gen,lv);return duel(box,{title:typeof title==='function'?title(lv):title,gen:()=>G()})};
 const RC=(title,gen)=>(box,T,lv)=>{const G=NRG(gen,lv);return raceDuel(box,{title:typeof title==='function'?title(lv):title,gen:()=>G()})};
 const TQ=(title,gen,rounds=10)=>(box,T,lv)=>{const G=NRG(gen,lv);return TEAMQ(box,{rounds,title:typeof title==='function'?title(lv):title,gen:k=>G(k)})};
