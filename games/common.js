@@ -19,7 +19,7 @@ function TEAMQ(box,{rounds=10,gen,title}){const start=()=>{const SEEN=new Set();
  const ob=el('div','');ob.style.cssText='display:flex;gap:16px;flex-wrap:wrap;justify-content:center';W.append(tm,hd,qb,ob);W.insertBefore(st,hd);
  const sc=[0,0];let k=0,turn=0,cur;const TS=tm.querySelectorAll('.team');
  const paint=()=>TS.forEach((t,i)=>{t.classList.toggle('on',i===turn);t.querySelector('b').textContent=sc[i]});
- const show=()=>{st.set(k);paint();{let g=0;do{cur=gen(k)}while(SEEN.has(String(cur.q)+'|'+cur.a)&&g++<30);SEEN.add(String(cur.q)+'|'+cur.a)}qb.innerHTML='';if(typeof cur.q==='function')cur.q(qb);else qb.innerHTML=cur.q;ob.innerHTML='';
+ const show=()=>{st.set(k);paint();{let g=0;do{cur=gen(k)}while(SEEN.has(QK(cur))&&g++<40);SEEN.add(QK(cur))}qb.innerHTML='';if(typeof cur.q==='function')cur.q(qb);else qb.innerHTML=cur.q;ob.innerHTML='';
   shuffle(cur.o).forEach(v=>{const b=typeof v==='number'&&!cur.oh?ncard(v):el('button','opt',cur.oh?cur.oh(v):v);b.dataset.v=v;if(cur.oh){b.style.height='auto';b.style.minHeight='84px';b.style.padding='8px 18px'}
    b.onclick=()=>{if(ob.dataset.l)return;ob.dataset.l=1;if(String(v)===String(cur.a)){T.ok(b);sc[turn]++}else{T.bad(b);[...ob.children].forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')})}
     paint();T.later(()=>{delete ob.dataset.l;k++;turn^=1;if(k<rounds)show();else{const w=sc[0]===sc[1]?'Тең түсті! 🤝':(sc[0]>sc[1]?'🔴 1-топ жеңді!':'🔵 2-топ жеңді!');T.end(box,{em:'🏆',title:w,text:`🔴 ${sc[0]} : ${sc[1]} 🔵`,again:start})}},1300)};ob.append(b)})};
@@ -34,7 +34,7 @@ function raceDuel(box,def){const alive=T.alive();const GOAL=6;let over=false;con
  const sides=el('div','dsides');d.append(sides);
  const S=[0,1].map(i=>{const s=el('div','ds s'+i,`<div class="h">${i?'🔵 2-оқушы':'🔴 1-оқушы'} · <b class="sc">0</b> / ${GOAL}</div><div class="q"></div><div class="os"></div>`);sides.append(s);return s});
  const draw=()=>S.forEach((s,i)=>{s.querySelector('.sc').textContent=sc[i];lanes[i].style.left=`calc(${sc[i]/GOAL*100}% - ${sc[i]/GOAL*50}px)`});
- const ask=i=>{if(!alive()||over)return;const s=S[i];let t,g=0;do{t=def.gen()}while(s._l===t.q&&g++<6);s._l=t.q;s.querySelector('.q').innerHTML=t.q;const os=s.querySelector('.os');os.innerHTML='';
+ const ask=i=>{if(!alive()||over)return;const s=S[i];let t,g=0;s._s=s._s||new Set();do{t=def.gen()}while(s._s.has(QK(t))&&g++<40);s._s.add(QK(t));s.querySelector('.q').innerHTML=t.q;const os=s.querySelector('.os');os.innerHTML='';
   shuffle(t.o).forEach(v=>{const b=typeof v==='number'&&!t.oh?ncard(v,'sm'):el('button','opt',t.oh?t.oh(v):v);if(t.oh){b.style.height='auto';b.style.padding='8px'}
    b.onclick=()=>{if(over||s.classList.contains('lock'))return;
     if(String(v)===String(t.a)){T.ok(b);sc[i]++;draw();if(sc[i]>=GOAL){over=true;S[i].classList.add('win');return T.later(()=>T.end(box,{em:'🏁',title:(i?'🔵 2-оқушы':'🔴 1-оқушы')+' бірінші келді!',text:`🔴 ${sc[0]} : ${sc[1]} 🔵`,again:()=>raceDuel(box,def)}),600)}setTimeout(()=>ask(i),400)}
@@ -64,14 +64,14 @@ function bucket(n,max=10,lab=''){const h=200,lv=Math.round(n/max*(h-20));return 
  <clipPath id="bk${n}${lab}"><path d="M23 23 H167 L147 222 H43Z"/></clipPath><rect x="0" y="${225-lv}" width="190" height="${lv}" fill="#42a5f5" clip-path="url(#bk${n}${lab})"/>${[...Array(max)].map((_,i)=>`<line x1="150" y1="${225-(i+1)*(h-20)/max}" x2="168" y2="${225-(i+1)*(h-20)/max}" stroke="#90a4ae" stroke-width="2"/>`).join('')}</svg><div style="font-size:30px;font-weight:900">${lab}</div></div>`}
 function jars(n){return `<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:760px">${[...Array(n)].map(()=>`<div style="text-align:center"><div style="font-size:70px;line-height:1">🫙</div><div style="font-size:22px;font-weight:900;color:#1e88e5">1 л</div></div>`).join('')}</div>`}
 /* сызықтар суреті */
-function lineSvg(k){const W=620,H=200;const dot=(x,y,l)=>`<circle cx="${x}" cy="${y}" r="11" fill="#1a2a5a"/><text x="${x}" y="${y-22}" text-anchor="middle" font-size="34" font-weight="900" font-family="Nunito" fill="#e53935">${l}</text>`;
+function lineSvg(k,vr=0){const W=620,H=200;const dot=(x,y,l)=>`<circle cx="${x}" cy="${y}" r="11" fill="#1a2a5a"/><text x="${x}" y="${y-22}" text-anchor="middle" font-size="34" font-weight="900" font-family="Nunito" fill="#e53935">${l}</text>`;
  const ar=(x,y,dir)=>`<path d="M${x} ${y} l${-26*dir} -14 M${x} ${y} l${-26*dir} 14" stroke="#1a2a5a" stroke-width="7" stroke-linecap="round" fill="none"/>`;let b='';
- if(k==='нүкте')b=dot(310,110,'А');
+ if(k==='нүкте')b=dot([310,180,450][vr],[110,120,100][vr],'АВС'[vr]);
  if(k==='түзу')b=`<line x1="40" y1="110" x2="580" y2="110" stroke="#1a2a5a" stroke-width="7" stroke-linecap="round"/>`+ar(586,110,1)+ar(34,110,-1);
  if(k==='сәуле')b=`<line x1="90" y1="110" x2="580" y2="110" stroke="#1a2a5a" stroke-width="7" stroke-linecap="round"/>`+ar(586,110,1)+dot(90,110,'О');
  if(k==='кесінді')b=`<line x1="110" y1="110" x2="510" y2="110" stroke="#1a2a5a" stroke-width="7" stroke-linecap="round"/>`+dot(110,110,'А')+dot(510,110,'В');
  if(k==='қисық сызық')b=`<path d="M40 140 C140 20 220 200 320 100 S500 40 580 120" stroke="#1a2a5a" stroke-width="7" fill="none" stroke-linecap="round"/>`;
- return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="background:#f3f8ff;border:4px solid #d6e4f7;border-radius:26px">${b}</svg>`}
+ if(k!=='нүкте'&&vr)b=`<g transform="rotate(${vr===1?-14:12} 310 110) scale(.92) translate(25 9)">${b}</g>`;return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="background:#f3f8ff;border:4px solid #d6e4f7;border-radius:26px">${b}</svg>`}
 function segFig(n){const R=110,cx=160,cy=130;if(n===1)return `<svg width="320" height="260"><line x1="40" y1="130" x2="280" y2="130" stroke="#1a2a5a" stroke-width="7"/><circle cx="40" cy="130" r="9"/><circle cx="280" cy="130" r="9"/></svg>`;
  if(n===2)return `<svg width="320" height="260"><polyline points="40,200 160,50 280,200" fill="none" stroke="#1a2a5a" stroke-width="7"/>${[[40,200],[160,50],[280,200]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="9"/>`).join('')}</svg>`;
  const pts=[...Array(n)].map((_,i)=>[cx+R*Math.cos(-Math.PI/2+i*2*Math.PI/n),cy+R*Math.sin(-Math.PI/2+i*2*Math.PI/n)]);
@@ -92,10 +92,12 @@ const NOs=v=>`<span style="font-size:32px;padding:0 6px">${v}</span>`;
 /* жуық нұсқалар: қадаммен */
 function nearS(a,lo,hi,step=1,n=4){const s=new Set([a]);let g=0;while(s.size<n&&g++<300){const v=a+step*rnd(-3,3);if(v>=lo&&v<=hi)s.add(v)}for(let v=lo;s.size<n&&v<=hi;v+=step)s.add(v);return shuffle([...s])}
 /* қысқа құрастырушылар */
-const QZ=(title,gen,{rounds=8,icon='⭐'}={})=>(box,T,lv)=>GM.quiz({icon,title:typeof title==='function'?title(lv):title,rounds,gen:k=>gen(lv,k)}).build(box,T);
-const DU=(title,gen)=>(box,T,lv)=>duel(box,{title:typeof title==='function'?title(lv):title,gen:()=>gen(lv)});
-const RC=(title,gen)=>(box,T,lv)=>raceDuel(box,{title:typeof title==='function'?title(lv):title,gen:()=>gen(lv)});
-const TQ=(title,gen,rounds=10)=>(box,T,lv)=>TEAMQ(box,{rounds,title:typeof title==='function'?title(lv):title,gen:k=>gen(lv,k)});
+/* Қайталанбайтын генератор: деңгейдегі тапсырмалар біткенде көрші деңгейден алады */
+function NRG(gen,lv){const S=new Set();const ord=[lv,lv+1,lv-1,lv+2,lv-2].filter(x=>x>=1&&x<=3);return(...a)=>{let c;for(const L of ord){for(let g=0;g<30;g++){c=gen(L,...a);if(!S.has(QK(c))){S.add(QK(c));return c}}}S.clear();S.add(QK(c));return c}}
+const QZ=(title,gen,{rounds=8,icon='⭐'}={})=>(box,T,lv)=>{const G=NRG(gen,lv);return GM.quiz({icon,title:typeof title==='function'?title(lv):title,rounds,gen:k=>G(k)}).build(box,T)};
+const DU=(title,gen)=>(box,T,lv)=>{const G=NRG(gen,lv);return duel(box,{title:typeof title==='function'?title(lv):title,gen:()=>G()})};
+const RC=(title,gen)=>(box,T,lv)=>{const G=NRG(gen,lv);return raceDuel(box,{title:typeof title==='function'?title(lv):title,gen:()=>G()})};
+const TQ=(title,gen,rounds=10)=>(box,T,lv)=>{const G=NRG(gen,lv);return TEAMQ(box,{rounds,title:typeof title==='function'?title(lv):title,gen:k=>G(k)})};
 /* ондық тақта: n боялған, x сызылған */
 function tenFrame(n,x=0,s=56){let h='';for(let i=0;i<10;i++){const on=i<n,cr=on&&i>=n-x;h+=`<div style="width:${s}px;height:${s}px;border:3px solid #90a4ae;display:grid;place-items:center;background:#fff">${on?`<div style="width:${s*.7}px;height:${s*.7}px;border-radius:50%;background:${cr?'#cfd8dc':'#e53935'};position:relative">${cr?`<span style="position:absolute;inset:0;display:grid;place-items:center;font-size:${s*.7}px;color:#1a2a5a;line-height:1">✕</span>`:''}</div>`:''}</div>`}
  return `<div style="display:grid;grid-template-columns:repeat(5,${s}px);border:4px solid #546e7a;border-radius:8px;overflow:hidden;background:#fff">${h}</div>`}
@@ -130,13 +132,13 @@ function MILLION(box,T,GEN){const PR=['100','200','500','1 000','5 000','10 000'
   const main=el('div','');main.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-around;height:100%';
   const life=el('div','');life.style.cssText='display:flex;gap:14px';const qb=el('div','');qb.style.cssText='background:#fff;color:#1a2a5a;border-radius:30px;padding:24px 40px;font-size:40px;font-weight:900;text-align:center;min-width:700px;box-shadow:0 8px 0 #0004';
   const ob=el('div','');ob.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:16px;width:760px';main.append(life,qb,ob);W.append(main,lad);
-  let k=0,cur,used={};[['h','➗ 50/50'],['c','👥 Сыныптан сұрау'],['t','👩‍🏫 Мұғалім']].forEach(([id,t])=>{const b=el('button','',t);b.style.cssText='background:#fdd835;color:#1a2a5a;font-weight:900;font-size:20px;padding:12px 18px;border-radius:999px;box-shadow:0 5px 0 #c7a500';
+  let k=0,cur,used={};const SEEN=new Set();[['h','➗ 50/50'],['c','👥 Сыныптан сұрау'],['t','👩‍🏫 Мұғалім']].forEach(([id,t])=>{const b=el('button','',t);b.style.cssText='background:#fdd835;color:#1a2a5a;font-weight:900;font-size:20px;padding:12px 18px;border-radius:999px;box-shadow:0 5px 0 #c7a500';
    b.onclick=()=>{if(used[id])return;used[id]=1;b.style.opacity=.35;const bs=[...ob.children];
     if(id==='h')shuffle(bs.filter(x=>x.dataset.v!==String(cur.a))).slice(0,Math.max(0,bs.length-2)).forEach(x=>x.style.visibility='hidden');
     if(id==='c'){let rest=100;const ok=bs.find(x=>x.dataset.v===String(cur.a));const p0=rnd(45,70);ok.dataset.p=p0;rest-=p0;const wr=bs.filter(x=>x!==ok);wr.forEach((x,i)=>{const p=i===wr.length-1?rest:rnd(0,rest);x.dataset.p=p;rest-=p});bs.forEach(x=>x.insertAdjacentHTML('beforeend',`<small style="display:block;font-size:18px;color:#5c6bc0">${x.dataset.p}%</small>`))}
     if(id==='t')bs.forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')})};life.append(b)});
   const show=()=>{[...lad.children].forEach((x,i)=>{x.style.background=i===k?'#fdd835':i<k?'#43a04788':'#ffffff14';x.style.color=i===k?'#1a2a5a':'#fff'});
-   let g=0;do{cur=GEN[rnd(0,GEN.length-1)](k)}while(!cur.o.map(String).includes(String(cur.a))&&g++<20);qb.innerHTML=cur.q;ob.innerHTML='';
+   let g=0;do{cur=GEN[rnd(0,GEN.length-1)](k)}while((!cur.o.map(String).includes(String(cur.a))||SEEN.has(QK(cur)))&&g++<40);SEEN.add(QK(cur));qb.innerHTML=cur.q;ob.innerHTML='';
    shuffle(cur.o).slice(0,4).forEach((v,i)=>{const b=el('button','opt',`<span style="color:#5c6bc0">${'ABCD'[i]}:</span>&nbsp;${cur.oh?cur.oh(v):v}`);b.dataset.v=v;b.style.cssText+='height:auto;min-height:84px;justify-content:flex-start;padding:10px 22px;color:#1a2a5a';
     b.onclick=()=>{if(ob.dataset.l)return;ob.dataset.l=1;if(String(v)===String(cur.a)){T.ok(b);T.later(()=>{delete ob.dataset.l;k++;if(k<PR.length)show();else T.end(box,{em:'💰',title:'МИЛЛИОНЕР! 🎉',text:'Барлық 10 сұраққа дұрыс жауап бердіңдер!',again:start})},900)}
      else{T.bad(b);[...ob.children].forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')});T.later(()=>T.end(box,{em:'💡',title:k?`Ұтыс: ${PR[k-1]} ұпай`:'Тағы байқап көрейік!',text:`${k} сұраққа дұрыс жауап берілді`,again:start}),1400)}};ob.append(b)})};

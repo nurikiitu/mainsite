@@ -20,7 +20,7 @@ const JMEM=(title,pairs)=>(box,T,lv)=>GM.memory({title,pairs:()=>pick(pairs,lv==
 const JCATCH=(title,good,bad)=>(box,T,lv)=>GM.catcher({icon:'🧲',sec:L3(lv,30,30,25),title,good:()=>{const g=JPK(good);return`<div style="text-align:center;line-height:1.1"><div style="font-size:88px">${g[0]}</div><div style="font-size:20px;font-weight:900">${lv===3?'':g[1]}</div></div>`},
   bad:()=>{const g=JPK(bad);return`<div style="text-align:center;line-height:1.1"><div style="font-size:88px">${g[0]}</div><div style="font-size:20px;font-weight:900">${lv===3?'':g[1]}</div></div>`}}).build(box,T);
 /* ретімен қой: тізбектер [[эмодзи, атауы], ...] */
-const JORD=(title,seqs)=>(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const S=JPK(seqs);const n=Math.min(S.length,L3(lv,3,4,5));
+const JORD=(title,seqs)=>(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const S=pkU(seqs);const n=Math.min(S.length,L3(lv,3,4,5));
   let idx=[...S.keys()];if(n<S.length){idx=pick(idx,n).sort((a,c)=>a-c)}const seq=idx.map(i=>S[i]);
   hd.innerHTML=title;b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';
   const line=el('div','sline'),sl=seq.map((_,i)=>{const x=el('div','wslot',`<span style="opacity:.35">${i+1}</span>`);x.style.minWidth='170px';x.style.height='150px';line.append(x);return x});b.append(line);

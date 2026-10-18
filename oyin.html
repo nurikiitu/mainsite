@@ -194,7 +194,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=28"></script>
+<script src="data.js?v=29"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
@@ -259,7 +259,10 @@ $('#ans').onclick=()=>{if(T.reveal){T.reveal();beep('tap')}else toast('Бұл ж
 function toast(t,c){const x=el('div','toast',t);if(c)x.style.background=c;$('#stage').append(x);setTimeout(()=>x.remove(),1600)}
 function saveStar(){const k=G+'/'+SB+'/'+Q+'/'+ID,S=LS.get('nu_stars',{});if((S[k]||0)<LV){S[k]=LV;LS.set('nu_stars',S)}}
 /* бірнеше айналым: әр айналымда make(body,k) шақырылады; T.done келесіге өтеді */
-function ROUNDS(box,n,make,{title,bg}={}){let k=0;const t0=Date.now();
+let RSEEN=new Set();
+function uq(f,key){const K=key||(v=>JSON.stringify(v));let v,g=0;do{v=f()}while(RSEEN.has(K(v))&&g++<40);RSEEN.add(K(v));return v}
+const pkU=a=>uq(()=>a[rnd(0,a.length-1)]);
+function ROUNDS(box,n,make,{title,bg}={}){let k=0;RSEEN=new Set();const t0=Date.now();
  const W=el('div','');W.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;padding:16px 26px 18px;gap:10px;'+(bg?'background:'+bg:'');box.append(W);
  const st=prog(W,n);const hd=el('div','qline','');hd.style.fontSize='32px';W.append(hd);const body=el('div','');body.style.cssText='flex:1;min-height:0;position:relative;display:flex;gap:24px';W.append(body);
  body.className='rb';const show=()=>{st.set(k);body.innerHTML='';body.style.cssText='flex:1;min-height:0;position:relative;display:flex;gap:24px';T.reveal=null;hd.innerHTML=typeof title==='function'?title(k):(title||'');make(body,k,hd)};
@@ -304,7 +307,7 @@ function duel(box,def){const alive=T.alive();const GOAL=5;let pos=0,over=false,s
  const sides=el('div','dsides');d.append(sides);
  const S=[0,1].map(i=>{const s=el('div','ds s'+i,`<div class="h">${i?'🔵 2-оқушы':'🔴 1-оқушы'} · <b class="sc">0</b></div><div class="q"></div><div class="os"></div>`);sides.append(s);return s});
  const draw=()=>{rope.querySelector('.r').style.transform=`translate(calc(-50% + ${pos*5.5}%),-50%)`;S.forEach((s,i)=>s.querySelector('.sc').textContent=sc[i])};
- const ask=i=>{if(!alive()||over)return;const s=S[i];let t,g=0;do{t=def.gen()}while(s._l===t.q&&g++<6);s._l=t.q;s.querySelector('.q').innerHTML=t.q;const os=s.querySelector('.os');os.innerHTML='';
+ const ask=i=>{if(!alive()||over)return;const s=S[i];let t,g=0;s._s=s._s||new Set();do{t=def.gen()}while(s._s.has(QK(t))&&g++<40);s._s.add(QK(t));s.querySelector('.q').innerHTML=t.q;const os=s.querySelector('.os');os.innerHTML='';
   shuffle(t.o).forEach(v=>{const b=typeof v==='number'&&!t.oh?ncard(v,'sm'):el('button','opt',t.oh?t.oh(v):v);if(t.oh){b.style.height='auto';b.style.padding='8px'}
    b.onclick=()=>{if(over||s.classList.contains('lock'))return;
     if(String(v)===String(t.a)){T.ok(b);sc[i]++;pos+=i?1:-1;draw();if(Math.abs(pos)>=GOAL)return win(i);setTimeout(()=>ask(i),450)}
@@ -388,9 +391,9 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 /* ====== жүктеу ====== */
 const GAMES={};
 fit();
-const kit=document.createElement('script');kit.src='lessons/kit.js?v=28';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=28';cm.onload=()=>{if(SB==='kaz'||SB==='jar'){const sj=document.createElement('script');sj.src='games/subj-'+SB+'.js?v=28';sj.onload=sj.onerror=()=>document.body.append(sc);document.body.append(sj)}else document.body.append(sc)};
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=28`;sc.onload=()=>start();sc.onerror=()=>start();
+const kit=document.createElement('script');kit.src='lessons/kit.js?v=29';kit.onload=()=>document.body.append(cm);document.body.append(kit);
+const cm=document.createElement('script');cm.src='games/common.js?v=29';cm.onload=()=>{if(SB==='kaz'||SB==='jar'){const sj=document.createElement('script');sj.src='games/subj-'+SB+'.js?v=29';sj.onload=sj.onerror=()=>document.body.append(sc);document.body.append(sj)}else document.body.append(sc)};
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=29`;sc.onload=()=>start();sc.onerror=()=>start();
 </script>
 </body>
 </html>

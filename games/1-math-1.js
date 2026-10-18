@@ -7,8 +7,8 @@ GAMES.balloons=(box,T,lv)=>GM.balloons({from:lv===3?0:1,to:L3(lv,5,10,10)}).buil
 
 /* 2. Себетке жина */
 GAMES.basket=(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{
- const f1=FRUIT[rnd(0,FRUIT.length-1)],f2=FRUIT.filter(x=>x!==f1)[rnd(0,FRUIT.length-2)];
- const need=lv===3?{[f1]:rnd(1,5),[f2]:rnd(1,4)}:{[f1]:rnd(L3(lv,1,3,0),L3(lv,5,10,0))};
+ const [f1,f2,need]=uq(()=>{const f1=FRUIT[rnd(0,FRUIT.length-1)],f2=FRUIT.filter(x=>x!==f1)[rnd(0,FRUIT.length-2)];
+ const need=lv===3?{[f1]:rnd(1,5),[f2]:rnd(1,4)}:{[f1]:rnd(L3(lv,1,3,0),L3(lv,5,10,0))};return[f1,f2,need]},v=>JSON.stringify(v[2]));
  hd.innerHTML='🧺 Себетке салу керек: '+Object.entries(need).map(([e,n])=>`<b style="color:#e53935">${n}</b> ${e}`).join(' және ');
  b.style.alignItems='center';const tree=el('div','');tree.style.cssText='flex:1;height:100%;background:linear-gradient(#e8f5e9,#c8e6c9);border-radius:28px;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:10px;padding:20px;border:4px solid #a5d6a7';
  const bsk=el('div','');bsk.style.cssText='width:520px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px';
@@ -35,19 +35,19 @@ GAMES.more=(box,T,lv)=>duel(box,{title:'Қай жақта көп? Белгіні
  const e=EM[rnd(0,EM.length-1)];return{q:`<div style="display:flex;align-items:center;gap:12px">${grp(e,a,40,240)}<div class="slot" style="width:60px;height:60px">?</div>${grp(e,c,40,240)}</div>`,o:['>','<','='],a:cmp(a,c),oh:optBig}}});
 
 /* 5. Жылдам көз */
-GAMES.flash=(box,T,lv)=>TEAMQ(box,{rounds:10,title:'👀 Мұқият қара! Неше зат болды?',gen:()=>{const n=rnd(L3(lv,1,3,5),L3(lv,5,8,10)),e=EM[rnd(0,EM.length-1)],ms=L3(lv,3000,2000,1200);
- return{q:qb=>{qb.innerHTML=scatter(e,n,700,340,64);const a=T.alive();setTimeout(()=>{if(!a()||!qb.isConnected)return;qb.innerHTML=`<div style="width:700px;height:340px;background:#e3f2fd;border:4px solid #d6e4f7;border-radius:26px;display:grid;place-items:center;font-size:150px">❓</div>`},ms)},o:near(n,1,10),a:n}}});
+GAMES.flash=(box,T,lv)=>TEAMQ(box,{rounds:10,title:'👀 Мұқият қара! Неше зат болды?',gen:()=>{const n=rnd(L3(lv,1,3,5),L3(lv,5,8,10)),e=EM[rnd(0,EM.length-1)],ms=L3(lv,3000,2000,1200),key=n+e;
+ return{key,q:qb=>{qb.innerHTML=scatter(e,n,700,340,64);const a=T.alive();setTimeout(()=>{if(!a()||!qb.isConnected)return;qb.innerHTML=`<div style="width:700px;height:340px;background:#e3f2fd;border:4px solid #d6e4f7;border-radius:26px;display:grid;place-items:center;font-size:150px">❓</div>`},ms)},o:near(n,1,10),a:n}}});
 
 /* 6. Сан пойызы */
 GAMES.train=(box,T,lv)=>GM.train({max:L3(lv,5,10,10),len:L3(lv,4,5,7)}).build(box,T);
 
 /* 7. Жоғалған сан */
-GAMES.missing=(box,T,lv)=>ROUNDS(box,6,(b,k)=>{const max=L3(lv,5,10,10),len=L3(lv,4,5,6),rev=lv>1&&k%2===1;const s=rev?rnd(len-1,max):rnd(0,max-len+1);
+GAMES.missing=(box,T,lv)=>ROUNDS(box,6,(b,k)=>{const max=L3(lv,5,10,10),rev=lv>1&&k%2===1;const [s,len]=uq(()=>{const len=lv===1?rnd(3,4):L3(lv,4,5,6);return[rev?rnd(len-1,max):rnd(0,max-len+1),len]},v=>rev+':'+v);
  const seq=[...Array(len)].map((_,j)=>rev?s-j:s+j);const mc=L3(lv,1,rnd(1,2),rnd(2,3));const miss=pick([...Array(len).keys()].filter(i=>lv===3||(i>0&&i<len-1)||len<4),mc);
  K.seq(b,T,{rounds:[{seq,miss,from:0,to:max,q:rev?'Кері санау: бос орынды толтыр ⬅':'Бос орынды толтыр ➡'}]})},{title:'🔍 Жоғалған санды тап'});
 
 /* 8. Цифрды сыз */
-GAMES.trace=(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const d=lv===1?rnd(1,5):rnd(0,9);hd.innerHTML=`✍️ <b style="color:#e53935">${d}</b> цифрын нүкте бойымен саусағыңмен сыз`;
+GAMES.trace=(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const d=uq(()=>lv===1?rnd(1,5):rnd(0,9));hd.innerHTML=`✍️ <b style="color:#e53935">${d}</b> цифрын нүкте бойымен саусағыңмен сыз`;
  b.style.justifyContent='center';b.style.alignItems='center';const W=460,H=600;const wrap=el('div','');wrap.style.cssText=`position:relative;width:${W}px;height:${H}px;background:#fff;border:5px solid #d6e4f7;border-radius:30px;overflow:hidden`;
  const cv=document.createElement('canvas');cv.width=W;cv.height=H;cv.style.cssText='position:absolute;inset:0;touch-action:none;cursor:crosshair';wrap.append(cv);
  const side=el('div','');side.style.cssText='display:flex;flex-direction:column;gap:18px;align-items:center;margin-left:40px';const bar=el('div','');bar.style.cssText='width:300px;height:34px;background:#eef3fb;border-radius:17px;overflow:hidden';
@@ -77,11 +77,11 @@ GAMES.nbr=(box,T,lv)=>duel(box,{title:'Көрші сандарды тап',gen:(
  const bef=Math.random()<.5;return{q:BIG(bef?`? , ${n}`:`${n} , ?`,90)+`<div class="mut" style="font-size:24px">${bef?'Алдындағы сан':'Кейінгі сан'}</div>`,o:near(bef?n-1:n+1,0,max),a:bef?n-1:n+1}}});
 
 /* 11. Үйшіктер */
-GAMES.houses=(box,T,lv)=>ROUNDS(box,5,(b,k)=>{const n=lv===1?rnd(2,5):lv===2?rnd(6,8):rnd(9,10);const rows=[...Array(n-1)].map((_,i)=>[i+1,n-i-1]);
+GAMES.houses=(box,T,lv)=>ROUNDS(box,L3(lv,4,3,2),(b,k)=>{const n=uq(()=>lv===1?rnd(2,5):lv===2?rnd(6,8):rnd(9,10));const rows=[...Array(n-1)].map((_,i)=>[i+1,n-i-1]);
  const hideN=L3(lv,Math.min(2,rows.length),3,rows.length);const hi=pick([...rows.keys()],hideN);K.house(b,T,{n,pairs:rows.map((r,i)=>hi.includes(i)?[r[0],r[1],rnd(0,1)]:[r[0],r[1]])})},{title:'🏠 Сан үйінің терезелерін толтыр'});
 
 /* 12. Екіге бөл */
-GAMES.split=(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{const n=lv===1?rnd(3,5):lv===2?rnd(6,8):rnd(8,10),a=rnd(1,n-1),c=n-a;
+GAMES.split=(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{const [n,a]=uq(()=>{const n=lv===1?rnd(3,5):lv===2?rnd(6,8):rnd(8,10);return[n,rnd(1,n-1)]}),c=n-a;
  hd.innerHTML=`🍎 <b>${n}</b> алманы бөл: <span style="color:#e53935">сол себетте ${a}</span>, қалғаны — оң себетте`;
  b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';
  const mid=el('div','');mid.style.cssText='display:flex;gap:10px;min-height:90px;flex-wrap:wrap;justify-content:center';
@@ -93,14 +93,14 @@ GAMES.split=(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{const n=lv===1?rnd(3,5):lv===2?r
  T.reveal=()=>toast(`Сол жақта ${a}, оң жақта ${c}`,'#c28a00')},{title:''});
 
 /* 13. Домино */
-GAMES.domino=(box,T,lv)=>ROUNDS(box,5,(b,k)=>{const n=lv===1?rnd(2,6):lv===2?rnd(5,10):rnd(6,10),mx=lv===3?6:5,cnt=lv===3?8:6;const tiles=[],seen=new Set();
+GAMES.domino=(box,T,lv)=>ROUNDS(box,5,(b,k)=>{const n=uq(()=>lv===1?rnd(2,6):lv===2?rnd(5,10):rnd(6,10)),mx=lv===3?6:5,cnt=lv===3?8:6;const tiles=[],seen=new Set();
  const good=[];for(let a=0;a<=Math.min(mx,n);a++){const c=n-a;if(c>=0&&c<=mx&&a<=c)good.push([a,c])}const gs=pick(good,Math.min(good.length,lv===1?1:2));
  gs.forEach(([a,c])=>{seen.add(a+'/'+c);tiles.push({h:Math.random()<.5?domino(a,c,80):domino(c,a,80),ok:true})});
  let g=0;while(tiles.length<cnt&&g++<300){const a=rnd(0,mx),c=rnd(0,mx);if(a+c===n||seen.has(Math.min(a,c)+'/'+Math.max(a,c)))continue;seen.add(Math.min(a,c)+'/'+Math.max(a,c));tiles.push({h:domino(a,c,80),ok:false})}
  K.pickAll(b,T,{tiles,cols:lv===3?4:3,size:220,title:`Нүктелерінің қосындысы <b style="color:#e53935;font-size:44px">${n}</b> болатын доминоны тап`})},{title:'🁣 Домино'});
 
 /* 14. 10-ға жеткіз */
-GAMES.to10=(box,T,lv)=>duel(box,{title:lv===1?'5-ке дейін неше жетпейді?':'10-ға дейін неше жетпейді?',gen:()=>{const N=lv===1?5:10,a=rnd(0,N-1),m=N-a;
+GAMES.to10=(box,T,lv)=>duel(box,{title:lv===1?'5-ке дейін неше жетпейді?':'10-ға дейін неше жетпейді?',gen:()=>{const N=lv===1?rnd(3,5):10,a=rnd(0,N-1),m=N-a;
  const q=lv===3&&Math.random()<.5?`? + ${a} = ${N}`:`${a} + ? = ${N}`;return{q:BIG(q,84),o:near(m,0,N),a:m}}});
 
 /* 15. Сиқырлы қапшық */
@@ -153,7 +153,7 @@ GAMES.million=(box,T,lv)=>{const PR=['100','200','500','1 000','5 000','10 000',
      bs.forEach(x=>x.insertAdjacentHTML('beforeend',`<small style="display:block;font-size:18px;color:#5c6bc0">${x.dataset.p}%</small>`))}
     if(id==='t')bs.forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')})};life.append(b)});
   const show=()=>{[...lad.children].forEach((x,i)=>{x.style.background=i===k?'#fdd835':i<k?'#43a04788':'#ffffff14';x.style.color=i===k?'#1a2a5a':'#fff'});
-   cur=GEN[k<3?k%3:rnd(0,GEN.length-1)](k);qb.innerHTML=cur.q;ob.innerHTML='';
+   {const SN=show.S=show.S||new Set();let g=0;do{cur=GEN[k<3?k%3:rnd(0,GEN.length-1)](k)}while(SN.has(QK(cur))&&g++<40);SN.add(QK(cur))}qb.innerHTML=cur.q;ob.innerHTML='';
    shuffle(cur.o).slice(0,4).concat([]).forEach((v,i)=>{const b=el('button','opt',`<span style="color:#5c6bc0">${'ABCD'[i]}:</span>&nbsp;${cur.oh?cur.oh(v):v}`);b.dataset.v=v;b.style.cssText+='height:auto;min-height:84px;justify-content:flex-start;padding:10px 22px;color:#1a2a5a';
     b.onclick=()=>{if(ob.dataset.l)return;ob.dataset.l=1;if(String(v)===String(cur.a)){T.ok(b);T.later(()=>{delete ob.dataset.l;k++;if(k<PR.length)show();else T.end(box,{em:'💰',title:'МИЛЛИОНЕР! 🎉',text:'Барлық 10 сұраққа дұрыс жауап бердіңдер!',again:start})},900)}
      else{T.bad(b);[...ob.children].forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')});T.later(()=>T.end(box,{em:'💡',title:k?`Ұтыс: ${PR[k-1]} ұпай`:'Тағы байқап көрейік!',text:`${k} сұраққа дұрыс жауап берілді`,again:start}),1400)}};ob.append(b)});
@@ -161,7 +161,7 @@ GAMES.million=(box,T,lv)=>{const PR=['100','200','500','1 000','5 000','10 000',
   T.reveal=()=>[...ob.children].forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')});show()};start()};
 
 /* 21. Фигураны тап */
-GAMES.findshape=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const tg=SHAPES[(k+rnd(0,3))%(lv===1?3:4)];const types=lv===1?SHAPES.slice(0,3):SHAPES;
+GAMES.findshape=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const tg=uq(()=>SHAPES[(k+rnd(0,3))%(lv===1?3:4)]);const types=lv===1?SHAPES.slice(0,3):SHAPES;
  const n=L3(lv,9,12,12),good=rnd(2,4);const tiles=[];for(let i=0;i<n;i++){const t=i<good?tg:pick(types.filter(x=>x!==tg),1)[0];const c=lv===1?{circle:'#29b6f6',square:'#ec407a',triangle:'#fdd835',rect:'#66bb6a'}[t]:SHC[rnd(0,SHC.length-1)];
   const s=lv===3?rnd(60,110):90;tiles.push({h:rot(SHP(t,c,s),lv>1?rnd(-30,30):0),ok:t===tg})}
  K.pickAll(b,T,{tiles,cols:L3(lv,6,6,6),size:L3(lv,170,150,150),title:`Барлық <b style="color:#e53935">${SHN[tg]}</b> фигурасын тап`})},{title:'🔺 Фигураны тап'});
@@ -176,23 +176,23 @@ GAMES.sortshape=(box,T,lv)=>ROUNDS(box,3,(b,k,hd)=>{const by=L3(lv,'shape',k%2?'
   K.bins(b,T,{items,bins:[{id:'b',h:'🐘 Үлкен'},{id:'s',h:'🐭 Кіші'}],title:''});hd.innerHTML='🗂️ Фигураларды <b style="color:#e53935">өлшемі</b> бойынша сұрыпта'}},{title:''});
 
 /* 23. Нүкте, сызық, кесінді */
-GAMES.lines=(box,T,lv)=>GM.quiz({icon:'📍',title:lv===3?'📍 Суретте неше кесінді бар?':'📍 Бұл не? Дұрыс атауын таңда',rounds:8,gen:()=>{
- if(lv===3){const n=pick([1,2,3,4,5,6],1)[0];return{q:segFig(n),o:near(n,1,6),a:n}}
+GAMES.lines=(box,T,lv)=>GM.quiz({icon:'📍',title:lv===3?'📍 Кесінді, сәуле, түзу':'📍 Бұл не? Дұрыс атауын таңда',rounds:8,gen:()=>{
+ if(lv===3&&Math.random()<.55){const n=pick([1,2,3,4,5,6],1)[0];return{q:segFig(n)+'<div style="font-size:30px;font-weight:900">Суретте неше кесінді бар?</div>',o:near(n,1,6),a:n}}const vr=rnd(0,2);
  const K1=lv===1?['нүкте','түзу','қисық сызық']:['нүкте','түзу','қисық сызық','сәуле','кесінді'];const k=pick(K1,1)[0];
- return{q:lineSvg(k),o:K1,a:k,oh:v=>`<span style="font-size:30px;padding:0 6px">${v}</span>`}}}).build(box,T);
+ return{key:k+vr,q:lineSvg(k,vr),o:K1,a:k,oh:v=>`<span style="font-size:30px;padding:0 6px">${v}</span>`}}}).build(box,T);
 
 /* 24. Фигурадан сурет */
-GAMES.build=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const pics=shuffle(PICS.filter(p=>lv===1?p[1].length<=2:lv===2?true:Object.keys(p[2]).length));const p=pics[k%pics.length];
+GAMES.build=(box,T,lv)=>{const PL=PICS.filter(p=>lv===1?p[1].length<=2:lv===2?true:Object.keys(p[2]).length);return ROUNDS(box,Math.min(4,PL.length),(b,k)=>{const p=pkU(PL);
  b.style.alignItems='center';b.style.justifyContent='center';const pic=el('div','',p[0]);pic.style.cssText='background:#f3f8ff;border:4px solid #d6e4f7;border-radius:30px;padding:20px';const side=el('div','side');b.append(pic,side);
  if(lv===3){const [sh,n]=Object.entries(p[2])[0];side.append(el('div','qline',`Суретте неше <b style="color:#e53935">${SHN[sh]}</b> бар?`));const ob=el('div','ncards');side.append(ob);
   near(n,1,10).forEach(v=>{const c=ncard(v);c.onclick=()=>{if(v===n){T.ok(c);T.done()}else T.bad(c)};ob.append(c)});T.reveal=()=>[...ob.children].forEach(c=>{if(+c.dataset.v===n)c.classList.add('hint')});return}
- K.pickAll(side,T,{tiles:SHAPES.map(t=>({h:SHP(t,null,80),ok:p[1].includes(t)})),cols:2,size:150,title:'Суретте қандай фигуралар бар? Бәрін тап'})},{title:'🧩 Фигурадан сурет'});
+ K.pickAll(side,T,{tiles:SHAPES.map(t=>({h:SHP(t,null,80),ok:p[1].includes(t)})),cols:2,size:150,title:'Суретте қандай фигуралар бар? Бәрін тап'})},{title:'🧩 Фигурадан сурет'})};
 
 /* 25. Артығын тап */
 GAMES.odd=(box,T,lv)=>TEAMQ(box,{rounds:10,title:'🚫 Қай фигура артық?',gen:()=>{const by=L3(lv,'shape',pick(['shape','color'],1)[0],pick(['shape','color','size'],1)[0]);
  const t=pick(SHAPES.slice(0,3),2),c=pick(SHC.slice(0,4),2);let it=[];
  if(by==='shape')it=[0,0,0,1].map(i=>SHP(t[i],c[0],100));if(by==='color')it=[0,0,0,1].map(i=>SHP(t[0],c[i],100));if(by==='size')it=[0,0,0,1].map(i=>SHP(t[0],c[0],i?50:110));
- const ids=it.map((h,i)=>'f'+i);const H=Object.fromEntries(ids.map((id,i)=>[id,it[i]]));return{q:`<div class="mut" style="font-size:26px">Үшеуі ұқсас, біреуі басқаша</div>`,o:ids,a:'f3',oh:v=>`<div style="width:150px;height:130px;display:grid;place-items:center">${H[v]}</div>`}}});
+ const ids=it.map((h,i)=>'f'+i);const H=Object.fromEntries(ids.map((id,i)=>[id,it[i]]));return{key:by+t+c,q:`<div class="mut" style="font-size:26px">Үшеуі ұқсас, біреуі басқаша</div>`,o:ids,a:'f3',oh:v=>`<div style="width:150px;height:130px;display:grid;place-items:center">${H[v]}</div>`}}});
 
 /* 26. Ұзын, қысқа */
 GAMES.length=(box,T,lv)=>ROUNDS(box,5,(b,k)=>{const n=L3(lv,3,4,5),desc=lv===3&&k%2===1;const ws=pick([120,200,280,360,440,520,600],n).sort((x,y)=>x-y);const cs=pick(SHC,n);
@@ -213,12 +213,12 @@ GAMES.scale=(box,T,lv)=>GM.quiz({icon:'⚖️',title:lv===3?'⚖️ Таразы
 /* 29. Литр құй */
 GAMES.litre=(box,T,lv)=>GM.quiz({icon:'🪣',title:lv===3?'🪣 Қай ыдыста су көп?':'🪣 Шелекке неше литр су құйылды?',rounds:8,gen:()=>{
  if(lv===3){let a=rnd(1,9),c=rnd(1,9);while(c===a)c=rnd(1,9);return{q:`<div style="display:flex;gap:60px;align-items:flex-end">${bucket(a,10,'А')}${bucket(c,10,'Ә')}</div><div class="mut" style="font-size:24px">Әр сызық — 1 литр</div>`,o:['А','Ә'],a:a>c?'А':'Ә',oh:v=>`<span style="font-size:48px;padding:0 20px">${v} ыдыс</span>`}}
- const n=rnd(1,L3(lv,5,10,10));return{q:`<div style="display:flex;gap:40px;align-items:center">${jars(n)}<div style="font-size:70px">➡</div>${bucket(n,10)}</div>`,o:near(n,1,10).map(v=>v+' л'),a:n+' л',oh:v=>`<span style="font-size:40px;padding:0 10px">${v}</span>`}}}).build(box,T);
+ const n=rnd(1,L3(lv,8,10,10));return{q:`<div style="display:flex;gap:40px;align-items:center">${jars(n)}<div style="font-size:70px">➡</div>${bucket(n,10)}</div>`,o:near(n,1,10).map(v=>v+' л'),a:n+' л',oh:v=>`<span style="font-size:40px;padding:0 10px">${v}</span>`}}}).build(box,T);
 
 /* 30. Дүкен */
 GAMES.shop=(box,T,lv)=>duel(box,{title:lv===3?'Салыстыр: 1 дм = 10 см':'Немен өлшейміз?',gen:()=>{
  if(lv===3){const pairs=[['1 дм','10 см','='],['1 дм','8 см','>'],['12 см','1 дм','>'],['1 дм','15 см','<'],['6 см','1 дм','<'],['10 см','1 дм','='],['1 дм','9 см','>'],['2 дм','10 см','>']];const [a,c,r]=pick(pairs,1)[0];
   return{q:BIG(`${a} ◻ ${c}`,64),o:['>','<','='],a:r,oh:optBig}}
- const W=[['🍉','Қарбыздың салмағы','кг'],['🥔','Картоптың салмағы','кг'],['🍎','Алманың салмағы','кг'],['🥛','Сүттің көлемі','л'],['🧃','Шырынның көлемі','л'],['🪣','Шелектегі су','л']];
+ const W=[['🍉','Қарбыздың салмағы','кг'],['🥔','Картоптың салмағы','кг'],['🍎','Алманың салмағы','кг'],['🥛','Сүттің көлемі','л'],['🧃','Шырынның көлемі','л'],['🪣','Шелектегі су','л'],['🍞','Нанның салмағы','кг'],['🍚','Күріштің салмағы','кг'],['🍯','Балдың салмағы','кг'],['🫖','Шәйнектегі су','л'],['🛁','Ваннадағы су','л'],['🥤','Бөтелкедегі су','л']];
  const C=[['✏️','Қарындаштың ұзындығы','см'],['📏','Лентаның ұзындығы','см'],['🐛','Құрттың ұзындығы','см']];const [e,t,a]=pick(lv===1?W:W.concat(C),1)[0];
  return{q:`<div style="font-size:90px;line-height:1">${e}</div><div style="font-size:28px;font-weight:900">${t}</div>`,o:lv===1?['кг','л']:['кг','л','см'],a,oh:v=>`<span style="font-size:40px;padding:0 14px">${v}</span>`}}});

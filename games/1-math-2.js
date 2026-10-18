@@ -24,7 +24,7 @@ GAMES.table=(box,T,lv)=>ROUNDS(box,4,(b,k,hd)=>{const ns=L3(lv,[4,5],[6,7],[8,9]
  K.fill(b,T,{rows,ans,fs:64})},{title:''});
 GAMES.from10=QZ('🔟 10-нан азайт',(lv)=>{const x=rnd(1,lv===1?5:9);if(lv===3&&Math.random()<.5)return{q:`${tenFrame(10,x)}<div style="margin-top:14px">${BIG(`10 − ${SL} = ${10-x}`,80)}</div>`,o:near(x,0,10),a:x};
  return{q:`${tenFrame(10,x)}<div style="margin-top:14px">${BIG(`10 − ${x} = ${SL}`,80)}</div>`,o:near(10-x,0,10),a:10-x}});
-GAMES.maze=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const t=rnd(L3(lv,4,5,6),L3(lv,6,9,10));const tiles=[];const seen=new Set();let g=0;
+GAMES.maze=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const t=uq(()=>rnd(L3(lv,4,5,6),L3(lv,6,9,10)));const tiles=[];const seen=new Set();let g=0;
  while(tiles.length<12&&g++<500){const ok=tiles.filter(x=>x.ok).length<4&&(Math.random()<.4);const v=ok?t:rnd(0,10);if(!ok&&v===t)continue;const e=Math.random()<.5?(()=>{const a=rnd(0,v);return`${a} + ${v-a}`})():(()=>{const a=rnd(v,10);return`${a} − ${a-v}`})();
   if(seen.has(e))continue;seen.add(e);tiles.push({h:`<span style="font-size:40px;font-weight:900">${e}</span>`,ok:v===t})}
  if(!tiles.some(x=>x.ok))tiles[0]={h:`<span style="font-size:40px;font-weight:900">${t} + 0</span>`,ok:true};
@@ -72,7 +72,7 @@ GAMES.rebus=QZ('🧩 Ребус: суреттің орнында қандай с
  const a=rnd(1,3),b=rnd(1,3),c=rnd(1,3);return{q:BIG(`${x} + ${x} = ${2*a}`,58)+BIG(`${x} + ${y} = ${a+b}`,58)+BIG(`${y} + ${z} = ${b+c}`,58)+BIG(`${z} = ?`,54),o:near(c,0,10),a:c}});
 function triFig(k){const W=420,H=330,A=[210,20],L=[20,310],R=[400,310];let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><polygon points="${A} ${L} ${R}" fill="#e3f2fd" stroke="#1a2a5a" stroke-width="6" stroke-linejoin="round"/>`;
  for(let i=1;i<=k;i++){const x=L[0]+(R[0]-L[0])*i/(k+1);s+=`<line x1="${A[0]}" y1="${A[1]}" x2="${x}" y2="${R[1]}" stroke="#1a2a5a" stroke-width="5"/>`}return s+'</svg>'}
-GAMES.tricount=QZ('🔺 Суретте неше үшбұрыш бар?',(lv)=>{const k=rnd(0,L3(lv,1,2,3));const n=(k+1)*(k+2)/2;return{q:triFig(k)+(lv===1?'<div class="mut" style="font-size:22px">Кіші үшбұрыштарды да, үлкенін де сана</div>':''),o:near(n,1,12),a:n}});
+GAMES.tricount=QZ('🔺 Суретте неше үшбұрыш бар?',(lv)=>{const k=rnd(0,L3(lv,1,2,3));const n=(k+1)*(k+2)/2;return{q:triFig(k)+(lv===1?'<div class="mut" style="font-size:22px">Кіші үшбұрыштарды да, үлкенін де сана</div>':''),o:near(n,1,12),a:n}},{rounds:4});
 GAMES.balance=QZ('⚖️ Таразыны теңестір',(lv)=>{const mx=L3(lv,5,8,10);const a=rnd(1,mx-1),b=rnd(1,mx-a),c=rnd(1,a+b-1),x=a+b-c;
  return{q:scaleSvg('📦','📦',0,`${a} кг + ${b} кг`,`${c} кг + ? кг`)+'<div class="mut" style="font-size:24px">Оң жаққа неше кг керек?</div>',o:near(x,0,10).map(v=>v+' кг'),a:x+' кг',oh:NO}});
 GAMES.rebusduel=DU('Ребус: суреттің орнындағы сан',(lv)=>{const [x,y]=pick(RB,2);if(lv===1){const v=rnd(1,5);return{q:BIG(`${x}+${x}=${2*v}`,64)+BIG(`${x}=?`,56),o:near(v,0,10),a:v}}
@@ -88,7 +88,7 @@ GAMES.riddles2=TQ('🧠 Ойлан, тап!',(lv,k)=>{const [q,a]=RID2[(k*5+rnd(
 /* ===== 6. Уақыт. Өлшеу ===== */
 GAMES.clockread=QZ('🕐 Сағат нешені көрсетіп тұр?',(lv)=>{const h=rnd(1,12),m=lv===3&&Math.random()<.6?30:0;const o=[...new Set([tm(h,m),tm(h%12+1,m),tm(h,m?0:30),tm((h+10)%12+1,m)])];
  return{q:clockSvg(h,m,320),o:lv===1?nearS(h,1,12,1).map(v=>tm(v)):o,a:tm(h,m),oh:NO}});
-GAMES.clockset=(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const th=rnd(1,12),tmn=lv===3?pick([0,30],1)[0]:0;let h=rnd(1,12),m=0;hd.innerHTML=`🕐 Сағатты <b style="color:#e53935;font-size:46px">${tm(th,tmn)}</b> етіп қой`;
+GAMES.clockset=(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const [th,tmn]=uq(()=>[rnd(1,12),lv===3?pick([0,30],1)[0]:0]);let h=rnd(1,12),m=0;hd.innerHTML=`🕐 Сағатты <b style="color:#e53935;font-size:46px">${tm(th,tmn)}</b> етіп қой`;
  b.style.justifyContent='center';b.style.alignItems='center';const cw=el('div','');const side=el('div','side');b.append(cw,side);
  const draw=()=>cw.innerHTML=clockSvg(h,m,380);draw();const mkb=(t,f)=>{const x=el('button','btn alt',t);x.style.margin='6px';x.onclick=()=>{f();beep('tap');draw()};return x};
  const r1=el('div','');r1.append(el('div','big','Сағат тілі (қысқа, қызыл)'),mkb('◀',()=>h=h===1?12:h-1),mkb('▶',()=>h=h===12?1:h+1));side.append(r1);

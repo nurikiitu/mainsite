@@ -9,7 +9,7 @@ const MOD=n=>`<div style="display:flex;align-items:flex-end;gap:6px;flex-wrap:wr
 /* ондық/бірлік кестесі (графикалық модель) */
 const TBL=(d,u)=>`<div style="display:inline-grid;grid-template-columns:150px 150px;border:4px solid #1a2a5a;border-radius:16px;overflow:hidden;font-weight:900;text-align:center;background:#fff"><div style="background:#ffe0b2;font-size:26px;padding:6px">ондық</div><div style="background:#bbdefb;font-size:26px;padding:6px">бірлік</div><div style="font-size:72px;padding:6px">${d}</div><div style="font-size:72px;padding:6px">${u}</div></div>`;
 /* тізбекпен ретке қою */
-const SORTN=(title,mk)=>(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const {vals,desc}=mk(lv);const seq=[...vals].sort((x,y)=>desc?y-x:x-y);hd.innerHTML=title(desc);
+const SORTN=(title,mk)=>(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const {vals,desc}=uq(()=>mk(lv));const seq=[...vals].sort((x,y)=>desc?y-x:x-y);hd.innerHTML=title(desc);
   b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';const line=el('div','sline'),sl=seq.map(()=>{const x=el('div','wslot');line.append(x);return x});b.append(line);
   let f=0;const mark=()=>sl.forEach((x,i)=>x.classList.toggle('next',i===f));mark();const tiles=el('div','tiles');
   shuffle(vals).forEach(v=>{const t=el('button','tile',String(v));t.onclick=()=>{if(v!==seq[f])return T.bad(t);beep('tap');sl[f].textContent=v;sl[f].className='wslot filled';t.classList.add('used');f++;mark();if(f>=seq.length)T.done()};tiles.append(t)});b.append(tiles);

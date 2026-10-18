@@ -14,7 +14,7 @@ GAMES.check=QZ('✅ Мысал дұрыс шешілген бе?',(lv)=>{const [
  const q=sub?`${r} − ${a} = ${b}`:`${a} + ${b} = ${r}`;return{q:BIG(q,84)+(lv===3?`<div class="mut" style="font-size:24px">Кері амалмен тексер</div>`:''),o:['✅ Дұрыс','❌ Қате'],a:ok?'✅ Дұрыс':'❌ Қате',oh:NO}});
 GAMES.invduel=DU('Жетпейтін санды тап',(lv)=>{const [w,a,b,st]=pairN(lv);const t=rnd(0,3);
  if(t===0)return{q:exq(a,'+',null,w,1),o:opt(b,st),a:b,oh:NOs};if(t===1)return{q:exq(null,'+',b,w,0),o:opt(a,st),a,oh:NOs};if(t===2)return{q:exq(w,'-',null,a,1),o:opt(b,st),a:b,oh:NOs};return{q:exq(w,'-',a,b),o:opt(b,st),a:b,oh:NOs}});
-GAMES.family=TQ('👨‍👩‍👧 Мысалдар отбасы: қайсысы дұрыс?',(lv)=>{const [w,a,b,st]=pairN(lv);const ok=pick([`${w} − ${a} = ${b}`,`${w} − ${b} = ${a}`,`${b} + ${a} = ${w}`],1)[0];
+GAMES.family=TQ('👨‍👩‍👧 Мысалдар отбасы: қайсысы дұрыс?',(lv)=>{let w,a,b,st,g=0;do{[w,a,b,st]=pairN(lv)}while(a===b&&g++<30);const ok=pick([`${w} − ${a} = ${b}`,`${w} − ${b} = ${a}`,`${b} + ${a} = ${w}`],1)[0];
  const wr=[`${a} − ${w} = ${b}`,`${w} + ${a} = ${b}`,`${a} + ${w} = ${b}`,`${b} − ${w} = ${a}`];return{q:BIG(`${a} + ${b} = ${w}`,80,'#1e88e5')+`<div style="font-size:30px;font-weight:900">Осыдан қандай мысал шығады?</div>`,o:[ok,...pick(wr,3)],a:ok,oh:NO}});
 
 /* ===== 2. Есептер ===== */

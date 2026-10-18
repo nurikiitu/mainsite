@@ -24,7 +24,7 @@ GAMES.add20=QZ('➕ 20 көлемінде қосу және азайту',(lv)=>
 GAMES.frog20=QZ('🐸 Бақа 0–20 сан сызығымен секіреді',(lv)=>{let s,j,g=0;do{s=rnd(0,20);j=rnd(1,L3(lv,4,6,9))*(lv>1&&Math.random()<.5?-1:1)}while((s+j<0||s+j>20)&&g++<100);
  const st=1000/20.6,x=30+s*st;const sv=nline(20,[],0,1000).replace('</svg>',`<text x="${x}" y="88" text-anchor="middle" font-size="56">🐸</text></svg>`);
  return{q:`<div style="font-size:40px;font-weight:900">Бақа <b>${s}</b>-ден <span style="color:${j>0?'#e53935':'#1e63d6'}">${j>0?'+'+j:'−'+(-j)}</span> секірді</div>${sv}`,o:o20(s+j),a:s+j,oh:NO}});
-GAMES.pick20=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const t=rnd(L3(lv,12,11,11),L3(lv,16,18,20));const tiles=[],seen=new Set();let g=0;
+GAMES.pick20=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const t=uq(()=>rnd(L3(lv,12,11,11),L3(lv,16,18,20)));const tiles=[],seen=new Set();let g=0;
  while(tiles.length<12&&g++<600){const ok=tiles.filter(x=>x.ok).length<4&&Math.random()<.4;const v=ok?t:rnd(10,20);if(!ok&&v===t)continue;let e;
   if(Math.random()<.5){const a=rnd(Math.max(0,v-9),Math.min(v,10));e=`${a} + ${v-a}`}else{const a=rnd(v,20);if(a-v>10)continue;e=`${a} − ${a-v}`}if(seen.has(e))continue;seen.add(e);tiles.push({h:`<span style="font-size:40px;font-weight:900">${e}</span>`,ok:v===t})}
  if(!tiles.some(x=>x.ok))tiles[0]={h:`<span style="font-size:40px;font-weight:900">10 + ${t-10}</span>`,ok:true};
@@ -42,7 +42,7 @@ GAMES.million4=(box,T,lv)=>MILLION(box,T,[
 const CV=[1,2,5,10,20];
 GAMES.coinsum=QZ('🪙 Барлығы неше теңге?',(lv)=>{let l,s;do{const n=rnd(2,L3(lv,3,4,5));l=[...Array(n)].map(()=>pick(lv===1?[1,2,5]:CV.slice(0,4),1)[0]).sort((a,b)=>b-a);s=l.reduce((a,b)=>a+b,0)}while(s>20);
  return{q:coins(l),o:o20(s).map(v=>v+' тг'),a:s+' тг',oh:NO}});
-GAMES.pay=(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const IT=['🍦','🧃','🍪','🍌','✏️','🎈','🧸','🍫'];const e=IT[rnd(0,IT.length-1)];const p=rnd(L3(lv,3,8,12),L3(lv,10,15,20));hd.innerHTML=`🛒 ${e} бағасы <b style="color:#e53935;font-size:46px">${p} тг</b>. Дәл сонша монета сал`;
+GAMES.pay=(box,T,lv)=>ROUNDS(box,5,(b,k,hd)=>{const IT=['🍦','🧃','🍪','🍌','✏️','🎈','🧸','🍫'];const [e,p]=uq(()=>[IT[rnd(0,IT.length-1)],rnd(L3(lv,3,8,12),L3(lv,10,15,20))],v=>v[1]);hd.innerHTML=`🛒 ${e} бағасы <b style="color:#e53935;font-size:46px">${p} тг</b>. Дәл сонша монета сал`;
  b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';const purse=el('div','');purse.style.cssText='min-width:700px;min-height:150px;background:#fff8e1;border:6px dashed #d7a35a;border-radius:30px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;padding:10px';
  const sum=el('div','big','Әмиянда: 0 тг');const row=el('div','');row.style.cssText='display:flex;gap:16px';const chk=el('button','btn','✅ Төлеу');b.append(sum,purse,row,chk);let s=0;
  const upd=()=>{s=[...purse.children].reduce((a,c)=>a+ +c.dataset.v,0);sum.textContent=lv===3?'Әмиянды өзің сана':'Әмиянда: '+s+' тг'};
@@ -75,7 +75,7 @@ GAMES.pictosum=TQ('📊 Пиктограмма: барлығы неше?',(lv)=>
 
 /* ===== 5. Жиын. Кесінді. Логикалық есептер ===== */
 const SETS=[['Жемістер','🍎🍐🍌🍊🍓🍒'],['Көліктер','🚗🚌🚲🚂✈️🚀'],['Жануарлар','🐱🐶🐰🐻🦊🐸'],['Гүлдер','🌷🌸🌻🌹🌼🪷'],['Оқу құралдары','✏️📏📘📒✂️🖍️']];
-GAMES.set=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const si=rnd(0,SETS.length-1);const [nm,em]=SETS[si];const own=[...em].filter(x=>x.trim()&&x!=='️');const ownE=Array.from(em.matchAll(/\p{Extended_Pictographic}️?/gu),m=>m[0]);
+GAMES.set=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const si=uq(()=>rnd(0,SETS.length-1));const [nm,em]=SETS[si];const own=[...em].filter(x=>x.trim()&&x!=='️');const ownE=Array.from(em.matchAll(/\p{Extended_Pictographic}️?/gu),m=>m[0]);
  const others=SETS.filter((_,i)=>i!==si).flatMap(s=>Array.from(s[1].matchAll(/\p{Extended_Pictographic}️?/gu),m=>m[0]));const good=pick(ownE,L3(lv,3,4,4)),bad=pick(others,L3(lv,5,6,8));
  K.pickAll(b,T,{tiles:[...good.map(e=>({h:`<span style="font-size:80px">${e}</span>`,ok:true})),...bad.map(e=>({h:`<span style="font-size:80px">${e}</span>`,ok:false}))],cols:6,size:160,title:`<b style="color:#e53935">«${nm}»</b> жиынының элементтерін тап`})},{title:'🧺 Жиын'});
 GAMES.segment=QZ('📏 Кесіндінің ұзындығы',(lv)=>{let s=0,e;if(lv===1)e=rnd(2,6);else if(lv===2)e=rnd(2,10);else{s=rnd(1,4);e=rnd(s+2,10)}
@@ -108,12 +108,12 @@ const CORN={үшбұрыш:3,шаршы:4,тіктөртбұрыш:4,бесбұ�
 GAMES.figname=QZ('🔷 Бұл қандай фигура?',(lv)=>{const L=L3(lv,['дөңгелек','үшбұрыш','шаршы','тіктөртбұрыш'],['дөңгелек','шеңбер','үшбұрыш','шаршы','тіктөртбұрыш','сопақша'],Object.keys(FIG));const f=pick(L,1)[0];
  return{q:`<div style="transform:scale(1.6);margin:30px">${FIG[f]}</div>`,o:[...new Set([f,...pick(L.filter(x=>x!==f),3)])],a:f,oh:NO}});
 GAMES.corners=QZ('📐 Фигураның неше бұрышы бар?',(lv)=>{const L=L3(lv,['үшбұрыш','шаршы','тіктөртбұрыш'],['үшбұрыш','шаршы','тіктөртбұрыш','бесбұрыш','дөңгелек'],['үшбұрыш','шаршы','тіктөртбұрыш','бесбұрыш','алтыбұрыш','дөңгелек','сопақша']);const f=pick(L,1)[0];
- return{q:`<div style="transform:scale(1.6);margin:30px">${FIG[f]}</div>`,o:[0,3,4,5,6].filter(v=>lv===3||v!==6).slice(0,lv===1?3:5).concat(CORN[f]).filter((v,i,a)=>a.indexOf(v)===i),a:CORN[f]}});
-GAMES.findfig=(box,T,lv)=>ROUNDS(box,4,(b,k)=>{const L=L3(lv,['дөңгелек','үшбұрыш','шаршы'],['дөңгелек','үшбұрыш','шаршы','тіктөртбұрыш','сопақша'],Object.keys(FIG));const tg=pick(L,1)[0];const tiles=[];const good=rnd(2,4);
+ return{q:`<div style="transform:scale(1.6);margin:30px">${FIG[f]}</div>`,o:[0,3,4,5,6].filter(v=>lv===3||v!==6).slice(0,lv===1?3:5).concat(CORN[f]).filter((v,i,a)=>a.indexOf(v)===i),a:CORN[f]}},{rounds:6});
+GAMES.findfig=(box,T,lv)=>ROUNDS(box,L3(lv,3,4,4),(b,k)=>{const L=L3(lv,['дөңгелек','үшбұрыш','шаршы'],['дөңгелек','үшбұрыш','шаршы','тіктөртбұрыш','сопақша'],Object.keys(FIG));const tg=pkU(L);const tiles=[];const good=rnd(2,4);
  for(let i=0;i<12;i++){const f=i<good?tg:pick(L.filter(x=>x!==tg),1)[0];tiles.push({h:`<div style="transform:scale(.6) rotate(${lv>1?rnd(-25,25):0}deg)">${FIG[f]}</div>`,ok:f===tg})}
  K.pickAll(b,T,{tiles,cols:6,size:160,title:`Барлық <b style="color:#e53935">${tg}</b> фигурасын тап`})},{title:'🔍 Фигураларды тап'});
 GAMES.cornduel=DU('Неше бұрышы бар?',(lv)=>{const L=['үшбұрыш','шаршы','тіктөртбұрыш','бесбұрыш'].concat(lv===3?['алтыбұрыш']:[]);const f=pick(L,1)[0];return{q:`<div style="transform:scale(1.1)">${FIG[f]}</div><div style="font-size:26px;font-weight:900">${lv===1?f:''}</div>`,o:[3,4,5,6].slice(0,lv===3?4:3),a:CORN[f]}});
 GAMES.oddfig=TQ('🚫 Қай фигура артық?',(lv)=>{const G=L3(lv,[['үшбұрыш','үшбұрыш','үшбұрыш','дөңгелек'],['шаршы','шаршы','шаршы','үшбұрыш'],['дөңгелек','дөңгелек','дөңгелек','шаршы']],
  [['үшбұрыш','шаршы','бесбұрыш','дөңгелек'],['дөңгелек','сопақша','шеңбер','шаршы'],['шаршы','тіктөртбұрыш','бесбұрыш','сопақша']],
- [['үшбұрыш','шаршы','бесбұрыш','шеңбер'],['дөңгелек','сопақша','шеңбер','алтыбұрыш'],['шаршы','тіктөртбұрыш','алтыбұрыш','сопақша']]);const g=pick(G,1)[0];const ids=g.map((f,i)=>'f'+i);
- return{q:`<div style="font-size:30px;font-weight:900">${lv===1?'Үшеуі бірдей, біреуі басқа':'Біреуі басқаша: бұрышына қара'}</div>`,o:ids,a:'f3',oh:v=>`<div style="width:170px;height:130px;display:grid;place-items:center;transform:scale(.75)">${FIG[g[+v[1]]]}</div>`}});
+ [['үшбұрыш','шаршы','бесбұрыш','шеңбер'],['дөңгелек','сопақша','шеңбер','алтыбұрыш'],['шаршы','тіктөртбұрыш','алтыбұрыш','сопақша']]);let g=pick(G,1)[0];if(lv===1&&Math.random()<.7){const [x,y]=pick(['үшбұрыш','шаршы','дөңгелек','тіктөртбұрыш'],2);g=[x,x,x,y]}const ids=g.map((f,i)=>'f'+i);
+ return{key:g.join(),q:`<div style="font-size:30px;font-weight:900">${lv===1?'Үшеуі бірдей, біреуі басқа':'Біреуі басқаша: бұрышына қара'}</div>`,o:ids,a:'f3',oh:v=>`<div style="width:170px;height:130px;display:grid;place-items:center;transform:scale(.75)">${FIG[g[+v[1]]]}</div>`}});

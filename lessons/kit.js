@@ -1,4 +1,5 @@
 /* NeuroUstaz · сабақтарға ортақ құралдар (тапсырма үлгілері мен ойындар) */
+const QK=t=>t.key!=null?'K'+t.key:String(t.q).replace(/\s(style|class)="[^"]*"/g,'')+'|'+t.a;
 const near=(a,lo=1,hi=10,n=4)=>{const s=new Set([a]);let g=0;while(s.size<n&&g++<200){const v=a+rnd(-3,3);if(v>=lo&&v<=hi)s.add(v)}for(let v=lo;s.size<n&&v<=hi;v++)s.add(v);return shuffle([...s])};
 const SG=v=>({'>':'&gt;','<':'&lt;','=':'=','≠':'≠','+':'+','-':'−'}[v]||v);
 const cmp=(a,b)=>a>b?'>':a<b?'<':'=';
@@ -87,7 +88,7 @@ const GM={
 quiz({icon,title,gen,rounds=10,bg,em:emj='🏆',win='Керемет!'}){return{icon,build(box,T){const start=()=>{const SEEN=new Set();const W=gwrap(box,bg);const st=prog(W,rounds);const hd=el('div','qline',title);hd.style.fontSize='32px';const tm=el('div','mut','');tm.style.fontSize='24px';
  const qb=el('div','');qb.style.cssText='flex:1;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;width:100%';const ob=el('div','');ob.style.cssText='display:flex;gap:16px;flex-wrap:wrap;justify-content:center';W.append(st,hd,tm,qb,ob);
  let k=0,err=0,t0=Date.now(),cur;const alive=T.alive();const tick=()=>{if(!alive()||!W.isConnected)return;tm.textContent='⏱ '+Math.floor((Date.now()-t0)/1000)+' сек · ❌ '+err;setTimeout(tick,500)};tick();
- const show=()=>{st.set(k);{let g=0;do{cur=gen(k)}while(SEEN.has(String(cur.q)+'|'+cur.a)&&g++<30);SEEN.add(String(cur.q)+'|'+cur.a)}qb.innerHTML=cur.q;ob.innerHTML='';shuffle(cur.o).forEach(v=>{const b=typeof v==='number'&&!cur.oh?ncard(v):el('button','opt',cur.oh?cur.oh(v):v);b.dataset.v=v;if(cur.oh){b.style.height='auto';b.style.minHeight='84px';b.style.padding='8px 18px'}
+ const show=()=>{st.set(k);{let g=0;do{cur=gen(k)}while(SEEN.has(QK(cur))&&g++<40);SEEN.add(QK(cur))}qb.innerHTML=cur.q;ob.innerHTML='';shuffle(cur.o).forEach(v=>{const b=typeof v==='number'&&!cur.oh?ncard(v):el('button','opt',cur.oh?cur.oh(v):v);b.dataset.v=v;if(cur.oh){b.style.height='auto';b.style.minHeight='84px';b.style.padding='8px 18px'}
   b.onclick=()=>{if(b.dataset.l)return;if(String(v)===String(cur.a)){T.ok(b);[...ob.children].forEach(x=>x.dataset.l=1);T.later(()=>{k++;if(k<rounds)show();else{const s=Math.floor((Date.now()-t0)/1000);T.end(box,{em:emj,title:win,text:`Уақыт: ${s} сек · ${T.errTxt(err)}`,again:start})}},650)}else{err++;T.bad(b)}};ob.append(b)})};
  T.reveal=()=>[...ob.children].forEach(x=>{if(x.dataset.v===String(cur.a))x.classList.add('hint')});show()};start()}}},
 /* шарларды ретімен жару */
