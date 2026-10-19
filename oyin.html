@@ -393,7 +393,7 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 const GAMES={};
 fit();
 const kit=document.createElement('script');kit.src='lessons/kit.js?v=34';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=34';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=34';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=34';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
+const cm=document.createElement('script');cm.src='games/common.js?v=34';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=35';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=34';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
 const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=34`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
 </script>
 </body>
