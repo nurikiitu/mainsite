@@ -11,3 +11,5 @@ GAMES.k2find2=SA.findLetter(AI,['б','й','к','і']);GAMES.k2bw=SA.buildWord(PI
 GAMES.k2miss2=SA.missLetter(PE,['ң','ғ','ж','ә'],AE);GAMES.k2pw=SA.picWord(PE);GAMES.k2sndc=SA.soundCount(PES);GAMES.k2first2=SA.firstDuel(PE,AE);GAMES.k2mil=SA.million(PE,AE,S2);
 GAMES.k2syls=SA.sylSplit(PE);GAMES.k2sb=SA.sentBuild(S2);GAMES.k2sc=SA.sentCount(S2);GAMES.k2syld=SA.sylDuel(PE);GAMES.k2long=SA.longShort(PE);
 GAMES.k2min=SA.minute(sylF,'буын');GAMES.k2minw=SA.minute(wrdF,'сөз');GAMES.k2sp=SA.sentPic(S2);GAMES.k2rope=SA.ropeWord(PE);GAMES.k2reb=SA.rebusSent(R2);
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.trainw=SA.train(lv=>TRW['l'+lv]);

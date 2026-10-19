@@ -17,3 +17,5 @@ GAMES.k1find=SA.findLetter(A5,['а','р','л','у','н']);GAMES.k1catch=SA.catch
 GAMES.k1first=SA.firstDuel(P9,A9);GAMES.k1flash=SA.flashLetter(A9,['а','р','л','у','н']);
 GAMES.k1miss=SA.missLetter(P9,['с','о','т','қ'],A9);GAMES.k1bw=SA.buildWord(P9);GAMES.k1pw=SA.picWord(P9);GAMES.k1wd=SA.wordDuel(P9);GAMES.k1mil=SA.million(P9,A9,null);
 GAMES.k1min=SA.minute(SYL1,'буын');GAMES.k1minw=SA.minute(WRD1,'сөз');GAMES.k1reb=SA.rebusSent(R1);GAMES.k1rope=SA.ropeWord(P9);GAMES.k1rid=SA.riddle;
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.hardsoft=SA.hardsoft;

@@ -75,3 +75,5 @@ GAMES.k22mem=KMEM('🇰🇿 Туған өлке: атауын түсінікпе
 GAMES.k22th=QZ('📘 Мәтін мен сөйлем туралы',KQ(K22TH));
 GAMES.k22mil=(box,T,lv)=>MILLION(box,T,[k=>KQ(K22TH)(Math.min(3,1+(k>>2))),k=>KQ(K22TT)(2),k=>{const x=KPK(K22ST);return{q:`«${x[0]}…» — соңына қандай белгі?`,o:['.','?','!'],a:x[1]}},
   k=>{const x=KPK(K22QW);return{q:`«${x[0]}» сөзі қай сұраққа жауап береді?`,o:['Кім?','Не?','Қандай?','Не істеді?'],a:x[1]}},k=>{const x=KPK(K22KD);return{q:`<div style="font-size:24px">${x[0]}</div>Бұл қандай мәтін?`,o:['Әңгімелеу','Сипаттау','Пайымдау'],a:x[1]}}]);
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.readtx=SA.readText(lv=>lv===1?RTX0:RTX1);

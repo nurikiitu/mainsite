@@ -42,3 +42,5 @@ GAMES.k31sb=SA.sentBuild(K31SB);
 GAMES.k31th=TQ('📘 Тіл туралы білім',KQ(K31TH));
 GAMES.k31mil=(box,T,lv)=>MILLION(box,T,[k=>KQ(K31TH)(Math.min(3,1+(k>>2))),k=>{const x=KPK(K31QS);const ws=[...new Set(x[0].replace(/[.,!?—]/g,'').split(' ').filter(w=>w&&w!==x[1]))];return{q:`«${x[0]}» — қыстырма сөз қайсы?`,o:[x[1],...pick(ws,3)],a:x[1]}},
   k=>{const x=KPK(K31SP);return{q:'Қай сөз дұрыс жазылған?',o:[x[0],...x[1]],a:x[0]}},k=>{const x=KPK(K31LT);return{q:`${x[3]} ${x[0]} — қай әріп жетпейді?`,o:x[2],a:x[1]}},k=>{const x=KPK(K31KD);return{q:`<div style="font-size:24px">${x[0]}</div>Бұл қандай мәтін?`,o:['Әңгімелеу','Сипаттау','Пайымдау'],a:x[1]}}]);
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.readtx=SA.readText(()=>RTX1);GAMES.trainw=SA.train(lv=>TRW[['l3','l4','l4'][lv-1]]);

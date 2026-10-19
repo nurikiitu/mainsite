@@ -72,3 +72,5 @@ GAMES.k21sb=SA.sentBuild(K21SB);
 GAMES.k21mil=(box,T,lv)=>MILLION(box,T,[k=>KQ(K21TQ)(Math.min(3,1+(k>>2))),k=>KS('Бұл қандай сөйлеу?',['Ауызша','Жазбаша'],K21OW)(2),
   k=>{const x=KPK(K21SP);return{q:'Қай сөз дұрыс жазылған?',o:[x[0],...x[1]],a:x[0]}},k=>{const c=KPK([...'пқтсбгджмнлр']);return{q:`«${c.toUpperCase()}» — қандай дауыссыз?`,o:['Қатаң','Ұяң','Үнді'],a:K21CT(c)}},
   k=>{const x=KPK(K21PB);return{q:`${x[0]} + ы/і = ?`,o:[x[1],x[2]],a:x[1]}}]);
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.hardsoft=SA.hardsoft;GAMES.trainw=SA.train(lv=>TRW[['l2','l3','l4'][lv-1]]);

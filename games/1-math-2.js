@@ -105,3 +105,5 @@ GAMES.measure2=QZ('📏 Фигураның барлық қабырғаларын
 GAMES.clockduel=DU('Сағат нешені көрсетіп тұр?',(lv)=>{const h=rnd(1,12),m=lv===3&&Math.random()<.5?30:0;return{q:clockSvg(h,m,230),o:[...new Set([tm(h,m),tm(h%12+1,m),tm((h+10)%12+1,m)])],a:tm(h,m),oh:NOs}});
 GAMES.earlier=TQ('⏰ Қай сағат ерте? (таңертеңгі уақыт)',(lv)=>{let a=rnd(6,11),b=rnd(6,11);while(b===a)b=rnd(6,11);const ma=lv===3?pick([0,30],1)[0]:0,mb=lv===3?pick([0,30],1)[0]:0;
  return{q:`<div style="display:flex;gap:80px"><div style="text-align:center">${clockSvg(a,ma,240)}<div class="big">А</div></div><div style="text-align:center">${clockSvg(b,mb,240)}<div class="big">Ә</div></div></div>`,o:['А','Ә'],a:a*60+ma<b*60+mb?'А':'Ә',oh:v=>`<span style="font-size:48px;padding:0 24px">${v} сағат</span>`}});
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.pyr1=PYRAMID(lv=>[[1,3,2],[1,5,3],[2,5,3]][lv-1]);

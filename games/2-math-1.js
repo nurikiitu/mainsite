@@ -89,3 +89,5 @@ GAMES.m1len=QZ('📏 Шамалар: ұзындық, масса, көлем',lv=
 GAMES.m1probd=DU('Есепті шығар',lv=>{const p=PR[rnd(0,lv===1?2:6)](lv);return{q:`<div style="font-size:22px;font-weight:800;line-height:1.3">${p.q}</div>`,o:Q2N(p.a,0,100,L3(lv,3,4,4)),a:p.a}});
 GAMES.m1mil2=(box,T,lv)=>MILLION(box,T,[k=>{const p=PR[rnd(0,6)](2);return{q:p.q,o:Q2N(p.a,0,100),a:p.a}},k=>{const e=CARRY2(k<5?1:2);return{q:`${e.a} ${SG(e.op)} ${e.b} = ?`,o:Q2N(e.r,0,100),a:e.r}},
   k=>{const n=rnd(1,9);return{q:`${n} дм = ? см`,o:[n*10,n,n*100,n+10].map(x=>x+' см'),a:n*10+' см'}},k=>{const n=rnd(1,5);return{q:`${n} ц = ? кг`,o:[n*100,n*10,n,n*1000].map(x=>x+' кг'),a:n*100+' кг'}}]);
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.pyr2=PYRAMID(lv=>[[5,12,2],[10,20,3],[10,24,3]][lv-1]);

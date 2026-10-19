@@ -12,3 +12,5 @@ GAMES.k3find2=SA.findLetter(AV,['х','һ','щ','в']);GAMES.k3miss2=SA.missLette
 GAMES.k3find3=SA.findLetter(AZ,['э','ё','ц','ф','ч']);GAMES.k3miss3=SA.missLetter(PX,['э','ё','ц','ф','ч','ъ','ь'],AZ);GAMES.k3bw2=SA.buildWord(pool(AZ,{focus:'эёцфчъь'}).concat(pool(AZ,{maxLen:5})));GAMES.k3first2=SA.firstDuel(PX,AZ);GAMES.k3mil=SA.million(PX,AZ,S3);
 GAMES.k3scheme=SA.scheme(PXS);GAMES.k3syls=SA.sylSplit(PX);GAMES.k3sb=SA.sentBuild(S3);GAMES.k3sc=DU('Сөйлемде неше сөз?',lv=>{const s=pk1(S3);const n=s.t.replace(/[.,!?]/g,'').split(' ').length;return{q:PIC(s.e,70)+W(s.t,36),o:[2,3,4,5],a:n}});GAMES.k3long=SA.longShort(PX);
 GAMES.k3min=SA.minute(sylF,'буын');GAMES.k3minw=SA.minute(wrdF,'сөз');GAMES.k3reb=SA.rebusSent(R3);GAMES.k3rope=SA.ropeWord(PX);GAMES.k3rid=SA.riddle;
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.readtx=SA.readText(lv=>lv===1?RTX0:RTX1);

@@ -56,3 +56,5 @@ GAMES.m31mem=(box,T,lv)=>GM.memory({title:'🧩 Көбейтінді мен мә
 GAMES.m31mil=(box,T,lv)=>MILLION(box,T,[k=>{const n=rnd(100,999);return{q:`${n} = ? + ${Math.floor(n/10)%10*10} + ${n%10}`,o:M3N(Math.floor(n/100)*100,100,900,4,[100]),a:Math.floor(n/100)*100}},k=>{const {a,b}=M3T(k<4?2:3);return{q:`${a} · ${b} = ?`,o:M3N(a*b,0,100,4,[1,a,b]),a:a*b}},
   k=>{const a=rnd(2,99);return{q:`${a} · 0 = ?`,o:[0,1,a,a+1],a:0}},k=>{const w=rnd(3,9),h=rnd(2,6);return{q:`Тіктөртбұрыштың ұзындығы ${w} см, ені ${h} см. Ауданы?`,o:M3N(w*h,1,60,4,[1,2]).map(x=>x+' см²'),a:w*h+' см²'}},k=>{const a=rnd(200,700),b=rnd(100,299);return{q:`${a} + ${b} = ?`,o:M3N(a+b,0,999,4,[1,10,100]),a:a+b}}]);
 function KPKX(a){return a[rnd(0,a.length-1)]}
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.pyr3=PYRAMID(lv=>[[50,150,2],[100,200,3],[100,240,3]][lv-1]);

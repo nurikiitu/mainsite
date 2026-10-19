@@ -155,3 +155,56 @@ function MILLION(box,T,GEN){const PR=['100','200','500','1 000','5 000','10 000'
 /* мысал: a op b (шектерімен) */
 function ex(max,ops='+-',minA=0){const op=ops[rnd(0,ops.length-1)];let a,b,r;if(op==='+'){r=rnd(Math.max(1,minA),max);a=rnd(0,r);b=r-a}else{a=rnd(Math.max(1,minA),max);b=rnd(0,a);r=a-b}return{a,b,op,r}}
 const exT=(max=100,ops='+-')=>{const e=ex(max/10,ops);return{a:e.a*10,b:e.b*10,op:e.op,r:e.r*10}};
+
+/* ===== 1–3 сынып сайттарынан қосылған математика ойындары ===== */
+const OPTN=(a,n,lo,hi)=>{const S=new Set([a]);let g=0;while(S.size<n&&g++<200){const v=a+rnd(-Math.max(3,Math.ceil(a*.3)),Math.max(3,Math.ceil(a*.3)));if(v>=lo&&v<=hi)S.add(v)}for(let v=lo;S.size<n&&v<=hi;v++)S.add(v);return shuffle([...S])};
+const TILEB=(v,cls='')=>el('button','tile'+(cls?' '+cls:''),String(v));
+/* Математикалық пирамида: жоғарғы сан = астындағы екі санның қосындысы */
+const PYR_REL=[[0,1,2],[1,3,4],[2,4,5]];
+function pyrSolv(hid){const u=new Set(hid);let ch=true;while(ch&&u.size){ch=false;for(const r of PYR_REL){const x=r.filter(i=>u.has(i));if(x.length===1){u.delete(x[0]);ch=true}}}return !u.size}
+const PYRAMID=(rng)=>(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{hd.innerHTML='🔺 Математикалық пирамида: жоғарғы сан — астындағы екі санның қосындысы';
+ const [lo,hi,nh]=rng(lv);const t=uq(()=>{const B=[rnd(lo,hi),rnd(lo,hi),rnd(lo,hi)],M=[B[0]+B[1],B[1]+B[2]];const vals=[M[0]+M[1],...M,...B];let hid;do{hid=pick([0,1,2,3,4,5],nh)}while(!pyrSolv(hid));return{vals,hid:hid.sort()}},t=>t.vals.join(',')+'|'+t.hid.join(''));
+ b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';
+ const p=el('div','');p.style.cssText='display:flex;flex-direction:column;align-items:center;gap:10px';const cells=[];
+ [[0],[1,2],[3,4,5]].forEach(r=>{const row=el('div','');row.style.cssText='display:flex;gap:14px';r.forEach(i=>{const h=t.hid.includes(i);const c=el('div','',h?'?':t.vals[i]);
+  c.style.cssText=`width:${hi>99?150:120}px;height:100px;border-radius:24px;display:grid;place-items:center;font-size:${hi>99?50:56}px;font-weight:900;color:#1a2a5a;background:${h?'#ffffff55':'#fff'};border:5px ${h?'dashed #fff':'solid #fff'};box-shadow:0 6px 0 #0002`;c.dataset.e=h?1:'';cells[i]=c;row.append(c)});p.append(row)});b.append(p);
+ const emp=()=>t.hid.filter(i=>cells[i].dataset.e);const ready=i=>PYR_REL.some(r=>r.includes(i)&&r.filter(j=>emp().includes(j)).length===1);
+ let sel=null;const setSel=i=>{sel=i;cells.forEach((c,j)=>c.style.outline=j===i?'6px solid #fdd835':'')};const mark=()=>{const e=emp();setSel([...e].sort((x,y)=>y-x).find(ready)??e[0]??null)};
+ t.hid.forEach(i=>cells[i].onclick=()=>{if(cells[i].dataset.e)setSel(i)});
+ const fill=(i,v,tb)=>{const c=cells[i];c.textContent=v;c.dataset.e='';c.style.background='#fff';c.style.borderStyle='solid';c.style.borderColor='#43a047';T.ok(c);tb.style.visibility='hidden';tb.classList.remove('hint');if(!emp().length){setSel(null);T.done()}else mark()};
+ const hv=t.hid.map(i=>t.vals[i]),ex2=[];let g=0;while(ex2.length<2&&g++<100){const v=hv[rnd(0,hv.length-1)]+rnd(-9,9)*(hi>99?3:1);if(v>0&&!hv.includes(v)&&!ex2.includes(v))ex2.push(v)}
+ const tl=el('div','tiles');shuffle([...hv,...ex2]).forEach(v=>{const tb=TILEB(v,hi>99?'wide':'');const tap=()=>{if(sel!=null&&v===t.vals[sel])fill(sel,v,tb);else T.bad(tb)};tb.onclick=tap;tb._tap=tap;
+  DRAG(tb,()=>emp().map(i=>cells[i]),c=>{const i=cells.indexOf(c);v===t.vals[i]?fill(i,v,tb):T.bad(tb)});tl.append(tb)});b.append(tl);mark();
+ T.reveal=()=>{const i=sel;if(i==null)return;[...tl.children].forEach(x=>{if(x.style.visibility!=='hidden'&&+x.textContent===t.vals[i])x.classList.add('hint')})}});
+/* 10 саны қалай алынды? */
+const TENHOW=(box,T,lv)=>ROUNDS(box,8,(b,k,hd)=>{hd.innerHTML='🔟 10 саны қалай алынды? Жетпейтін санды тап';
+ const t=uq(()=>({a:rnd(1,9),m:Math.random()<.5?'a':'b'}),t=>t.a+t.m);const a=t.a,bb=10-a,ans=t.m==='a'?a:bb;
+ b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';
+ const d=el('div','');d.style.cssText='display:grid;grid-template-columns:repeat(5,70px);gap:12px;background:#fff;padding:16px;border-radius:24px;box-shadow:0 6px 0 #0002';
+ for(let i=0;i<10;i++){const red=i<a,show=lv===1||(lv===2&&(t.m==='a'?!red:red));d.append(el('div','',''));d.lastChild.style.cssText=`width:70px;height:70px;border-radius:50%;${show?`background:${red?'#e53935':'#1e88e5'}`:'border:4px dashed #b0bec5'}`}
+ if(lv<3)b.append(d);
+ const bx=el('div','','');bx.style.cssText='width:120px;height:120px;border-radius:22px;background:#ffffff4d;border:5px solid #fff;display:inline-grid;place-items:center';
+ const eq=el('div','');eq.style.cssText='display:flex;align-items:center;gap:20px;font-size:96px;font-weight:900;text-shadow:0 5px 0 #0003';
+ const sp=v=>{const s=el('span','',String(v));return s};eq.append(t.m==='a'?bx:sp(a),sp('+'),t.m==='b'?bx:sp(bb),sp('= 10'));b.append(eq);
+ const tl=el('div','tiles');OPTN(ans,4,0,10).forEach(v=>{const tb=TILEB(v);const put=()=>{if(v!==ans)return T.bad(tb);bx.textContent=v;bx.style.background='#fff';bx.style.color='#1a2a5a';bx.style.textShadow='none';tb.style.visibility='hidden';T.ok(bx);T.done()};tb.onclick=put;tb._tap=put;DRAG(tb,()=>[bx],put);tl.append(tb)});b.append(tl);
+ T.reveal=()=>[...tl.children].forEach(x=>{if(+x.textContent===ans)x.classList.add('hint')})});
+/* Бағандап (бұрышпен) бөлу: 84 : 4 — қадаммен */
+function cdPoolM(){const P=[];for(let d=2;d<=9;d++)for(let q=11;q*d<=99;q++){const n=q*d,A=Math.floor(n/10);if(A<d)continue;P.push({n,d,q,easy:A%d===0})}return P}
+const COLDIV=(box,T,lv)=>{const P=cdPoolM();const E=P.filter(x=>x.easy),Hd=P.filter(x=>!x.easy);
+ ROUNDS(box,8,(b,k,hd)=>{const src=lv===1?E:lv===3?Hd:(k<4?E:Hd);const t=uq(()=>src[rnd(0,src.length-1)],x=>x.n+':'+x.d);
+ const A=Math.floor(t.n/10),B=t.n%10,q1=Math.floor(A/t.d),r1=A-q1*t.d,N2=r1*10+B,q2=N2/t.d;hd.innerHTML=`➗ Бағандап бөл: ${t.n} : ${t.d}`;
+ b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';
+ const card=el('div','');card.style.cssText='background:#fff;border-radius:28px;padding:18px 40px;box-shadow:0 8px 0 rgba(0,0,0,.12);display:flex;gap:48px;align-items:flex-start;color:#1a2a5a';
+ const mono='font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:900';
+ const left=el('div','');left.style.cssText=mono+';font-size:72px;line-height:1.05;min-width:200px';left.innerHTML=`<div><span class="cA" style="border-radius:10px;padding:0 4px">${A}</span><span class="cB" style="border-radius:10px;padding:0 4px">${B}</span></div><div class="cW" style="font-size:56px;color:#5c6bc0"></div>`;
+ const right=el('div','');right.style.cssText=mono+';font-size:72px;line-height:1.05';const S=[0,1].map(()=>{const x=el('div','','');x.style.cssText='width:96px;height:100px;border:5px dashed #7986cb;border-radius:18px;display:inline-grid;place-items:center;background:#e8eaf6;font-size:64px';return x});
+ right.innerHTML=`<div style="border-left:7px solid #1a2a5a;padding-left:18px">${t.d}</div>`;const qr=el('div','');qr.style.cssText='border-left:7px solid #1a2a5a;border-top:7px solid #1a2a5a;padding:10px 0 0 18px;display:flex;gap:10px';qr.append(...S);right.append(qr);card.append(left,right);
+ const hint=el('div','');hint.style.cssText='font-size:28px;font-weight:800;text-align:center';const tl=el('div','tiles');b.append(card,hint,tl);
+ const W=left.querySelector('.cW'),hA=left.querySelector('.cA'),hB=left.querySelector('.cB');let ans=0;
+ const step=s=>{tl.innerHTML='';ans=s===1?q1:q2;const slot=S[s-1];hA.style.background=s===1?'#fff59d':'';hB.style.background=s===2?'#fff59d':'';slot.style.borderColor='#fdd835';
+  hint.innerHTML=s===1?`1-қадам: <b>${A}</b> ондықты <b>${t.d}</b>-ге бөл. ${A} : ${t.d} = ?`:`2-қадам: ${r1?`қалдық ${r1}, ${B}-ді түсіреміз → <b>${N2}</b>`:`<b>${B}</b> бірлікті`} ${t.d}-ге бөл. ${N2} : ${t.d} = ?`;
+  OPTN(ans,4,0,9).forEach(v=>{const tb=TILEB(v);const put=()=>{if(v!==ans)return T.bad(tb);slot.textContent=v;slot.style.borderStyle='solid';slot.style.borderColor='#43a047';slot.style.background='#e8f5e9';T.ok(slot);tb.style.visibility='hidden';
+   if(s===1){const pd=N2<10?'padding-left:1ch':'';W.innerHTML=`<div>−${q1*t.d}</div><div style="border-top:5px solid #5c6bc0;width:110px;${pd}">${N2}</div>`;T.later(()=>step(2),500)}
+   else{const pd=q2*t.d<10?'padding-left:1ch;':'';W.innerHTML+=`<div style="${pd}">−${q2*t.d}</div><div style="border-top:5px solid #5c6bc0;width:110px;padding-left:1ch">0</div>`;hA.style.background=hB.style.background='';hint.innerHTML=`✅ ${t.n} : ${t.d} = <b>${t.q}</b> &nbsp; Тексеру: ${t.q} · ${t.d} = ${t.n}`;T.later(()=>T.done(),900)}};
+   tb.onclick=put;tb._tap=put;DRAG(tb,()=>[slot],put);tl.append(tb)})};
+ T.reveal=()=>[...tl.children].forEach(x=>{if(+x.textContent===ans)x.classList.add('hint')});step(1)})};

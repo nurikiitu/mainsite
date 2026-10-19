@@ -72,3 +72,5 @@ GAMES.m3cost=QZ('🛒 Баға · саны = құны',lv=>{const p=pick([2,3,4,
 GAMES.m3probd=DU('Есеп жарысы',lv=>{const p=P3[rnd(0,6)](lv);return{q:`<div style="font-size:21px;font-weight:800;line-height:1.3">${p.q}</div>`,o:Q2N(p.a,1,100,L3(lv,3,4,4)),a:p.a}});
 GAMES.m3mil=(box,T,lv)=>MILLION(box,T,[k=>{const {a,b,r}=MUL(k<4?1:2);return{q:`${a} · ${b} = ?`,o:MO(r,a,b),a:r}},k=>{const {a,b,r}=MUL(2);return{q:`${r} : ${a} = ?`,o:near(b,1,10),a:b}},k=>{const n=rnd(3,6);return{q:`${PN[n]} — неше бұрышы бар?`,o:near(n,3,9),a:n}},
   k=>{const p=P3[rnd(0,6)](2);return{q:p.q,o:Q2N(p.a,1,100),a:p.a}},k=>({q:'Тік бұрыш неше градус?',o:[90,60,100,180],a:90})]);
+/* 1–3 сынып сайттарынан қосылған */
+GAMES.coldiv=COLDIV;
