@@ -9,7 +9,7 @@ const big=(t,c='#3b7dd8',fs=90)=>`<span style="font-size:${fs}px;font-weight:900
 const em=(e,fs=64)=>`<span style="font-size:${fs}px;line-height:1">${e}</span>`;
 function prog(host,n){const st=el('div','prog');for(let i=0;i<n;i++)st.append(el('i'));host.append(st);st.set=k=>[...st.children].forEach((x,j)=>x.className=j<k?'d':j===k?'c':'');return st}
 function col(b,gap=16,just='space-around'){b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent=just;b.style.gap=gap+'px'}
-function cellBtn(h,css=''){const c=el('button','',h);c.style.cssText='background:#fff;border:4px solid var(--line);border-radius:22px;display:grid;place-items:center;box-shadow:0 5px 0 var(--line);padding:8px;'+css;return c}
+function cellBtn(h,css=''){const c=el('button','cb',h);c.style.cssText='background:#fff;border:4px solid var(--line);border-radius:22px;display:grid;place-items:center;box-shadow:0 5px 0 var(--line);padding:8px;'+css;return c}
 
 const K={
 /* сұрақтар тізбегі (жай орауыш) */
@@ -30,12 +30,17 @@ match(b,T,{L,R,title,cw=200,ch=150,gap=26,side=false,cw2}){col(b,10);b.style.pos
  T.reveal=()=>{A.forEach(a=>{if(a.dataset.ok)return;const c=B.find(x=>!x.dataset.ok&&x.dataset.k===a.dataset.k);if(c){link(a,c);left--}});if(left<=0)T.done()}},
 /* топтарға бөлу: затты бас, сосын қорапты бас */
 bins(b,T,{items,bins,title}){col(b,14);if(title)b.append(el('div','mut',title));
- const pool=el('div','');pool.style.cssText='display:flex;gap:14px;flex-wrap:wrap;justify-content:center;min-height:120px;max-width:1350px';b.append(pool);
- const row=el('div','');row.style.cssText='display:flex;gap:26px;justify-content:center';b.append(row);let sel=null,left=items.length;const Bs=[];
- bins.forEach(bn=>{const c=el('button','',`<div style="font-size:26px;font-weight:900;margin-bottom:6px">${bn.h}</div><div class="bin-in" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:90px"></div>`);
-  c.style.cssText=`flex:1;min-width:300px;max-width:${Math.floor(1300/bins.length)}px;background:${bn.c||'#f6f7fb'};border:4px dashed #c9cfdc;border-radius:24px;padding:12px`;c.dataset.id=bn.id;
-  c.onclick=()=>{if(!sel){T.bad(c);return}if(sel.dataset.bin===bn.id){T.ok(c);sel.style.outline='';sel.onclick=null;sel.style.transform='scale(.8)';c.querySelector('.bin-in').append(sel);sel=null;if(--left===0)T.done()}else{T.bad(sel)}};row.append(c);Bs.push(c)});
- shuffle(items).forEach(it=>{const c=cellBtn(it.h,'min-width:110px;height:110px');c.dataset.bin=it.bin;c.onclick=()=>{pool.querySelectorAll('button').forEach(x=>x.style.outline='');sel=c;c.style.outline='5px solid #ffc531';beep('tap')};if(typeof DRAG==='function'){const tap=c.onclick;c._tap=tap;DRAG(c,()=>Bs,t=>{tap();t.onclick()})}pool.append(c)});
+ const pool=el('div','');pool.style.cssText='display:flex;gap:16px;flex-wrap:wrap;justify-content:center;min-height:120px;max-width:1400px';b.append(pool);
+ const row=el('div','');row.style.cssText='display:flex;gap:30px;justify-content:center;width:100%;max-width:1300px';b.append(row);let sel=null,left=items.length;const Bs=[];
+ const PAL=[['#42a5f5','#1e88e5'],['#ec407a','#c2185b'],['#66bb6a','#388e3c'],['#ffa726','#ef6c00'],['#ab47bc','#7b1fa2']];
+ bins.forEach((bn,bi)=>{const [c1,c2]=PAL[bi%PAL.length];const c=el('button','kbin',`<div class="kh">${bn.h}<b>0</b></div><div class="bin-in" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-content:flex-start"></div>`);
+  c.style.background=`linear-gradient(160deg,${c1},${c2})`;c.style.maxWidth=Math.floor(1300/bins.length)+'px';c.dataset.id=bn.id;let n=0;
+  c.onclick=()=>{if(!sel){c.classList.remove('no');void c.offsetWidth;c.classList.add('no');return}
+   if(sel.dataset.bin===bn.id){const it=sel;sel=null;const r0=it.getBoundingClientRect();it.style.outline='';it.style.transform='';it.onclick=null;it._tap=null;it.style.cursor='default';c.querySelector('.bin-in').append(it);const r1=it.getBoundingClientRect();
+    it.animate([{transform:`translate(${r0.left-r1.left}px,${r0.top-r1.top}px) scale(1)`},{transform:'translate(0,-30px) scale(1)',offset:.7},{transform:'scale(.82)'}],{duration:500,easing:'cubic-bezier(.3,1.2,.5,1)'});
+    T.ok(c);c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump');c.querySelector('.kh b').textContent=++n;if(--left===0)T.done()}else{T.bad(sel);c.classList.remove('no');void c.offsetWidth;c.classList.add('no')}};row.append(c);Bs.push(c)});
+ shuffle(items).forEach(it=>{const c=cellBtn(it.h,'min-width:110px;height:110px;color:#1a2a5a');c.dataset.bin=it.bin;c.onclick=()=>{pool.querySelectorAll('button').forEach(x=>{x.style.outline='';x.style.transform=''});sel=c;c.style.outline='6px solid #ffc531';c.style.transform='translateY(-8px) scale(1.06)';beep('tap')};if(typeof DRAG==='function'){const tap=c.onclick;c._tap=tap;DRAG(c,()=>Bs,t=>{tap();t.onclick()})}pool.append(c)});
+ b.append(el('div','',''));b.lastChild.innerHTML='<div style="font-size:22px;font-weight:800;opacity:.85">👆 Ұстап, керек себетке апар — немесе басып, сосын себетті бас</div>';
  T.reveal=()=>{pool.querySelectorAll('button').forEach(x=>x.classList.add('hint'));toast('Әр затты өз тобына сал 🙂','#c28a00')}},
 /* дұрыстарының бәрін тап */
 pickAll(b,T,{tiles,cols=6,size=180,title}){col(b,16);if(title)b.append(el('div','qline',title));

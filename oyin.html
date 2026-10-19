@@ -116,6 +116,54 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .btn{height:64px;padding:0 30px;border-radius:18px;font-weight:900;font-size:24px;background:var(--brand);color:#fff;box-shadow:0 5px 0 #3e30b0}
 .btn.alt{background:#f1f3f8;color:var(--ink);box-shadow:0 5px 0 #dfe3ec}
 .btn:active{transform:translateY(3px);box-shadow:none}
+
+/* ====== ЖАНДЫ ӘРІ ТҮРЛІ ТҮСТІ СТИЛЬ ====== */
+.main::before,.main::after{content:'';position:absolute;border-radius:50%;filter:blur(40px);opacity:.35;pointer-events:none;z-index:0}
+.main::before{width:520px;height:520px;left:-140px;top:-160px;background:#80deea;animation:blob 18s ease-in-out infinite alternate}
+.main::after{width:600px;height:600px;right:-180px;bottom:-220px;background:#ce93d8;animation:blob 22s ease-in-out infinite alternate-reverse}
+@keyframes blob{0%{transform:translate(0,0) scale(1)}50%{transform:translate(120px,60px) scale(1.15)}100%{transform:translate(40px,140px) scale(.9)}}
+.stagew,#pen{z-index:2}.stagew{position:absolute}
+.main .qline{width:fit-content;max-width:96%;margin-left:auto;margin-right:auto;background:#fff8e1;color:#1a2a5a;border-radius:22px;padding:8px 30px;box-shadow:0 6px 0 #0002;text-shadow:none;animation:qdrop .5s cubic-bezier(.3,1.5,.5,1) both;--mut:#6b7590}
+@keyframes qdrop{from{transform:translateY(-30px) scale(.9);opacity:0}}
+@keyframes popin{0%{transform:scale(.3) translateY(30px);opacity:0}70%{transform:scale(1.08)}100%{transform:none;opacity:1}}
+.opt,.tile,.nc,.cb{animation:popin .5s cubic-bezier(.3,1.5,.5,1) both}
+.opt:nth-child(2),.tile:nth-child(2),.nc:nth-child(2),.cb:nth-child(2){animation-delay:.05s}
+.opt:nth-child(3),.tile:nth-child(3),.nc:nth-child(3),.cb:nth-child(3){animation-delay:.1s}
+.opt:nth-child(4),.tile:nth-child(4),.nc:nth-child(4),.cb:nth-child(4){animation-delay:.15s}
+.opt:nth-child(5),.tile:nth-child(5),.nc:nth-child(5),.cb:nth-child(5){animation-delay:.2s}
+.opt:nth-child(6),.tile:nth-child(6),.nc:nth-child(6),.cb:nth-child(6){animation-delay:.25s}
+.opt:nth-child(n+7),.tile:nth-child(n+7),.nc:nth-child(n+7),.cb:nth-child(n+7){animation-delay:.3s}
+.opt,.tile,.cb{--tc:#64b5f6;--td:#1e88e5}
+.opt:nth-child(6n+2),.tile:nth-child(6n+2),.cb:nth-child(6n+2){--tc:#ff8a65;--td:#e64a19}
+.opt:nth-child(6n+3),.tile:nth-child(6n+3),.cb:nth-child(6n+3){--tc:#81c784;--td:#388e3c}
+.opt:nth-child(6n+4),.tile:nth-child(6n+4),.cb:nth-child(6n+4){--tc:#ba68c8;--td:#7b1fa2}
+.opt:nth-child(6n+5),.tile:nth-child(6n+5),.cb:nth-child(6n+5){--tc:#ffd54f;--td:#f9a825}
+.opt:nth-child(6n),.tile:nth-child(6n),.cb:nth-child(6n){--tc:#4dd0e1;--td:#0097a7}
+.opt,.tile{background:linear-gradient(#fff 55%,#f1f5ff)!important;border:5px solid var(--tc)!important;box-shadow:0 7px 0 var(--td)!important;transition:transform .15s}
+.cb{border-color:var(--tc)!important;box-shadow:0 6px 0 var(--td)!important;transition:transform .15s}
+.opt:hover,.tile:hover,.cb:hover{transform:translateY(-5px) rotate(-1.5deg)}
+.opt:active,.tile:active,.cb:active{transform:translateY(4px)!important;box-shadow:0 2px 0 var(--td)!important}
+.opt.ok,.tile.ok,.cb.ok{border-color:#43a047!important;box-shadow:0 0 0 6px #43a04788,0 7px 0 #2e7d32!important;animation:okj .5s}
+.opt.bad,.tile.bad,.cb.bad{border-color:#e53935!important;box-shadow:0 0 0 6px #e5393566,0 7px 0 #b71c1c!important}
+.opt.hint,.tile.hint,.cb.hint{box-shadow:0 0 0 7px #ffc531,0 0 30px #ffc531!important;animation:hintp 1s infinite}
+@keyframes okj{30%{transform:scale(1.18) rotate(4deg)}60%{transform:scale(.95)}}
+@keyframes hintp{50%{transform:scale(1.07)}}
+.nc{box-shadow:inset 0 -8px 0 #0002,0 6px 0 #0003}
+.prog i{width:20px;height:20px;background:#ffffff59;transition:all .3s}.prog i.d{background:#fdd835;box-shadow:0 0 10px #fdd835}.prog i.c{background:#fff;transform:scale(1.3);box-shadow:0 0 0 4px #ffffff55;animation:hintp 1.2s infinite}
+.fxp{position:fixed;pointer-events:none;z-index:9999;font-size:34px;line-height:1}
+.toast{font-size:34px;padding:14px 38px;animation:tbounce .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes tbounce{from{opacity:0;transform:translate(-50%,40px) scale(.6)}}
+.endbox{animation:endin .6s cubic-bezier(.3,1.5,.5,1);border:6px solid #fdd835}
+.endbox .em{animation:emj 1.6s ease-in-out infinite}
+@keyframes endin{from{transform:scale(.4) rotate(-6deg);opacity:0}}
+@keyframes emj{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.12)}}
+/* себеттер */
+.kbin{flex:1;min-width:300px;border-radius:30px;padding:12px 14px 16px;border:6px solid #fff;box-shadow:0 10px 0 #0002;position:relative;transition:transform .2s;color:#fff}
+.kbin .kh{font-size:32px;font-weight:900;text-shadow:0 3px 0 #0003;display:flex;align-items:center;justify-content:center;gap:10px}
+.kbin .kh b{min-width:44px;height:44px;border-radius:22px;background:#fff;color:#1a2a5a;font-size:24px;display:grid;place-items:center;text-shadow:none}
+.kbin .bin-in{background:#ffffff40;border-radius:20px;min-height:110px;padding:8px;margin-top:8px;border:4px dashed #ffffffaa}
+.kbin.jump{animation:okj .45s}.kbin.no{animation:shake .45s}
+.kbin .bin-in>button{transform:scale(.82);animation:none}
 /* duel */
 .duel{position:absolute;inset:0;display:flex;flex-direction:column}
 .dhead{font-size:26px;font-weight:900;color:#fff;text-align:center;margin-top:8px;text-shadow:0 3px 0 #0003}
@@ -204,7 +252,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=38"></script>
+<script src="data.js?v=40"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
@@ -297,13 +345,20 @@ function ROUNDS(box,n,make,{title,bg}={}){let k=0;RSEEN=new Set();RHK=typeof HKE
  body.className='rb';const show=()=>{st.set(k);body.innerHTML='';body.style.cssText='flex:1;min-height:0;position:relative;display:flex;gap:24px';T.reveal=null;hd.innerHTML=typeof title==='function'?title(k):(title||'');make(body,k,hd)};
  ROUND={next:()=>{k++;if(k<n)T.later(show,900);else{ROUND=null;const s=Math.round((Date.now()-t0)/1000);T.later(()=>T.end(box,{em:'🎉',title:'Жарайсың!',text:`Уақыт: ${s} сек · ${T.errTxt(ERR)}`,again:start}),900)}}};show()}
 
+
+/* ====== анимация эффектілері ====== */
+const FX={burst(e){try{const r=e.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const E=['⭐','✨','🌟','💫','⭐','✨','🎉','💖'];
+  for(let i=0;i<10;i++){const p=document.createElement('div');p.className='fxp';p.textContent=E[i%E.length];p.style.left=cx-17+'px';p.style.top=cy-17+'px';document.body.append(p);
+   const a=Math.PI*2*i/10+Math.random()*.4,d=90+Math.random()*80;p.animate([{transform:'translate(0,0) scale(.4)',opacity:1},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(1.1) rotate(${rnd(-90,90)}deg)`,opacity:0}],{duration:750,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>p.remove()}}catch(x){}},
+ rain(n){try{const E=['🎉','⭐','🎊','🌟','🍬','🎈','💛','💙','💚'];for(let i=0;i<n;i++){const p=document.createElement('div');p.className='fxp';p.textContent=E[rnd(0,E.length-1)];p.style.left=rnd(0,innerWidth)+'px';p.style.top='-50px';p.style.fontSize=rnd(26,46)+'px';document.body.append(p);
+   p.animate([{transform:'translate(0,0) rotate(0)'},{transform:`translate(${rnd(-120,120)}px,${innerHeight+100}px) rotate(${rnd(-360,360)}deg)`}],{duration:rnd(1600,2800),delay:rnd(0,500),easing:'cubic-bezier(.4,.1,.7,1)'}).onfinish=()=>p.remove()}}catch(x){}}};
 const T={
  reveal:null,
  alive(){const id=RID;return()=>id===RID},
  later(fn,ms){const a=T.alive();setTimeout(()=>a()&&fn(),ms)},
- ok(e){e&&(e.classList.remove('bad'),e.classList.remove('ok'),void e.offsetWidth,e.classList.add('ok'));beep('ok')},
+ ok(e){e&&(e.classList.remove('bad'),e.classList.remove('ok'),void e.offsetWidth,e.classList.add('ok'));beep('ok');e&&FX.burst(e)},
  bad(e){ERR++;e&&(e.classList.remove('bad'),void e.offsetWidth,e.classList.add('bad'));beep('bad');e&&setTimeout(()=>e.classList.remove('bad'),500)},
- done(msg){if(ROUND){beep('win');toast(msg&&msg!==' '?msg:'Дұрыс! ✓');ROUND.next();return}beep('win');if(msg!==' ')toast(msg||'Жарайсың! ✓')},
+ done(msg){FX.rain(10);if(ROUND){beep('win');toast(msg&&msg!==' '?msg:'Дұрыс! ✓');ROUND.next();return}beep('win');if(msg!==' ')toast(msg||'Жарайсың! ✓')},
  cards(host,{from=1,to=10,sm=false,onPick}={}){const r=el('div','ncards');for(let i=from;i<=to;i++){const b=ncard(i,sm?'sm':'');b.onclick=()=>onPick(i,b);r.append(b)}host.append(r);return r},
  series(host,items,{opts:defOpts,optHtml,onEach,end}={}){const top=el('div','prog');host.append(top);const qb=el('div','');qb.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;width:100%';host.append(qb);
   const ob=el('div','ncards');host.append(ob);let k=0;items.forEach(()=>top.append(el('i')));
@@ -325,7 +380,7 @@ const T={
  end(host,{em='🏆',title='Жарайсың!',text='',again}){saveStar();T.reveal=null;
   const o=el('div','endov',`<div class="endbox"><div class="em">${em}</div><div class="stars">${'★'.repeat(LV)}<i>${'★'.repeat(3-LV)}</i></div><h2>${title}</h2><p>${text}</p><div class="row"><button class="btn">🔁 Қайтадан</button>${LV<3?'<button class="btn up">⬆ Келесі деңгей</button>':''}<button class="btn alt">🎮 Ойындар</button></div></div>`);
   o.querySelector('.btn').onclick=()=>{o.remove();(again||start)()};const up=o.querySelector('.up');if(up)up.onclick=()=>document.querySelector(`#lvl button[data-l="${LV+1}"]`).click();
-  o.querySelector('.alt').onclick=()=>$('#back').click();host.append(o);beep('win')},
+  o.querySelector('.alt').onclick=()=>$('#back').click();host.append(o);beep('win');FX.rain(40)},
  errTxt(e){return e?`${e} рет қателестің`:'Бірде-бір қате жоқ! 🌟'}
 };
 
@@ -429,9 +484,9 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 /* ====== жүктеу ====== */
 const GAMES={};
 fit();
-const kit=document.createElement('script');kit.src='lessons/kit.js?v=38';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=39';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=39';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=38';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=38`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
+const kit=document.createElement('script');kit.src='lessons/kit.js?v=40';kit.onload=()=>document.body.append(cm);document.body.append(kit);
+const cm=document.createElement('script');cm.src='games/common.js?v=40';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=40';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=40';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=40`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
 </script>
 </body>
 </html>

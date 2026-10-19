@@ -199,6 +199,6 @@ const TRW={l1:['Ата','Ана','Апа','Аға','Әке','Ит','Ат','Ай'
 /* Жуан ба, жіңішке ме? */
 const HSW={h:['ата','бала','қала','доп','қар','тау','ұшақ','балық','мысық','қоян','алма','жаңбыр','бұлт','қауын','шана','тышқан','сағат','торт','қаз','қасық','орындық','құлақ','арба','жылан'],
  s:['әке','кеме','ешкі','есік','гүл','күн','үй','өрік','сәбіз','терезе','жүзім','түлкі','көл','бөлме','дәптер','іні','сүт','терек','мектеп','күшік','көбелек','бүркіт','кілем','көйлек']};
-SA.hardsoft=(box,T,lv)=>ROUNDS(box,3,(b,k,hd)=>{hd.innerHTML='🐘 Сөз <b style="color:#90caf9">жуан</b> ба, <b style="color:#f48fb1">жіңішке</b> ме? Себетке сал';const n=L3(lv,3,4,5);
+SA.hardsoft=(box,T,lv)=>ROUNDS(box,3,(b,k,hd)=>{hd.innerHTML='🐘 Сөз <b style="color:#1e88e5">жуан</b> ба, <b style="color:#e91e63">жіңішке</b> ме? Себетке сал';const n=L3(lv,3,4,5);
  const items=[...pick(HSW.h,n).map(w=>({h:`<span style="font-size:40px;font-weight:900">${w}</span>`,bin:'h'})),...pick(HSW.s,n).map(w=>({h:`<span style="font-size:40px;font-weight:900">${w}</span>`,bin:'s'}))];
- K.bins(b,T,{items,bins:[{id:'h',h:'🐘 Жуан',c:'#e3f2fd'},{id:'s',h:'🐭 Жіңішке',c:'#fce4ec'}],title:''})});
+ K.bins(b,T,{items,bins:[{id:'h',h:'<span style="font-size:44px">🐘</span> Жуан'},{id:'s',h:'<span style="font-size:44px">🐭</span> Жіңішке'}],title:''})});
