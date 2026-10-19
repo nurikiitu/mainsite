@@ -14,3 +14,4 @@ GAMES.k3scheme=SA.scheme(PXS);GAMES.k3syls=SA.sylSplit(PX);GAMES.k3sb=SA.sentBui
 GAMES.k3min=SA.minute(sylF,'буын');GAMES.k3minw=SA.minute(wrdF,'сөз');GAMES.k3reb=SA.rebusSent(R3);GAMES.k3rope=SA.ropeWord(PX);GAMES.k3rid=SA.riddle;
 /* 1–3 сынып сайттарынан қосылған */
 GAMES.readtx=SA.readText(lv=>lv===1?RTX0:RTX1);
+GAMES.k3rsyl._sec=15;

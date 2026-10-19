@@ -13,3 +13,4 @@ GAMES.k2syls=SA.sylSplit(PE);GAMES.k2sb=SA.sentBuild(S2);GAMES.k2sc=SA.sentCount
 GAMES.k2min=SA.minute(sylF,'буын');GAMES.k2minw=SA.minute(wrdF,'сөз');GAMES.k2sp=SA.sentPic(S2);GAMES.k2rope=SA.ropeWord(PE);GAMES.k2reb=SA.rebusSent(R2);
 /* 1–3 сынып сайттарынан қосылған */
 GAMES.trainw=SA.train(lv=>TRW['l'+lv]);
+GAMES.k2rsyl._sec=15;

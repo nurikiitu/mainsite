@@ -252,7 +252,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=40"></script>
+<script src="data.js?v=41"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
@@ -484,9 +484,9 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 /* ====== жүктеу ====== */
 const GAMES={};
 fit();
-const kit=document.createElement('script');kit.src='lessons/kit.js?v=40';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=40';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=40';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=40';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=40`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
+const kit=document.createElement('script');kit.src='lessons/kit.js?v=41';kit.onload=()=>document.body.append(cm);document.body.append(kit);
+const cm=document.createElement('script');cm.src='games/common.js?v=41';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=41';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=41';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=41`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
 </script>
 </body>
 </html>

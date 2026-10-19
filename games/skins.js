@@ -40,14 +40,14 @@ const SKO=cls=>h=>el('button','opt sk-o '+cls,h);
 const SKFX=(sc,txt,x,y)=>{const d=SKE(txt,`left:${x}px;top:${y}px;font-size:34px;font-weight:900;color:#fff;text-shadow:0 2px 4px #0008;pointer-events:none;z-index:9`);sc.append(d);SKA(d,[{transform:'translateY(0)',opacity:1},{transform:'translateY(-50px)',opacity:0}],1100);setTimeout(()=>d.remove(),1200)};
 
 /* ===== Ортақ қозғалтқыш ===== */
-function SKINQ(box,T,{title,gen,rounds=8,skin:S}){
+function SKINQ(box,T,{title,gen,rounds=8,skin:S,sec}){
  const start=()=>{const SEEN=new Set();const W=gwrap(box,S.bg);W.style.justifyContent='flex-start';W.style.gap='8px';W.style.padding='10px 22px 14px';
   const pr=prog(W,rounds);const top=el('div','');top.style.cssText='display:flex;align-items:center;gap:16px;justify-content:center;width:100%';
   const tag=el('div','sk-tag',S.em+' '+S.n);const hd=el('div','qline',title);hd.style.fontSize='28px';const tm=el('div','mut','');tm.style.fontSize='20px';top.append(tag,hd,tm);W.append(top);
   const sc=el('div','sk-scene');sc.style.cssText=`position:relative;width:100%;max-width:1420px;height:${S.h||190}px;border-radius:24px;overflow:hidden;flex:none;background:${S.sbg||'#e3f2fd'}`;W.append(sc);
   const qb=el('div','');qb.style.cssText='flex:1;min-height:0;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;width:100%';
   const ob=el('div','');ob.style.cssText='display:flex;gap:20px;flex-wrap:wrap;justify-content:center;align-items:center;min-height:100px;width:100%;'+(S.obCss||'');W.append(qb,ob);
-  const C={sc,W,ob,qb,rounds,T,box,k:0,err:0};const alive=T.alive();C.alive=alive;S.init&&S.init(C);
+  const C={sc,W,ob,qb,rounds,T,box,k:0,err:0,sec};const alive=T.alive();C.alive=alive;S.init&&S.init(C);
   let k=0,err=0,t0=Date.now(),cur;
   const tick=()=>{if(!alive()||!W.isConnected)return;tm.textContent='⏱ '+Math.floor((Date.now()-t0)/1000)+' сек · ❌ '+err;S.tick&&S.tick(C);setTimeout(tick,500)};tick();
   const fin=()=>{const s=Math.floor((Date.now()-t0)/1000);const go=()=>T.end(box,{em:S.em,title:S.win||'Керемет!',text:(S.res?S.res(C)+' · ':'')+`Уақыт: ${s} сек · ${T.errTxt(err)}`,again:start});ob.innerHTML='';if(S.done){S.done(C);T.later(go,S.doneMs||1800)}else go()};
@@ -193,9 +193,9 @@ const SKINS=[
 /* 18. Бомбаны залалсыздандыр */
 {n:'Бомба',em:'💣',win:'Бомба залалсызданды!',sbg:'linear-gradient(#263238,#37474f)',opt:(h,i)=>{const b=SKO('sk-wire')(h);b.style.background=['#e53935','#1e88e5','#43a047','#fdd835'][i%4];return b},
  init(C){C.sc.append(SKE('💣',`left:60px;top:30px;font-size:110px`));C.tm=SKE('',`left:210px;top:40px;font-family:monospace;font-size:72px;font-weight:900;color:#ff1744;background:#000;padding:4px 18px;border-radius:12px;box-shadow:0 0 18px #ff1744`);
-  C.wr=SKE('',`left:480px;top:50px;display:flex;gap:14px`);C.wr.innerHTML=[...Array(C.rounds)].map((_,i)=>`<div style="width:22px;height:96px;border-radius:10px;background:${['#e53935','#1e88e5','#43a047','#fdd835','#ab47bc','#ff7043'][i%6]}"></div>`).join('');C.sc.append(C.tm,C.wr);C.t=40},
- before(C){C.t=40},tick(C){if(!C.cur||C.ob.dataset.l)return;C.t-=.5;if(C.t<=0){C.t=40;SKFX(C.sc,'💥 Бум! Тағы байқа!',160,60);C.sc.style.animation='skshake .2s 4';setTimeout(()=>C.sc.style.animation='',900)}C.tm.textContent='00:'+String(Math.ceil(C.t)).padStart(2,'0')},
- hit(b,C,k){const w=C.wr.children[k-1];if(w){w.style.background='linear-gradient(#777 0 40%,transparent 40% 55%,#777 55%)';w.style.opacity=.5}C.t=40}},
+  C.wr=SKE('',`left:480px;top:50px;display:flex;gap:14px`);C.wr.innerHTML=[...Array(C.rounds)].map((_,i)=>`<div style="width:22px;height:96px;border-radius:10px;background:${['#e53935','#1e88e5','#43a047','#fdd835','#ab47bc','#ff7043'][i%6]}"></div>`).join('');C.sc.append(C.tm,C.wr);C.t=C.sec||40},
+ before(C){C.t=C.sec||40},tick(C){if(!C.cur||C.ob.dataset.l)return;C.t-=.5;if(C.t<=0){C.t=C.sec||40;SKFX(C.sc,'💥 Бум! Тағы байқа!',160,60);C.sc.style.animation='skshake .2s 4';setTimeout(()=>C.sc.style.animation='',900)}C.tm.textContent='00:'+String(Math.ceil(C.t)).padStart(2,'0')},
+ hit(b,C,k){const w=C.wr.children[k-1];if(w){w.style.background='linear-gradient(#777 0 40%,transparent 40% 55%,#777 55%)';w.style.opacity=.5}C.t=C.sec||40}},
 /* 19. Аралдағы қазына */
 {n:'Аралдағы қазына',em:'🏝️',win:'Қазына табылды!',sbg:'linear-gradient(#4fc3f7,#0288d1)',opt:SKO('sk-gem'),
  init(C){const n=C.rounds+1;C.pt=[...Array(n)].map((_,i)=>({x:60+i*(1260/(n-1)),y:i%2?40:110}));C.pt.forEach((p,i)=>C.sc.append(SKE(i===n-1?'🧰':'🏝️',`left:${p.x-30}px;top:${p.y}px;font-size:${i===n-1?60:52}px`)));
