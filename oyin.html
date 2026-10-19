@@ -212,7 +212,7 @@ const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=nu
 /* ====== көк фондағы контраст: ақ фонда — қою мәтін, көк фонда — ақ мәтін ====== */
 const CTR=(()=>{const rgb=c=>{const m=String(c).match(/rgba?\(([^)]+)\)/);if(!m)return null;const v=m[1].split(/[ ,\/]+/).filter(Boolean).map(Number);return{r:v[0],g:v[1],b:v[2],a:v.length>3?v[3]:1}};
  const lum=o=>(0.299*o.r+0.587*o.g+0.114*o.b)/255;
- const bgOf=e=>{const cs=getComputedStyle(e);const bi=cs.backgroundImage;if(bi&&bi!=='none'&&!bi.startsWith('url')){const c=rgb(bi);if(c)return c}const c=rgb(cs.backgroundColor);return c&&c.a>.35?c:null};
+ const bgOf=e=>{const cs=getComputedStyle(e);const bi=cs.backgroundImage;if(bi&&bi!=='none'){if(bi.startsWith('url'))return{r:255,g:255,b:255,a:1};const c=rgb(bi);if(c)return c}const c=rgb(cs.backgroundColor);return c&&c.a>.35?c:null};
  const eff=e=>{for(let x=e;x&&x.id!=='main';x=x.parentElement){const c=bgOf(x);if(c)return{l:lum(c),el:x}}return{l:0.35,el:null,main:1}};
  const own=e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim());
  function fix(root){const L=root.querySelectorAll?[root,...root.querySelectorAll('*')]:[];for(const e of L){if(!(e instanceof HTMLElement)||e.closest('svg'))continue;if(e.dataset.ctr)continue;
@@ -430,7 +430,7 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 const GAMES={};
 fit();
 const kit=document.createElement('script');kit.src='lessons/kit.js?v=38';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=38';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=38';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=38';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
+const cm=document.createElement('script');cm.src='games/common.js?v=38';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=39';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=38';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
 const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=38`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
 </script>
 </body>

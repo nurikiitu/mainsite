@@ -4,7 +4,7 @@
 .sk-scene{box-shadow:inset 0 0 0 4px #ffffff55,0 6px 0 #0001}
 .sk-o{background:#fff;border:4px solid #dfe3ec;border-radius:22px;min-height:92px;min-width:150px;padding:8px 22px;box-shadow:0 6px 0 #0002;font-weight:900;color:#1a2a5a;display:grid;place-items:center;transition:transform .2s;cursor:pointer;line-height:1.15}
 .sk-o:hover{transform:translateY(-4px)}
-.sk-asyk{background:radial-gradient(ellipse at 50% 35%,#fffdf5,#ead2a2 70%,#cfa766);border:4px solid #a77b3c;border-radius:48% 48% 42% 42%/62% 62% 38% 38%;min-width:170px;min-height:116px}
+.sk-asyk{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 132' preserveAspectRatio='none'%3E%3Cpath d='M30 18C60 2 78 30 100 30S140 2 170 18C197 32 197 100 170 114C140 130 122 102 100 102S60 130 30 114C3 100 3 32 30 18Z' fill='%23fff3d6' stroke='%238d5a2b' stroke-width='6'/%3E%3Cellipse cx='55' cy='42' rx='18' ry='9' fill='%23ffffffaa'/%3E%3C/svg%3E") center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;filter:drop-shadow(0 6px 0 #0003);min-width:200px;min-height:132px;padding:10px 34px;color:#4e342e}
 .sk-plank{background:repeating-linear-gradient(90deg,#d7a86e 0 26px,#c99657 26px 30px);border:4px solid #8d5a2b;color:#3e2410;border-radius:14px}
 .sk-plate{background:radial-gradient(circle,#fff 55%,#e3f2fd 56%,#fff 70%);border:5px solid #90caf9;border-radius:50%;min-width:150px;min-height:150px;padding:10px}
 .sk-bottle{background:linear-gradient(#e1bee7,#ba68c8);border:4px solid #7b1fa2;border-radius:22px 22px 40px 40px;color:#fff;position:relative;margin-top:22px;text-shadow:0 2px 0 #4a148c}
@@ -34,6 +34,7 @@
 `;document.head.append(s)})();
 const SKA=(e,f,ms=600,o={})=>{try{return e.animate(f,{duration:ms,fill:'forwards',easing:'ease-in-out',...o})}catch(_){}};
 const SKC=(e,p)=>{const a=e.getBoundingClientRect(),b=p.getBoundingClientRect(),z=(b.width/p.offsetWidth)||1;return{x:(a.left+a.width/2-b.left)/z,y:(a.top+a.height/2-b.top)/z}};
+const ASYK=(w,c)=>`<svg width="${w}" height="${w*.66|0}" viewBox="0 0 200 132" style="display:inline-block;vertical-align:middle;filter:drop-shadow(0 3px 0 #0003)"><path d="M30 18C60 2 78 30 100 30S140 2 170 18C197 32 197 100 170 114C140 130 122 102 100 102S60 130 30 114C3 100 3 32 30 18Z" fill="${c}" stroke="#8d5a2b" stroke-width="7"/><path d="M62 66C62 50 80 44 100 44S138 50 138 66 120 88 100 88 62 82 62 66Z" fill="#0000001f"/><ellipse cx="58" cy="46" rx="16" ry="9" fill="#ffffff88"/></svg>`;
 const SKE=(t,css)=>{const d=el('div','',t);d.style.cssText='position:absolute;'+css;return d};
 const SKO=cls=>h=>el('button','opt sk-o '+cls,h);
 const SKFX=(sc,txt,x,y)=>{const d=SKE(txt,`left:${x}px;top:${y}px;font-size:34px;font-weight:900;color:#fff;text-shadow:0 2px 4px #0008;pointer-events:none;z-index:9`);sc.append(d);SKA(d,[{transform:'translateY(0)',opacity:1},{transform:'translateY(-50px)',opacity:0}],1100);setTimeout(()=>d.remove(),1200)};
@@ -69,12 +70,16 @@ const SKINS=[
  hit(b,C,k){C.pos[0]=k/C.rounds;SKINS[0].draw(C)},miss(b,C){SKA(C.H[0],[{transform:'translateY(0)'},{transform:'translateY(-14px)'},{transform:'translateY(0)'}],400)},
  done(C){C.pos[0]=1;SKINS[0].draw(C);SKFX(C.sc,'🏆 1-орын!',600,60)}},
 /* 2. Асық ату */
-{n:'Асық ату',em:'🦴',win:'Асықтың бәрін ұттың!',sbg:'linear-gradient(#fff8e1,#ffe0b2)',opt:SKO('sk-asyk'),
- init(C){C.bag=SKE('',`left:20px;top:20px;right:20px;font-size:44px;letter-spacing:6px`);C.sc.append(C.bag);C.sc.append(SKE('🦴 Ұтқан асықтарың:',`left:24px;bottom:16px;font-size:26px;font-weight:900;color:#8d5a2b`));
-  C.saqa=SKE('🔴',`left:50%;bottom:10px;font-size:46px`);C.sc.append(C.saqa)},
- before(C){C.bag.textContent='🦴'.repeat(C.k)||' '},
- hit(b,C){const s=SKE('🔴','font-size:46px;z-index:9;position:fixed');const r=b.getBoundingClientRect(),q=C.saqa.getBoundingClientRect();s.style.left=q.left+'px';s.style.top=q.top+'px';document.body.append(s);
-  SKA(s,[{transform:'translate(0,0)'},{transform:`translate(${r.left+r.width/2-q.left-20}px,${r.top+r.height/2-q.top-20}px)`}],350);setTimeout(()=>{s.remove();SKA(b,[{transform:'translate(0,0) rotate(0)',opacity:1},{transform:'translate(0,-260px) rotate(540deg)',opacity:0}],600);C.bag.textContent='🦴'.repeat(C.k)},360)}},
+{n:'Асық ату',em:'🎯',win:'Асықтың бәрін ұттың!',sbg:'linear-gradient(#ffe9c4,#f3c98b 62%,#c99a5b 62%)',opt:SKO('sk-asyk'),
+ init(C){const R=C.rounds;C.row=[];const w=Math.min(64,900/R);
+  C.sc.append(SKE('',`left:16%;right:6%;top:112px;border-top:5px dashed #8d5a2b88`));C.sc.append(SKE('Кон',`right:2%;top:84px;font-size:20px;font-weight:900;color:#6d4c41`));
+  for(let i=0;i<R;i++){const x=SKE(ASYK(w,'#fff8e7'),`left:calc(${28+i*(62/R)}% );top:${86}px;transition:transform .5s,opacity .5s`);C.sc.append(x);C.row.push(x)}
+  C.saqa=SKE(ASYK(74,'#e53935'),`left:3%;top:96px;transition:transform .35s ease-in`);C.sc.append(C.saqa);C.sc.append(SKE('Саққа',`left:3%;top:150px;font-size:18px;font-weight:900;color:#b71c1c`));
+  C.bag=SKE('',`left:20px;top:12px;display:flex;gap:4px;align-items:center;font-size:24px;font-weight:900;color:#6d4c41`);C.sc.append(C.bag)},
+ before(C){C.bag.innerHTML='Ұтқаның: '+(C.k?ASYK(34,'#fff8e7').repeat(C.k):'—')},
+ hit(b,C,k){const t=C.row[k-1];if(!t)return;const sr=C.saqa.getBoundingClientRect(),tr=t.getBoundingClientRect(),sc=C.sc.getBoundingClientRect().width/C.sc.offsetWidth||1;
+  C.saqa.style.transform=`translate(${(tr.left-sr.left)/sc-20}px,${(tr.top-sr.top)/sc}px) rotate(360deg)`;
+  setTimeout(()=>{t.style.transform='translate(-120px,-140px) rotate(-420deg) scale(.6)';t.style.opacity='0';C.saqa.style.transition='none';C.saqa.style.transform='';void C.saqa.offsetWidth;C.saqa.style.transition='transform .35s ease-in';C.bag.innerHTML='Ұтқаның: '+ASYK(34,'#fff8e7').repeat(k)},360)}},
 /* 3. Киіз үй тік */
 {n:'Киіз үй тік',em:'🏕️',win:'Киіз үй тігілді!',sbg:'linear-gradient(#bbdefb,#e3f2fd 70%,#a5d6a7 70%)',opt:SKO('sk-wood'),
  P:['Кереге','Есік','Уық','Шаңырақ','Туырлық','Үзік','Ою-өрнек','Түтін'],
