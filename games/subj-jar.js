@@ -13,7 +13,7 @@ const JQ=(B,{opts}={})=>(lv)=>{const x=JPK(JLV(B,lv));const wrong=shuffle(x.o||o
 /* сұрыптау: заттар [эмодзи, атауы, топ, деңгей] → «Қай топқа жатады?» */
 const JS=(q,cats,items)=>(lv)=>{const x=JPK(JLV(items.map(i=>({e:i[0],t:i[1],c:i[2],d:i[3]||1})),lv));
   const n=Math.min(cats.length,Math.max(2,JN(lv)+(cats.length>3?0:1)));const o=shuffle([x.c,...pick(cats.filter(c=>c!==x.c),n-1)]);
-  return{q:JP(x.e,130)+JT(x.t,44)+`<div style="font-size:26px;font-weight:800;color:#6b7590">${q}</div>`,o,a:x.c,oh:JO}};
+  return{q:JP(x.e,130)+JT(x.t,44)+`<div style="font-size:26px;font-weight:800;color:var(--mut)">${q}</div>`,o,a:x.c,oh:JO}};
 /* жұп тап */
 const JMEM=(title,pairs)=>(box,T,lv)=>GM.memory({title,pairs:()=>pick(pairs,lv===1?4:lv===2?6:8).map(([a,b])=>[`<div style="font-size:64px;line-height:1">${a}</div>`,`<div style="font-size:26px;font-weight:900;text-align:center">${b}</div>`])}).build(box,T);
 /* ұстап ал */

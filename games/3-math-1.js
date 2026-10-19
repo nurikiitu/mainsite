@@ -6,7 +6,7 @@ const M3F=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 const M3R=lv=>lv===1?rnd(100,499):lv===2?rnd(100,999):rnd(101,999);
 const M3W=n=>{const H=['','жүз','екі жүз','үш жүз','төрт жүз','бес жүз','алты жүз','жеті жүз','сегіз жүз','тоғыз жүз'],Tn=['','он','жиырма','отыз','қырық','елу','алпыс','жетпіс','сексен','тоқсан'],U=['','бір','екі','үш','төрт','бес','алты','жеті','сегіз','тоғыз'];return [H[Math.floor(n/100)],Tn[Math.floor(n/10)%10],U[n%10]].filter(Boolean).join(' ')};
 const M3COL=(a,b,op)=>`<div style="font-family:monospace;font-size:70px;font-weight:900;line-height:1.05;text-align:right;color:#1a2a5a;display:inline-block;padding:4px 18px;border-bottom:6px solid #1a2a5a">${M3F(a)}<br><span style="color:#e53935">${op}</span> ${M3F(b)}</div>`;
-const M3GRID=(w,h,s=34)=>`<div style="display:grid;grid-template-columns:repeat(${w},${s}px);gap:3px;background:#90caf9;padding:3px;border-radius:8px">${'<div style="width:'+s+'px;height:'+s+'px;background:#e3f2fd"></div>'.repeat(w*h)}</div>`;
+const M3GRID=(w,h,s=34)=>{const c=`<div style="width:${s}px;height:${s}px;background:#e3f2fd"></div>`;return `<div style="display:grid;grid-template-columns:repeat(${w},${s}px);gap:3px;background:#90caf9;padding:3px;border-radius:8px">${c.repeat(w*h)}</div>`};
 
 /* ===== 1А. 1000 көлеміндегі сандар. Қосу және азайту ===== */
 GAMES.m31read=QZ('🔢 Санды оқы',lv=>{const n=M3R(lv);const t=Math.floor(n/10)%10,u=n%10;const sw=t!==u&&t?Math.floor(n/100)*100+u*10+t:n+10;const o=[...new Set([M3W(n),M3W(sw),M3W(n>899?n-100:n+100)])];return{q:M3E(String(n),110),o,a:M3W(n),oh:NOs,key:n}});

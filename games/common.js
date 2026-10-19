@@ -1,6 +1,6 @@
 /* neuroUstaz · ойындарға ортақ көмекшілер */
 const L3=(lv,a,b,c)=>[a,b,c][lv-1];
-const BIG=(t,fs=96,c='#1a2a5a')=>`<span style="font-size:${fs}px;font-weight:900;color:${c};line-height:1">${t}</span>`;
+const BIG=(t,fs=96,c='inherit')=>`<span style="font-size:${fs}px;font-weight:900;color:${c};line-height:1">${t}</span>`;
 const FRUIT=['🍎','🍐','🍊','🍋','🍓','🍒','🥕','🍌'];
 const SHAPES=['circle','square','triangle','rect'];
 const SHN={circle:'дөңгелек',square:'шаршы',triangle:'үшбұрыш',rect:'тіктөртбұрыш'};
@@ -27,18 +27,13 @@ function TEAMQ(box,{rounds=10,gen,title}){const start=()=>{const SEEN=new Set();
 
 /* ===== 2 оқушы: көлік жарысы ===== */
 function raceDuel(box,def){const alive=T.alive();const GOAL=6;let over=false;const sc=[0,0];box.innerHTML='';const d=el('div','duel');box.append(d);
- d.append(el('div','',`<div class="qline" style="font-size:22px;color:var(--mut);margin-top:6px">🏎️ ${def.title}</div>`));
- const tr=el('div','');tr.style.cssText='margin:6px 20px 0;border-radius:22px;background:#5d6b7c;padding:10px 70px 10px 20px;position:relative;flex:none';
- const lanes=[0,1].map(i=>{const l=el('div','');l.style.cssText=`height:58px;position:relative;border-bottom:${i?0:4}px dashed #fff8`;l.innerHTML=`<span style="position:absolute;left:0;top:50%;transform:translate(0,-50%) scaleX(-1);font-size:48px;transition:left .45s">${i?'🚙':'🏎️'}</span>`;tr.append(l);return l.firstChild});
+ d.append(el('div','dhead',`🏎️ ${def.title}`));
+ const tr=el('div','');tr.style.cssText='margin:8px 20px 0;border-radius:22px;background:#455a64;border:3px solid #ffffff40;padding:8px 70px 8px 20px;position:relative;flex:none';
+ const lanes=[0,1].map(i=>{const l=el('div','');l.style.cssText=`height:54px;position:relative;border-bottom:${i?0:4}px dashed #fff8`;l.innerHTML=`<span style="position:absolute;left:0;top:50%;transform:translate(0,-50%) scaleX(-1);font-size:46px;transition:left .45s">${i?'🚙':'🏎️'}</span>`;tr.append(l);return l.firstChild});
  tr.insertAdjacentHTML('beforeend','<span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:52px">🏁</span>');d.append(tr);
- const sides=el('div','dsides');d.append(sides);
- const S=[0,1].map(i=>{const s=el('div','ds s'+i,`<div class="h">${i?'🔵 2-оқушы':'🔴 1-оқушы'} · <b class="sc">0</b> / ${GOAL}</div><div class="q"></div><div class="os"></div>`);sides.append(s);return s});
- const draw=()=>S.forEach((s,i)=>{s.querySelector('.sc').textContent=sc[i];lanes[i].style.left=`calc(${sc[i]/GOAL*100}% - ${sc[i]/GOAL*50}px)`});
- const ask=i=>{if(!alive()||over)return;const s=S[i];let t,g=0;s._s=s._s||new Set();do{t=def.gen()}while(s._s.has(QK(t))&&g++<40);s._s.add(QK(t));s.querySelector('.q').innerHTML=t.q;const os=s.querySelector('.os');os.innerHTML='';
-  shuffle(t.o).forEach(v=>{const b=typeof v==='number'&&!t.oh?ncard(v,'sm'):el('button','opt',t.oh?t.oh(v):v);if(t.oh){b.style.height='auto';b.style.padding='8px'}
-   b.onclick=()=>{if(over||s.classList.contains('lock'))return;
-    if(String(v)===String(t.a)){T.ok(b);sc[i]++;draw();if(sc[i]>=GOAL){over=true;S[i].classList.add('win');return T.later(()=>T.end(box,{em:'🏁',title:(i?'🔵 2-оқушы':'🔴 1-оқушы')+' бірінші келді!',text:`🔴 ${sc[0]} : ${sc[1]} 🔵`,again:()=>raceDuel(box,def)}),600)}setTimeout(()=>ask(i),400)}
-    else{T.bad(b);s.classList.add('lock');setTimeout(()=>{s.classList.remove('lock');ask(i)},1300)}};os.append(b)})};
+ const S=dSides(d,GOAL);
+ const draw=()=>S.forEach((s,i)=>{S.dots(i,sc[i]);lanes[i].style.left=`calc(${sc[i]/GOAL*100}% - ${sc[i]/GOAL*50}px)`});
+ const ask=i=>{if(!alive()||over)return;dAsk(S[i],def,()=>{sc[i]++;draw();if(sc[i]>=GOAL){over=true;S.stop();S[i].classList.add('win');return T.later(()=>T.end(box,{em:'🏁',title:DNAME(i)+' бірінші келді!',text:`🔴 ${sc[0]} : ${sc[1]} 🟢`,again:()=>raceDuel(box,def)}),600)}setTimeout(()=>ask(i),400)},()=>ask(i))};
  draw();ask(0);ask(1)}
 
 /* ===== мысал генераторлары ===== */

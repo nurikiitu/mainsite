@@ -1,6 +1,6 @@
 /* neuroUstaz · 2–4-сынып Қазақ тілі: ортақ ойын құралдары */
 const KT=(t,fs=44)=>`<div style="font-size:${fs}px;font-weight:900;line-height:1.3;text-align:center;max-width:1150px">${t}</div>`;
-const KH=t=>`<div style="font-size:26px;font-weight:800;color:#6b7590;margin-top:8px">${t}</div>`;
+const KH=t=>`<div style="font-size:26px;font-weight:800;color:var(--mut);margin-top:8px">${t}</div>`;
 const KB=v=>`<span style="font-size:${String(v).length>14?28:36}px;font-weight:900;padding:4px 12px">${v}</span>`;
 const KPK=a=>a[rnd(0,a.length-1)];
 const KLV=(a,lv)=>{const f=a.filter(x=>(x.d||1)<=lv);return f.length>=3?f:a};

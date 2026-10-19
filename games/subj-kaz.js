@@ -17,7 +17,7 @@ const tricky=/[иуяюёщцъь]/;
 /* allowed: Set әріптер. focus: міндетті әріптер */
 function pool(allowed,{focus,maxLen=99,minLen=1,sound=false}={}){return WORDS.filter(x=>[...x.w].every(c=>allowed.has(c))&&x.w.length<=maxLen&&x.w.length>=minLen&&(!focus||[...focus].some(f=>x.w.includes(f)))&&(!sound||!tricky.test(x.w)))}
 const UP1=s=>s[0].toUpperCase()+s.slice(1);
-const W=(w,fs=96,c='#1a2a5a')=>`<span style="font-size:${fs}px;font-weight:900;color:${c};letter-spacing:2px;line-height:1.1">${w}</span>`;
+const W=(w,fs=96,c='inherit')=>`<span style="font-size:${fs}px;font-weight:900;color:${c};letter-spacing:2px;line-height:1.1">${w}</span>`;
 const PIC=(e,fs=130)=>`<div style="font-size:${fs}px;line-height:1">${e}</div>`;
 const LET=l=>`<span style="font-size:60px;padding:0 14px">${l.toUpperCase()}${l}</span>`;
 const WO=v=>`<span style="font-size:44px;padding:0 12px">${v}</span>`;

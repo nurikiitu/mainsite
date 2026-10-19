@@ -82,7 +82,7 @@ order(b,T,{items,title}){col(b,18,'center');if(title)b.append(el('div','qline',t
 };
 
 /* ====== ОЙЫНДАР ====== */
-function gwrap(box,bg){box.innerHTML='';const W=el('div','');W.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:18px;'+(bg?'background:'+bg:'');box.append(W);return W}
+function gwrap(box,bg){box.innerHTML='';const W=el('div','');W.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:18px;'+(bg?'background:'+bg+';color:var(--ink);--mut:#6b7590':'');box.append(W);return W}
 const GM={
 /* жалпы викторина: 10 айналым, уақыт пен қате */
 quiz({icon,title,gen,rounds=10,bg,em:emj='🏆',win='Керемет!'}){return{icon,build(box,T){const start=()=>{const SEEN=new Set();const W=gwrap(box,bg);const st=prog(W,rounds);const hd=el('div','qline',title);hd.style.fontSize='32px';const tm=el('div','mut','');tm.style.fontSize='24px';

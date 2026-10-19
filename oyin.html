@@ -24,7 +24,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .lvl{margin-left:auto;display:flex;gap:8px;background:#ffffff26;border-radius:18px;padding:5px}
 .lvl button{height:46px;padding:0 14px;border-radius:14px;font-weight:900;font-size:18px;color:#fff;white-space:nowrap}
 .lvl button.on{background:#fff;color:var(--ink);box-shadow:0 4px 0 rgba(0,0,0,.15)}
-.main{position:absolute;top:84px;bottom:86px;left:14px;right:14px;overflow:hidden;background:#fff;border-radius:30px;box-shadow:0 10px 0 rgba(0,0,0,.18)}
+.main{position:absolute;top:84px;bottom:86px;left:14px;right:14px;overflow:hidden;background:linear-gradient(160deg,#2196f3,#1565c0);color:#fff;--mut:#d6e7ff;border-radius:30px;box-shadow:inset 0 0 0 4px #ffffff38,0 10px 0 rgba(0,0,0,.18)}
+.main .qline,.main .big{text-shadow:0 3px 0 rgba(0,0,0,.22)}
+.opt,.tile,.endbox,.picker,.grp,.slot,.wslot,.dots,.sk-o,.bpan,.tools,#board,.lt,.wht{color:var(--ink);--mut:#6b7590;text-shadow:none}
 .stagew{position:absolute;left:50%;top:50%}
 .stage{width:1500px;height:760px;transform-origin:0 0;position:relative}
 #pen{position:absolute;inset:0;z-index:20;pointer-events:none;touch-action:none}
@@ -116,21 +118,29 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .btn:active{transform:translateY(3px);box-shadow:none}
 /* duel */
 .duel{position:absolute;inset:0;display:flex;flex-direction:column}
-.rope{height:120px;position:relative;flex:none;background:linear-gradient(90deg,#ffe3e3 0 50%,#e0ecff 50%);border-radius:24px;margin:10px 20px 0;overflow:hidden}
-.rope .mid{position:absolute;left:50%;top:10px;bottom:10px;width:4px;background:#1f2a4433;transform:translateX(-50%)}
-.rope .zone{position:absolute;top:0;bottom:0;width:28%;}
-.rope .zl{left:0;background:#ef535033}.rope .zr{right:0;background:#3b7dd833}
+.dhead{font-size:26px;font-weight:900;color:#fff;text-align:center;margin-top:8px;text-shadow:0 3px 0 #0003}
+.rope{height:110px;position:relative;flex:none;background:#ffffff1f;border:3px solid #ffffff40;border-radius:24px;margin:8px 20px 0;overflow:hidden}
+.rope .mid{position:absolute;left:50%;top:8px;bottom:8px;width:4px;background:#fff8;transform:translateX(-50%);border-radius:2px}
+.rope .zone{position:absolute;top:0;bottom:0;width:28%}
+.rope .zl{left:0;background:#ef535055}.rope .zr{right:0;background:#43a04755}
 .rope .r{position:absolute;left:50%;top:50%;width:80%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
-.rope .r .line{height:10px;width:62%;background:repeating-linear-gradient(90deg,#b07a3c 0 14px,#8c5a24 14px 28px);border-radius:6px}
-.rope .r .tm{font-size:50px}
+.rope .r .line{height:10px;width:62%;background:repeating-linear-gradient(90deg,#d7a15e 0 14px,#8c5a24 14px 28px);border-radius:6px}
+.rope .r .tm{font-size:48px}
 .rope .r .knot{position:absolute;left:50%;transform:translateX(-50%);font-size:40px}
-.dsides{flex:1;display:flex;gap:18px;padding:14px 20px 10px;min-height:0}
-.ds{flex:1;border-radius:26px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:14px;border:4px solid}
-.ds.s0{background:#fff5f5;border-color:#ffcdd2}.ds.s1{background:#f3f8ff;border-color:#c5dcff}
-.ds .h{font-size:26px;font-weight:900}
-.ds .q{flex:1;display:grid;place-items:center;width:100%;min-height:0}
-.ds .os{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.ds.lock{opacity:.5}
+.dsides{flex:1;display:flex;gap:22px;padding:14px 20px 12px;min-height:0}
+.ds{flex:1;border-radius:30px;padding:14px 16px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;border:6px solid;color:#fff;min-width:0}
+.ds.s0{background:rgba(229,57,53,.28);border-color:#ef5350}.ds.s1{background:rgba(67,160,71,.28);border-color:#66bb6a}
+.ds .h{font-size:34px;font-weight:900;text-shadow:0 3px 0 #0003;line-height:1}
+.ds .clk{font-size:34px;font-weight:900;background:rgba(0,0,0,.22);padding:2px 22px;border-radius:14px;font-variant-numeric:tabular-nums;min-width:110px;text-align:center}
+.ds .sd{display:flex;gap:8px}.ds .sd i{width:18px;height:18px;border-radius:50%;background:#ffffff59}.ds .sd i.d{background:#fdd835}
+.ds .q{flex:1;display:grid;place-items:center;width:100%;min-height:0;text-align:center;font-size:30px;font-weight:900;text-shadow:0 3px 0 #0002}
+.ds .seq{display:flex;align-items:center;gap:16px;font-size:72px;font-weight:900;text-shadow:0 4px 0 #0003;white-space:nowrap}
+.ds .bx{width:110px;height:110px;border-radius:22px;background:rgba(255,255,255,.3);border:5px solid #fff;display:grid;place-items:center;font-size:64px}
+.ds .bx.f{background:#fff;color:var(--ink);text-shadow:none}
+.ds .os{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.ds .os .tile{min-width:104px;height:104px;font-size:52px;box-shadow:0 7px 0 #8aa2cc;border:0}
+.ds .os .tile.tx{height:auto;min-height:88px;font-size:30px;padding:8px 22px}
+.ds.lock{opacity:.55}
 .ds.win{box-shadow:0 0 0 6px #ffc531,0 0 40px #ffc531}
 .grp{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-content:center;background:#fff;border-radius:18px;padding:10px;border:3px solid var(--line)}
 
@@ -194,11 +204,29 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
  </div>
  <button class="ans" id="ans">👁 Жауабы</button>
 </div>
-<script src="data.js?v=34"></script>
+<script src="data.js?v=37"></script>
 <script>
 /* ====== негізгі көмекшілер ====== */
 const $=s=>document.querySelector(s);
 const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+/* ====== көк фондағы контраст: ақ фонда — қою мәтін, көк фонда — ақ мәтін ====== */
+const CTR=(()=>{const rgb=c=>{const m=String(c).match(/rgba?\(([^)]+)\)/);if(!m)return null;const v=m[1].split(/[ ,\/]+/).filter(Boolean).map(Number);return{r:v[0],g:v[1],b:v[2],a:v.length>3?v[3]:1}};
+ const lum=o=>(0.299*o.r+0.587*o.g+0.114*o.b)/255;
+ const bgOf=e=>{const cs=getComputedStyle(e);const bi=cs.backgroundImage;if(bi&&bi!=='none'&&!bi.startsWith('url')){const c=rgb(bi);if(c)return c}const c=rgb(cs.backgroundColor);return c&&c.a>.35?c:null};
+ const eff=e=>{for(let x=e;x&&x.id!=='main';x=x.parentElement){const c=bgOf(x);if(c)return{l:lum(c),el:x}}return{l:0.35,el:null,main:1}};
+ const own=e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim());
+ function fix(root){const L=root.querySelectorAll?[root,...root.querySelectorAll('*')]:[];for(const e of L){if(!(e instanceof HTMLElement)||e.closest('svg'))continue;if(e.dataset.ctr)continue;
+   if(!own(e))continue;const col=rgb(getComputedStyle(e).color);if(!col)continue;const b=eff(e),lc=lum(col);
+   if(b.l>.72&&col.r>=250&&col.g>=250&&col.b>=250&&!e.closest('.endov')){e.style.color='#1a2a5a';e.style.textShadow='none';e.dataset.ctr=1}
+   else if(b.main&&lc<.35){e.style.color='#fff';e.dataset.ctr=1}}
+  root.querySelectorAll&&root.querySelectorAll('svg').forEach(v=>{if(v.dataset.ctr||v.parentElement.closest('svg'))return;const b=eff(v.parentElement);if(!b.main)return;
+   const dark=[...v.querySelectorAll('text,line,path,polyline,circle')].some(x=>{const f=getComputedStyle(x);const c=rgb(x.tagName==='text'?f.fill:(f.stroke!=='none'?f.stroke:f.fill));return c&&lum(c)<.3&&c.a>.5});
+   const box=[...v.querySelectorAll('rect,circle,ellipse')].some(x=>{const c=rgb(getComputedStyle(x).fill);const bb=x.getBBox?x.getBBox():null;return c&&lum(c)>.85&&bb&&bb.width*bb.height>(v.getBBox().width*v.getBBox().height)*.4});
+   if(dark&&!box){v.style.background='#ffffffee';v.style.borderRadius='18px';v.style.padding='6px'}v.dataset.ctr=1})}
+ let q=new Set(),pend=0;const run=()=>{pend=0;const L=[...q];q.clear();L.forEach(n=>n.isConnected&&fix(n))};
+ const mo=new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>n.nodeType===1&&q.add(n));if(m.type==='attributes')q.add(m.target)}if(!pend){pend=1;requestAnimationFrame(()=>setTimeout(run,30))}});
+ return{start(st){mo.observe(st,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});q.add(st)},fix}})();
+addEventListener('DOMContentLoaded',()=>{const st=document.getElementById('stage');st&&CTR.start(st)});
 const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const pick=(a,n)=>shuffle(a).slice(0,n);
@@ -301,20 +329,29 @@ const T={
  errTxt(e){return e?`${e} рет қателестің`:'Бірде-бір қате жоқ! 🌟'}
 };
 
-/* ====== 2 оқушы жарысы: арқан тартыс ====== */
+/* ====== 2 оқушы жарысы: ортақ панель ====== */
+const DNAME=i=>i?'🟢 2-оқушы':'🔴 1-оқушы';
+function dSides(d,goal){const sides=el('div','dsides');d.append(sides);const t0=performance.now();
+ const S=[0,1].map(i=>{const s=el('div','ds s'+i,`<div class="h">${i+1}-оқушы</div><div class="clk">0.0</div><div class="sd">${'<i></i>'.repeat(goal)}</div><div class="q"></div><div class="os"></div>`);sides.append(s);s._stop=0;return s});
+ const iv=setInterval(()=>{if(!document.body.contains(d))return clearInterval(iv);S.forEach(s=>{if(!s._stop)s.querySelector('.clk').textContent=((performance.now()-t0)/1000).toFixed(1)})},100);
+ S.dots=(i,n)=>[...S[i].querySelectorAll('.sd i')].forEach((x,j)=>x.className=j<n?'d':'');S.stop=()=>S.forEach(s=>s._stop=1);return S}
+function dAsk(s,def,right,wrong){let t,g=0;s._s=s._s||new Set();do{t=def.gen()}while(s._s.has(QK(t))&&g++<40);s._s.add(QK(t));
+ const q=s.querySelector('.q'),plain=String(t.q).replace(/<[^>]+>/g,'').trim();
+ if(!t.oh&&/^[\d\s+\-−–·×:()]+$/.test(plain)&&/[+\-−–·×:]/.test(plain)){q.innerHTML=`<div class="seq">${plain} = <span class="bx"></span></div>`}else q.innerHTML=t.q;
+ const os=s.querySelector('.os');os.innerHTML='';
+ shuffle(t.o).forEach(v=>{const b=el('button','tile'+(t.oh||String(v).length>3?' tx':''),t.oh?t.oh(v):v);
+  b.onclick=()=>{if(s.classList.contains('lock')||s._stop)return;
+   if(String(v)===String(t.a)){T.ok(b);const bx=q.querySelector('.bx');if(bx){bx.textContent=v;bx.classList.add('f')}right()}
+   else{T.bad(b);s.classList.add('lock');setTimeout(()=>{s.classList.remove('lock');wrong()},1300)}};os.append(b)})}
+/* арқан тартыс */
 function duel(box,def){const alive=T.alive();const GOAL=5;let pos=0,over=false,sc=[0,0];
  box.innerHTML='';const d=el('div','duel');box.append(d);
+ d.append(el('div','dhead',`⚔️ ${def.title}`));
  const rope=el('div','rope',`<div class="zone zl"></div><div class="zone zr"></div><div class="mid"></div><div class="r"><span class="tm">🧒🧒</span><div class="line"></div><span class="tm">🧒🧒</span><span class="knot">🎀</span></div>`);d.append(rope);
- const sides=el('div','dsides');d.append(sides);
- const S=[0,1].map(i=>{const s=el('div','ds s'+i,`<div class="h">${i?'🔵 2-оқушы':'🔴 1-оқушы'} · <b class="sc">0</b></div><div class="q"></div><div class="os"></div>`);sides.append(s);return s});
- const draw=()=>{rope.querySelector('.r').style.transform=`translate(calc(-50% + ${pos*5.5}%),-50%)`;S.forEach((s,i)=>s.querySelector('.sc').textContent=sc[i])};
- const ask=i=>{if(!alive()||over)return;const s=S[i];let t,g=0;s._s=s._s||new Set();do{t=def.gen()}while(s._s.has(QK(t))&&g++<40);s._s.add(QK(t));s.querySelector('.q').innerHTML=t.q;const os=s.querySelector('.os');os.innerHTML='';
-  shuffle(t.o).forEach(v=>{const b=typeof v==='number'&&!t.oh?ncard(v,'sm'):el('button','opt',t.oh?t.oh(v):v);if(t.oh){b.style.height='auto';b.style.padding='8px'}
-   b.onclick=()=>{if(over||s.classList.contains('lock'))return;
-    if(String(v)===String(t.a)){T.ok(b);sc[i]++;pos+=i?1:-1;draw();if(Math.abs(pos)>=GOAL)return win(i);setTimeout(()=>ask(i),450)}
-    else{T.bad(b);s.classList.add('lock');setTimeout(()=>{s.classList.remove('lock');ask(i)},1300)}};os.append(b)})};
- function win(i){over=true;S[i].classList.add('win');T.end(box,{em:'🏆',title:(i?'🔵 2-оқушы':'🔴 1-оқушы')+' жеңді!',text:`🔴 ${sc[0]} : ${sc[1]} 🔵`,again:()=>duel(box,def)})}
- const head=el('div','',`<div class="qline" style="font-size:22px;color:var(--mut);margin-top:6px">⚔️ ${def.title}</div>`);d.prepend(head);
+ const S=dSides(d,GOAL);
+ const draw=()=>{rope.querySelector('.r').style.transform=`translate(calc(-50% + ${pos*5.5}%),-50%)`;S.dots(0,Math.max(0,-pos));S.dots(1,Math.max(0,pos))};
+ const ask=i=>{if(!alive()||over)return;dAsk(S[i],def,()=>{sc[i]++;pos+=i?1:-1;draw();if(Math.abs(pos)>=GOAL)return win(i);setTimeout(()=>ask(i),450)},()=>ask(i))};
+ function win(i){over=true;S.stop();S[i].classList.add('win');T.end(box,{em:'🏆',title:DNAME(i)+' жеңді!',text:`🔴 ${sc[0]} : ${sc[1]} 🟢`,again:()=>duel(box,def)})}
  draw();ask(0);ask(1)}
 
 /* ====== масштаб ====== */
@@ -392,9 +429,9 @@ addEventListener('resize',()=>{if(BD.classList.contains('on'))bsize()});
 /* ====== жүктеу ====== */
 const GAMES={};
 fit();
-const kit=document.createElement('script');kit.src='lessons/kit.js?v=34';kit.onload=()=>document.body.append(cm);document.body.append(kit);
-const cm=document.createElement('script');cm.src='games/common.js?v=34';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=35';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=34';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
-const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=34`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
+const kit=document.createElement('script');kit.src='lessons/kit.js?v=37';kit.onload=()=>document.body.append(cm);document.body.append(kit);
+const cm=document.createElement('script');cm.src='games/common.js?v=37';cm.onload=()=>{const sk=document.createElement('script');sk.src='games/skins.js?v=37';sk.onload=sk.onerror=()=>NX0();document.body.append(sk)};const NX0=()=>{const SF=SB==='jar'?['jar']:SB==='kaz'?(G===1?['kaz']:['kaz','jar','k2']):[];const nx=()=>{const f=SF.shift();if(!f)return document.body.append(sc);const sj=document.createElement('script');sj.src='games/subj-'+f+'.js?v=37';sj.onload=sj.onerror=nx;document.body.append(sj)};nx()};
+const sc=document.createElement('script');sc.src=`games/${G}-${SB}-${Q}.js?v=37`;sc.onload=()=>{typeof SKASSIGN==='function'&&SKASSIGN(G*7+Q*3+SB.length);start()};sc.onerror=()=>start();
 </script>
 </body>
 </html>
