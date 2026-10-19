@@ -93,7 +93,15 @@ const NOs=v=>`<span style="font-size:32px;padding:0 6px">${v}</span>`;
 function nearS(a,lo,hi,step=1,n=4){const s=new Set([a]);let g=0;while(s.size<n&&g++<300){const v=a+step*rnd(-3,3);if(v>=lo&&v<=hi)s.add(v)}for(let v=lo;s.size<n&&v<=hi;v+=step)s.add(v);return shuffle([...s])}
 /* қысқа құрастырушылар */
 /* Қайталанбайтын генератор: деңгейдегі тапсырмалар біткенде көрші деңгейден алады */
-function NRG(gen,lv){const S=new Set();const ord=[lv,lv+1,lv-1,lv+2,lv-2].filter(x=>x>=1&&x<=3);return(...a)=>{let c;for(const L of ord){for(let g=0;g<30;g++){c=gen(L,...a);if(!S.has(QK(c))){S.add(QK(c));return c}}}S.clear();S.add(QK(c));return c}}
+/* Тапсырмалар қоры: соңғы ойындарда шыққан тапсырмалар осы құрылғыда сақталады (бір ойынға шамамен 3 ойындық қор) — келесі ойында алдымен жаңалары беріледі */
+const HKEY=lv=>{try{return 'nr:'+G+'/'+SB+'/'+Q+'/'+ID+'/'+lv}catch(e){return null}};
+const HH=s=>{let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return h.toString(36)};
+const HLOAD=k=>{try{return k?JSON.parse(localStorage.getItem(k)||'[]'):[]}catch(e){return[]}};
+const HSAVE=(k,a)=>{try{k&&localStorage.setItem(k,JSON.stringify(a.slice(-48)))}catch(e){}};
+function NRG(gen,lv){const S=new Set();const hk=HKEY(lv);let H=HLOAD(hk);const HS=new Set(H);const ord=[lv,lv+1,lv-1,lv+2,lv-2].filter(x=>x>=1&&x<=3);
+ const take=c=>{const q=QK(c);S.add(q);const h=HH(q);if(!HS.has(h)){HS.add(h);H.push(h);HSAVE(hk,H)}return c};
+ return(...a)=>{let c;for(const L of ord.slice(0,2)){for(let g=0;g<30;g++){c=gen(L,...a);if(!S.has(QK(c))&&!HS.has(HH(QK(c))))return take(c)}}
+  for(const L of ord){for(let g=0;g<30;g++){c=gen(L,...a);if(!S.has(QK(c)))return take(c)}}S.clear();return take(c)}}
 const QZ=(title,gen,{rounds=8,icon='⭐'}={})=>{const f=(box,T,lv)=>{const G=NRG(gen,lv);const tt=typeof title==='function'?title(lv):title;const sk=typeof SKINS!=='undefined'?(SKP!=null?SKP:f._skin):null;
  if(sk!=null&&SKINS[sk])return SKINQ(box,T,{title:tt,gen:k=>G(k),rounds,skin:SKINS[sk]});return GM.quiz({icon,title:tt,rounds,gen:k=>G(k)}).build(box,T)};f._qz=1;return f};
 const DU=(title,gen)=>(box,T,lv)=>{const G=NRG(gen,lv);return duel(box,{title:typeof title==='function'?title(lv):title,gen:()=>G()})};
