@@ -162,16 +162,17 @@ const TILEB=(v,cls='')=>el('button','tile'+(cls?' '+cls:''),String(v));
 /* Математикалық пирамида: жоғарғы сан = астындағы екі санның қосындысы */
 const PYR_REL=[[0,1,2],[1,3,4],[2,4,5]];
 function pyrSolv(hid){const u=new Set(hid);let ch=true;while(ch&&u.size){ch=false;for(const r of PYR_REL){const x=r.filter(i=>u.has(i));if(x.length===1){u.delete(x[0]);ch=true}}}return !u.size}
-const PYRAMID=(rng)=>(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{hd.innerHTML='🔺 Математикалық пирамида: жоғарғы сан — астындағы екі санның қосындысы';
+const PYRAMID=(rng)=>(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{hd.innerHTML='';hd.style.display='none';
  const [lo,hi,nh]=rng(lv);const t=uq(()=>{const B=[rnd(lo,hi),rnd(lo,hi),rnd(lo,hi)],M=[B[0]+B[1],B[1]+B[2]];const vals=[M[0]+M[1],...M,...B];let hid;do{hid=pick([0,1,2,3,4,5],nh)}while(!pyrSolv(hid));return{vals,hid:hid.sort()}},t=>t.vals.join(',')+'|'+t.hid.join(''));
- b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-around';
- const p=el('div','');p.style.cssText='display:flex;flex-direction:column;align-items:center;gap:10px';const cells=[];
- [[0],[1,2],[3,4,5]].forEach(r=>{const row=el('div','');row.style.cssText='display:flex;gap:14px';r.forEach(i=>{const h=t.hid.includes(i);const c=el('div','',h?'?':t.vals[i]);
-  c.style.cssText=`width:${hi>99?150:120}px;height:100px;border-radius:24px;display:grid;place-items:center;font-size:${hi>99?50:56}px;font-weight:900;color:#1a2a5a;background:${h?'#ffffff55':'#fff'};border:5px ${h?'dashed #fff':'solid #fff'};box-shadow:0 6px 0 #0002`;c.dataset.e=h?1:'';cells[i]=c;row.append(c)});p.append(row)});b.append(p);
+ b.style.flexDirection='column';b.style.alignItems='center';b.style.justifyContent='space-between';b.style.gap='14px';
+ const rule=el('div','','Жоғарғы сан — астындағы екі санның қосындысы');rule.style.cssText='background:#fff8e1;color:#1a2a5a;border-radius:20px;padding:10px 34px;font-size:30px;font-weight:900;box-shadow:0 5px 0 #0002;text-shadow:none';b.append(rule);
+ const D=hi>99?128:116;const p=el('div','');p.style.cssText=`display:flex;flex-direction:column;align-items:center;gap:${D*.18|0}px;background:#ffffff26;border-radius:34px;padding:22px 44px`;const cells=[];
+ [[0],[1,2],[3,4,5]].forEach(r=>{const row=el('div','');row.style.cssText=`display:flex;gap:${D*.42|0}px`;r.forEach(i=>{const h=t.hid.includes(i);const c=el('div','',h?'':t.vals[i]);
+  c.style.cssText=`width:${D}px;height:${D}px;border-radius:50%;display:grid;place-items:center;font-size:${hi>99?46:58}px;font-weight:900;color:#1a2a5a;text-shadow:none;transition:box-shadow .2s;`+(h?'background:#e8f4fd;border:6px dashed #fff;box-shadow:0 0 0 4px #64b5f6':'background:#fff;border:6px solid #64b5f6');c.dataset.e=h?1:'';cells[i]=c;row.append(c)});p.append(row)});b.append(p);
  const emp=()=>t.hid.filter(i=>cells[i].dataset.e);const ready=i=>PYR_REL.some(r=>r.includes(i)&&r.filter(j=>emp().includes(j)).length===1);
- let sel=null;const setSel=i=>{sel=i;cells.forEach((c,j)=>c.style.outline=j===i?'6px solid #fdd835':'')};const mark=()=>{const e=emp();setSel([...e].sort((x,y)=>y-x).find(ready)??e[0]??null)};
+ let sel=null;const setSel=i=>{sel=i;cells.forEach((c,j)=>{if(!c.dataset.e)return;if(j===i){c.style.border='6px solid #fdd835';c.style.boxShadow='0 0 0 10px #fdd83566'}else{c.style.border='6px dashed #fff';c.style.boxShadow='0 0 0 4px #64b5f6'}})};const mark=()=>{const e=emp();setSel([...e].sort((x,y)=>y-x).find(ready)??e[0]??null)};
  t.hid.forEach(i=>cells[i].onclick=()=>{if(cells[i].dataset.e)setSel(i)});
- const fill=(i,v,tb)=>{const c=cells[i];c.textContent=v;c.dataset.e='';c.style.background='#fff';c.style.borderStyle='solid';c.style.borderColor='#43a047';T.ok(c);tb.style.visibility='hidden';tb.classList.remove('hint');if(!emp().length){setSel(null);T.done()}else mark()};
+ const fill=(i,v,tb)=>{const c=cells[i];c.textContent=v;c.dataset.e='';c.style.background='#fff';c.style.border='6px solid #43a047';c.style.boxShadow='none';T.ok(c);tb.style.visibility='hidden';tb.classList.remove('hint');if(!emp().length){setSel(null);T.done()}else mark()};
  const hv=t.hid.map(i=>t.vals[i]),ex2=[];let g=0;while(ex2.length<2&&g++<100){const v=hv[rnd(0,hv.length-1)]+rnd(-9,9)*(hi>99?3:1);if(v>0&&!hv.includes(v)&&!ex2.includes(v))ex2.push(v)}
  const tl=el('div','tiles');shuffle([...hv,...ex2]).forEach(v=>{const tb=TILEB(v,hi>99?'wide':'');const tap=()=>{if(sel!=null&&v===t.vals[sel])fill(sel,v,tb);else T.bad(tb)};tb.onclick=tap;tb._tap=tap;
   DRAG(tb,()=>emp().map(i=>cells[i]),c=>{const i=cells.indexOf(c);v===t.vals[i]?fill(i,v,tb):T.bad(tb)});tl.append(tb)});b.append(tl);mark();
