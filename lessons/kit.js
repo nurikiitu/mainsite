@@ -35,7 +35,7 @@ bins(b,T,{items,bins,title}){col(b,14);if(title)b.append(el('div','mut',title));
  bins.forEach(bn=>{const c=el('button','',`<div style="font-size:26px;font-weight:900;margin-bottom:6px">${bn.h}</div><div class="bin-in" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:90px"></div>`);
   c.style.cssText=`flex:1;min-width:300px;max-width:${Math.floor(1300/bins.length)}px;background:${bn.c||'#f6f7fb'};border:4px dashed #c9cfdc;border-radius:24px;padding:12px`;c.dataset.id=bn.id;
   c.onclick=()=>{if(!sel){T.bad(c);return}if(sel.dataset.bin===bn.id){T.ok(c);sel.style.outline='';sel.onclick=null;sel.style.transform='scale(.8)';c.querySelector('.bin-in').append(sel);sel=null;if(--left===0)T.done()}else{T.bad(sel)}};row.append(c);Bs.push(c)});
- shuffle(items).forEach(it=>{const c=cellBtn(it.h,'min-width:110px;height:110px');c.dataset.bin=it.bin;c.onclick=()=>{pool.querySelectorAll('button').forEach(x=>x.style.outline='');sel=c;c.style.outline='5px solid #ffc531';beep('tap')};pool.append(c)});
+ shuffle(items).forEach(it=>{const c=cellBtn(it.h,'min-width:110px;height:110px');c.dataset.bin=it.bin;c.onclick=()=>{pool.querySelectorAll('button').forEach(x=>x.style.outline='');sel=c;c.style.outline='5px solid #ffc531';beep('tap')};if(typeof DRAG==='function'){const tap=c.onclick;c._tap=tap;DRAG(c,()=>Bs,t=>{tap();t.onclick()})}pool.append(c)});
  T.reveal=()=>{pool.querySelectorAll('button').forEach(x=>x.classList.add('hint'));toast('Әр затты өз тобына сал 🙂','#c28a00')}},
 /* дұрыстарының бәрін тап */
 pickAll(b,T,{tiles,cols=6,size=180,title}){col(b,16);if(title)b.append(el('div','qline',title));

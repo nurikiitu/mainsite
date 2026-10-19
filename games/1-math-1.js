@@ -17,7 +17,7 @@ GAMES.basket=(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{
  const items=[];Object.entries(need).forEach(([e,n])=>{for(let i=0;i<n+rnd(2,4);i++)items.push(e)});
  if(lv===3)for(let i=0;i<2;i++)items.push(FRUIT.filter(x=>!(x in need))[i]);
  shuffle(items).forEach(e=>{const f=el('button','',e);f.style.cssText='font-size:62px;line-height:1;padding:4px;transition:transform .15s';f.dataset.e=e;
-  f.onclick=()=>{beep('tap');(f.parentNode===tree?inb:tree).append(f);f.style.fontSize=f.parentNode===inb?'50px':'62px'};tree.append(f)});
+  f._tap=()=>{beep('tap');(f.parentNode===tree?inb:tree).append(f);f.style.fontSize=f.parentNode===inb?'50px':'62px'};DRAG(f,()=>[inb.parentNode,tree],t=>{(t===tree?tree:inb).append(f);f.style.fontSize=f.parentNode===inb?'50px':'62px'});tree.append(f)});
  chk.onclick=()=>{const got={};inb.querySelectorAll('button').forEach(x=>got[x.dataset.e]=(got[x.dataset.e]||0)+1);
   const ok=Object.keys(got).every(e=>e in need)&&Object.entries(need).every(([e,n])=>got[e]===n);
   if(ok){T.ok(chk);chk.disabled=true;T.done()}else{T.bad(chk);toast('Себетті қайта санап шық 🙂','#e53935')}};
@@ -88,7 +88,7 @@ GAMES.split=(box,T,lv)=>ROUNDS(box,6,(b,k,hd)=>{const [n,a]=uq(()=>{const n=lv==
  const row=el('div','');row.style.cssText='display:flex;gap:60px';const bk=['🔴 Сол себет','🔵 Оң себет'].map(t=>{const w=el('div','');w.style.cssText='width:440px;min-height:230px;background:#fff8e1;border:6px solid #d7a35a;border-radius:24px 24px 90px 90px;display:flex;flex-direction:column;align-items:center;padding:10px';
   w.innerHTML=`<div style="font-size:24px;font-weight:900">${t}</div><div class="in" style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;flex:1;align-content:center"></div>`;row.append(w);return w.querySelector('.in')});
  const eq=el('div','big','');const chk=el('button','btn','✅ Тексеру');b.append(mid,row,eq,chk);
- for(let i=0;i<n;i++){const f=el('button','','🍎');f.style.cssText='font-size:64px;line-height:1';f.onclick=()=>{beep('tap');const p=f.parentNode;(p===mid?bk[0]:p===bk[0]?bk[1]:mid).append(f)};mid.append(f)}
+ for(let i=0;i<n;i++){const f=el('button','','🍎');f.style.cssText='font-size:64px;line-height:1';f._tap=()=>{beep('tap');const p=f.parentNode;(p===mid?bk[0]:p===bk[0]?bk[1]:mid).append(f)};DRAG(f,()=>[bk[0].parentNode,bk[1].parentNode,mid],t=>(t===mid?mid:t.querySelector('.in')).append(f));mid.append(f)}
  chk.onclick=()=>{const L=bk[0].children.length,R=bk[1].children.length;if(L===a&&R===c&&!mid.children.length){T.ok(chk);chk.disabled=true;eq.innerHTML=`${n} = <span style="color:#e53935">${a}</span> + <span style="color:#1e88e5">${c}</span>`;T.done()}else{T.bad(chk);toast(mid.children.length?'Барлық алманы себетке сал':'Сол себетте '+a+' алма болуы керек','#e53935')}};
  T.reveal=()=>toast(`Сол жақта ${a}, оң жақта ${c}`,'#c28a00')},{title:''});
 
