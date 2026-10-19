@@ -92,6 +92,21 @@ footer{color:#fff;text-align:center;font-weight:800;opacity:.85;padding:30px 0 1
 </style>
 </head>
 <body>
+<div id="msgate" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(160deg,#29a3f5,#1565c0);display:grid;place-items:center;font-family:Nunito,system-ui,sans-serif">
+<div style="background:#fff;border-radius:30px;padding:36px 44px;text-align:center;box-shadow:0 12px 0 #0003;width:min(460px,92vw);color:#1a2a5a">
+<div style="font-size:70px">🔐</div><div style="font-size:30px;font-weight:900;margin:6px 0 4px">neuroUstaz</div><div style="font-size:18px;font-weight:700;color:#6b7590;margin-bottom:18px">Сайтқа кіру үшін кодты енгізіңіз</div>
+<input id="msin" type="password" inputmode="numeric" autocomplete="off" placeholder="Код" style="width:100%;height:64px;border-radius:18px;border:4px solid #e3e8f2;font-size:30px;font-weight:900;text-align:center;outline:none;color:#1a2a5a">
+<div id="mserr" style="color:#e53935;font-weight:800;height:26px;margin-top:8px"></div>
+<button id="msbtn" style="width:100%;height:64px;border:0;border-radius:18px;background:#43a047;color:#fff;font-size:26px;font-weight:900;box-shadow:0 6px 0 #2e7d32;cursor:pointer">Кіру ✅</button>
+<div style="margin-top:14px;font-size:15px;color:#6b7590;font-weight:700">📞 8 747 733 95 73</div></div></div>
+<script id="msgatejs">(()=>{const H='6042c5f797c88f524d07371ca67c5cd2b73a3d6cd6b17397bc93a605637e356f',K='ms_ok';const g=document.getElementById('msgate');
+let ok=false;try{ok=localStorage.getItem(K)===H||sessionStorage.getItem(K)===H}catch(e){}if(ok){g.remove();return}
+const sha=async s=>{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')};
+const inp=document.getElementById('msin'),er=document.getElementById('mserr');
+const go=async()=>{const v=inp.value.trim();if(!v)return;let h='';try{h=await sha('mainsite:'+v)}catch(e){}
+ if(h===H){try{localStorage.setItem(K,H);sessionStorage.setItem(K,H)}catch(e){}g.remove()}else{er.textContent='Код қате ❌';inp.value='';inp.focus()}};
+document.getElementById('msbtn').onclick=go;inp.onkeydown=e=>{if(e.key==='Enter')go()};setTimeout(()=>inp.focus(),100)})();</script>
+
 <header>
   <div class="tl"><button class="tbtn" id="back" style="visibility:hidden">⬅ Артқа</button></div>
   <div class="tr"><button class="tbtn" id="fs" title="Толық экран">⛶</button></div>
